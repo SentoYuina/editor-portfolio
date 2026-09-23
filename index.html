@@ -690,11 +690,6 @@
       transition: border-color .2s ease, box-shadow .2s ease;
     }
 
-    .orbit-node-inner {
-      width: clamp(3.6rem, 6vw, 5.4rem);
-      border-width: 1px;
-    }
-
     .orbit-node:nth-of-type(3n + 2) { --node-accent: var(--violet); }
     .orbit-node:nth-of-type(3n) { --node-accent: var(--cyan); }
 
@@ -753,6 +748,90 @@
       font: .68rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
       letter-spacing: .06em;
       text-transform: none;
+    }
+
+    .client-marquee {
+      width: 100%;
+      margin-top: -1rem;
+      padding: 1rem 0 .25rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .client-marquee-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0 0 .35rem;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 750;
+    }
+
+    .client-marquee-head strong { color: var(--acid); }
+
+    .client-marquee-viewport {
+      width: 100%;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+
+    .client-marquee-track {
+      width: max-content;
+      display: flex;
+      gap: .8rem;
+      padding: .65rem 0 1rem;
+      animation: client-marquee 34s linear infinite;
+    }
+
+    .client-marquee-viewport:hover .client-marquee-track,
+    .client-marquee-viewport:focus-within .client-marquee-track { animation-play-state: paused; }
+
+    .client-marquee-group { display: flex; gap: .8rem; }
+
+    .client-strip-card {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      min-width: max-content;
+      padding: .48rem .85rem .48rem .48rem;
+      color: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,242,234,.055);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .client-strip-card:hover,
+    .client-strip-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--acid);
+      background: rgba(255,112,173,.14);
+    }
+
+    .client-strip-card img {
+      width: 3rem;
+      height: 3rem;
+      display: block;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .client-strip-card .orbit-node-label {
+      position: static;
+      min-width: 0;
+      padding: 0;
+      color: inherit;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      transform: none;
+      opacity: 1;
     }
 
     .contact-card {
@@ -834,6 +913,11 @@
       50% { opacity: 1; }
     }
 
+    @keyframes client-marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-50% - .4rem)); }
+    }
+
     @media (hover: hover) {
       .work-card:hover .work-visual::after { animation: scan 1.05s ease-out; }
     }
@@ -875,8 +959,12 @@
       .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
       .orbit-core::before { top: .38rem; }
       .orbit-node { width: clamp(3.1rem, 14vw, 3.75rem); }
-      .orbit-node-inner { width: clamp(2.35rem, 11vw, 2.85rem); }
       .orbit-node-label { display: none; }
+      .client-marquee { margin-top: -.25rem; }
+      .client-marquee-head { align-items: flex-start; flex-direction: column; gap: .1rem; padding-inline: .25rem; }
+      .client-strip-card { padding: .4rem .7rem .4rem .4rem; font-size: .76rem; }
+      .client-strip-card img { width: 2.5rem; height: 2.5rem; }
+      .client-strip-card .orbit-node-label { display: block; }
       footer { flex-direction: column; }
     }
 
@@ -887,6 +975,8 @@
       .scroll-progress { display: none; }
       .reel { transform: rotate(1.6deg) !important; }
       .client-orbit { opacity: 1; transform: none; filter: none; }
+      .client-marquee-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+      .client-marquee-track { animation: none; }
     }
   </style>
 </head>
@@ -917,12 +1007,12 @@
             <span class="section-index">the creator orbit ✦</span>
             <h2 class="client-showcase-title">Clients</h2>
           </div>
-          <p>A bunch of lovely creators I’ve had the chance to edit for. Hover to pause; click a face to say hi.</p>
+          <p>Eight featured collaborators up front, with the full client crew rolling just below.</p>
         </div>
 
         <div class="client-orbit-wrap">
-          <p class="orbit-caption"><strong>24</strong> creators · two 3D orbits · still growing</p>
-          <div class="client-orbit" aria-label="Interactive horizontal 3D ring of selected clients">
+          <p class="orbit-caption"><strong>8</strong> featured creators · 3D orbit</p>
+          <div class="client-orbit" aria-label="Interactive horizontal 3D ring of eight featured clients">
             <span class="orbit-ring ring-a" aria-hidden="true"></span>
             <span class="orbit-ring ring-b" aria-hidden="true"></span>
             <span class="orbit-ring ring-c" aria-hidden="true"></span>
@@ -1002,6 +1092,14 @@
             </a>
           </div>
           <p class="orbit-help">Hover = pause · click = say hi ↗</p>
+        </div>
+        <div class="client-marquee">
+          <p class="client-marquee-head"><span><strong>16</strong> more lovely people</span><span>Hover to pause · click to visit ↗</span></p>
+          <div class="client-marquee-viewport">
+            <div class="client-marquee-track" id="clientStrip">
+              <div class="client-marquee-group" id="clientStripGroup"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1103,7 +1201,24 @@
     const items = document.querySelectorAll('.reveal');
     const progressBar = document.querySelector('.scroll-progress');
     const clientOrbit = document.querySelector('.client-orbit');
-    const orbitNodes = [...document.querySelectorAll('.orbit-node')];
+    const allClientNodes = [...document.querySelectorAll('.orbit-node')];
+    const orbitNodes = allClientNodes.slice(0, 8);
+    const extraClientNodes = allClientNodes.slice(8);
+    const clientStrip = document.querySelector('#clientStrip');
+    const clientStripGroup = document.querySelector('#clientStripGroup');
+
+    extraClientNodes.forEach((node) => {
+      node.classList.remove('orbit-node');
+      node.classList.add('client-strip-card');
+      node.removeAttribute('style');
+      clientStripGroup.appendChild(node);
+    });
+
+    const clientStripClone = clientStripGroup.cloneNode(true);
+    clientStripClone.removeAttribute('id');
+    clientStripClone.setAttribute('aria-hidden', 'true');
+    clientStripClone.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
+    clientStrip.appendChild(clientStripClone);
 
     requestAnimationFrame(() => document.body.classList.add('loaded'));
 
@@ -1122,23 +1237,10 @@
       items.forEach((item) => observer.observe(item));
     }
 
-    const outerCount = Math.ceil(orbitNodes.length / 2);
-    const innerCount = orbitNodes.length - outerCount;
-    const orbitLayout = orbitNodes.map((node, index) => {
-      const ring = index < outerCount ? 0 : 1;
-      const localIndex = ring === 0 ? index : index - outerCount;
-      const count = ring === 0 ? outerCount : innerCount;
-      node.classList.toggle('orbit-node-inner', ring === 1);
-      return {
-        ring,
-        angle: (Math.PI * 2 * localIndex) / count + (ring === 1 ? Math.PI / Math.max(1, count) : 0)
-      };
-    });
+    const orbitPoints = orbitNodes.map((_, index) => (Math.PI * 2 * index) / orbitNodes.length);
 
-    let outerAngle = -.72;
-    let innerAngle = .36;
-    let outerSpeed = prefersReducedMotion ? 0 : 9.2;
-    let innerSpeed = prefersReducedMotion ? 0 : -7.2;
+    let orbitAngle = -.72;
+    let orbitSpeed = prefersReducedMotion ? 0 : 9.2;
     let orbitPaused = false;
     let previousFrame = performance.now();
 
@@ -1147,31 +1249,24 @@
       previousFrame = now;
 
       if (!orbitPaused && !prefersReducedMotion) {
-        outerSpeed += (.14 - outerSpeed) * (1 - Math.exp(-delta * .92));
-        innerSpeed += (-.1 - innerSpeed) * (1 - Math.exp(-delta * .92));
-        outerAngle += outerSpeed * delta;
-        innerAngle += innerSpeed * delta;
+        orbitSpeed += (.14 - orbitSpeed) * (1 - Math.exp(-delta * .92));
+        orbitAngle += orbitSpeed * delta;
       }
 
-      const outerRadiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .35 : .36);
-      const outerRadiusY = clientOrbit.clientHeight * .23;
-      const innerRadiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .24 : .25);
-      const innerRadiusY = clientOrbit.clientHeight * .14;
+      const radiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .35 : .37);
+      const radiusY = clientOrbit.clientHeight * .24;
 
       orbitNodes.forEach((node, index) => {
-        const layout = orbitLayout[index];
-        const angle = layout.angle + (layout.ring === 0 ? outerAngle : innerAngle);
-        const radiusX = layout.ring === 0 ? outerRadiusX : innerRadiusX;
-        const radiusY = layout.ring === 0 ? outerRadiusY : innerRadiusY;
+        const angle = orbitPoints[index] + orbitAngle;
         const rotatedX = Math.cos(angle);
         const depthAxis = Math.sin(angle);
         const depth = (depthAxis + 1) / 2;
-        const perspectiveScale = (layout.ring === 0 ? .48 : .52) + depth * (layout.ring === 0 ? .76 : .64);
+        const perspectiveScale = .52 + depth * .8;
         const activeScale = node.classList.contains('active') ? 1.36 : 1;
 
         node.style.setProperty('--node-depth', depth.toFixed(3));
         node.style.opacity = (.2 + depth * .8).toFixed(3);
-        node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + layout.ring * 2 + Math.round(depth * 90));
+        node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + Math.round(depth * 92));
         node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radiusX}px, ${depthAxis * radiusY}px, 0) scale(${perspectiveScale * activeScale})`;
       });
 
