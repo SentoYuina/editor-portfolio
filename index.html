@@ -139,8 +139,8 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, .88fr) minmax(28rem, 1.12fr);
-      gap: clamp(2rem, 6vw, 6.5rem);
+      grid-template-columns: minmax(0, .72fr) minmax(32rem, 1.28fr);
+      gap: clamp(2rem, 4vw, 4rem);
       align-items: center;
     }
 
@@ -468,6 +468,7 @@
 
     .client-orbit-wrap {
       position: relative;
+      width: 100%;
       min-width: 0;
       display: grid;
       place-items: center;
@@ -489,13 +490,12 @@
 
     .client-orbit {
       position: relative;
-      width: min(49vw, 37rem);
-      aspect-ratio: 1;
+      width: min(59vw, 47rem);
+      aspect-ratio: 1.68;
       isolation: isolate;
-      border-radius: 50%;
-      perspective: 900px;
+      perspective: 1100px;
       opacity: 0;
-      transform: scale(.78) rotate(-7deg);
+      transform: scale(.78) rotateX(18deg);
       filter: blur(12px);
       transition: filter .8s ease;
     }
@@ -507,38 +507,52 @@
     .client-orbit::before {
       content: "";
       position: absolute;
-      z-index: -3;
-      inset: 12%;
+      z-index: 0;
+      inset: 24% 1% 20%;
       border-radius: 50%;
       background:
-        radial-gradient(circle at 34% 28%, rgba(255,255,255,.15), transparent 15%),
-        radial-gradient(circle at 48% 50%, rgba(121,99,255,.17), rgba(8,8,10,.08) 62%, transparent 69%);
+        radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.11), transparent 13%),
+        radial-gradient(ellipse at 50% 50%, rgba(121,99,255,.22), rgba(8,8,10,.14) 57%, transparent 69%);
       box-shadow:
-        inset -2.5rem -2rem 5rem rgba(8,8,10,.95),
-        0 0 7rem rgba(121,99,255,.17),
-        0 0 2.5rem rgba(255,103,77,.09);
+        inset 0 -2rem 4rem rgba(8,8,10,.86),
+        0 1.5rem 6rem rgba(121,99,255,.18),
+        0 0 2.8rem rgba(255,103,77,.08);
+      transform: perspective(800px) rotateX(10deg);
+      pointer-events: none;
+    }
+
+    .client-orbit::after {
+      content: "";
+      position: absolute;
+      z-index: 58;
+      inset: 24% 1% 20%;
+      border: 2px solid transparent;
+      border-bottom-color: rgba(255,103,77,.58);
+      border-radius: 50%;
+      filter: drop-shadow(0 .4rem .8rem rgba(255,103,77,.24));
+      pointer-events: none;
     }
 
     .orbit-ring {
       position: absolute;
-      z-index: -2;
-      inset: 11%;
+      z-index: 42;
+      inset: 24% 1% 20%;
       border: 1px solid rgba(255,255,255,.18);
       border-radius: 50%;
       pointer-events: none;
     }
 
-    .orbit-ring.ring-a { transform: rotateX(68deg) rotateZ(-8deg); }
-    .orbit-ring.ring-b { border-color: rgba(105,231,255,.2); transform: rotateY(66deg) rotateZ(19deg); }
-    .orbit-ring.ring-c { inset: 20%; border-color: rgba(255,103,77,.25); transform: rotateX(72deg) rotateZ(72deg); }
+    .orbit-ring.ring-a { transform: scale(.82); }
+    .orbit-ring.ring-b { border-color: rgba(105,231,255,.2); transform: scale(.64); }
+    .orbit-ring.ring-c { border-color: rgba(255,103,77,.25); transform: scale(.43); }
 
     .orbit-core {
       position: absolute;
-      z-index: -1;
+      z-index: 46;
       top: 50%;
       left: 50%;
-      width: 7.25rem;
-      aspect-ratio: 1;
+      width: 9rem;
+      height: 4.5rem;
       display: grid;
       place-items: center;
       color: rgba(243,241,233,.78);
@@ -546,7 +560,7 @@
       border-radius: 50%;
       background: rgba(8,8,10,.72);
       box-shadow: inset 0 0 2rem rgba(121,99,255,.18), 0 0 2rem rgba(8,8,10,.82);
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -45%);
       backdrop-filter: blur(8px);
       font: 800 .62rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
       letter-spacing: .12em;
@@ -560,7 +574,7 @@
       width: .45rem;
       aspect-ratio: 1;
       position: absolute;
-      top: 1.25rem;
+      top: .72rem;
       border-radius: 50%;
       background: var(--acid);
       box-shadow: 0 0 1rem rgba(255,103,77,.9);
@@ -571,7 +585,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: clamp(3.5rem, 6vw, 5.25rem);
+      width: clamp(3.75rem, 6.3vw, 5.65rem);
       aspect-ratio: 1;
       display: block;
       color: var(--paper);
@@ -724,7 +738,7 @@
       .hero-grid,
       .manifesto-grid { grid-template-columns: 1fr; }
       .client-orbit-wrap { margin-top: -1rem; }
-      .client-orbit { width: min(90vw, 34rem); }
+      .client-orbit { width: min(96vw, 44rem); }
       .works-grid { grid-template-columns: 1fr; }
       .work-card,
       .work-card:nth-child(2) { min-height: 0; margin-top: 0; }
@@ -741,11 +755,13 @@
       .button { width: 100%; }
       .work-visual { min-height: 12rem; }
       .client-orbit-wrap { order: -1; margin-top: 0; }
-      .client-orbit { width: calc(100vw - 1.25rem); }
+      .client-orbit { width: 100%; }
       .orbit-caption { top: .25rem; left: .25rem; }
-      .orbit-help { right: .25rem; bottom: .25rem; }
-      .orbit-node { width: clamp(3.25rem, 16vw, 4.2rem); }
-      .orbit-node-label { font-size: .58rem; }
+      .orbit-help { display: none; }
+      .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
+      .orbit-core::before { top: .38rem; }
+      .orbit-node { width: clamp(2.8rem, 13vw, 3.4rem); }
+      .orbit-node-label { display: none; }
       footer { flex-direction: column; }
     }
 
@@ -792,8 +808,8 @@
         </div>
 
         <div class="client-orbit-wrap" id="clients">
-          <p class="orbit-caption"><strong>10</strong> selected clients · live orbit</p>
-          <div class="client-orbit" aria-label="Interactive 3D orbit of selected clients">
+          <p class="orbit-caption"><strong>10</strong> selected clients · 3D ring</p>
+          <div class="client-orbit" aria-label="Interactive horizontal 3D ring of selected clients">
             <span class="orbit-ring ring-a" aria-hidden="true"></span>
             <span class="orbit-ring ring-b" aria-hidden="true"></span>
             <span class="orbit-ring ring-c" aria-hidden="true"></span>
@@ -935,13 +951,7 @@
       items.forEach((item) => observer.observe(item));
     }
 
-    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-    const orbitPoints = orbitNodes.map((_, index) => {
-      const y = 1 - (index / Math.max(1, orbitNodes.length - 1)) * 2;
-      const ringRadius = Math.sqrt(Math.max(0, 1 - y * y));
-      const angle = goldenAngle * index;
-      return { x: Math.cos(angle) * ringRadius, y, z: Math.sin(angle) * ringRadius };
-    });
+    const orbitPoints = orbitNodes.map((_, index) => (Math.PI * 2 * index) / orbitNodes.length);
 
     let orbitAngle = -.72;
     let orbitSpeed = prefersReducedMotion ? 0 : 4.6;
@@ -957,27 +967,21 @@
         orbitAngle += orbitSpeed * delta;
       }
 
-      const radius = clientOrbit.clientWidth * .355;
-      const tilt = -.18;
-      const cosY = Math.cos(orbitAngle);
-      const sinY = Math.sin(orbitAngle);
-      const cosX = Math.cos(tilt);
-      const sinX = Math.sin(tilt);
+      const radiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .39 : .43);
+      const radiusY = clientOrbit.clientHeight * .255;
 
       orbitNodes.forEach((node, index) => {
-        const point = orbitPoints[index];
-        const rotatedX = point.x * cosY + point.z * sinY;
-        const rotatedZ = -point.x * sinY + point.z * cosY;
-        const rotatedY = point.y * cosX - rotatedZ * sinX;
-        const finalZ = point.y * sinX + rotatedZ * cosX;
-        const depth = (finalZ + 1) / 2;
-        const perspectiveScale = .7 + depth * .46;
+        const angle = orbitPoints[index] + orbitAngle;
+        const rotatedX = Math.cos(angle);
+        const depthAxis = Math.sin(angle);
+        const depth = (depthAxis + 1) / 2;
+        const perspectiveScale = .56 + depth * .62;
         const activeScale = node.classList.contains('active') ? 1.42 : 1;
 
         node.style.setProperty('--node-depth', depth.toFixed(3));
-        node.style.opacity = (.48 + depth * .52).toFixed(3);
-        node.style.zIndex = node.classList.contains('active') ? 200 : String(10 + Math.round(depth * 80));
-        node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radius}px, ${rotatedY * radius}px, 0) scale(${perspectiveScale * activeScale})`;
+        node.style.opacity = (.34 + depth * .66).toFixed(3);
+        node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + Math.round(depth * 92));
+        node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radiusX}px, ${depthAxis * radiusY}px, 0) scale(${perspectiveScale * activeScale})`;
       });
 
       requestAnimationFrame(renderOrbit);
