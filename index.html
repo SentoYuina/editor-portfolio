@@ -466,6 +466,179 @@
     .principle h3 { margin: 0 0 .35rem; font-size: 1.35rem; }
     .principle p { margin: 0; color: var(--muted); }
 
+    .clients-section {
+      position: relative;
+      padding-bottom: clamp(6rem, 12vw, 11rem);
+      overflow: hidden;
+    }
+
+    .clients-intro {
+      display: grid;
+      grid-template-columns: 7rem 1fr minmax(15rem, 25rem);
+      gap: 1.5rem;
+      align-items: end;
+      padding-bottom: 2rem;
+    }
+
+    .clients-intro p {
+      margin: 0 0 .35rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .client-marquee {
+      width: 100%;
+      margin: 1.5rem 0 3rem;
+      padding: .85rem 0;
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--acid);
+      border-block: 1px solid rgba(255,255,255,.22);
+      transform: rotate(-1.2deg) scale(1.025);
+    }
+
+    .client-marquee-track {
+      width: max-content;
+      display: flex;
+      align-items: center;
+      animation: client-roll 26s linear infinite;
+      will-change: transform;
+    }
+
+    .client-marquee span {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding-right: 1.2rem;
+      font-size: clamp(1.8rem, 4.6vw, 4.4rem);
+      font-weight: 950;
+      line-height: .95;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .client-marquee span::after {
+      content: "✦";
+      color: var(--paper);
+      font-size: .55em;
+    }
+
+    .client-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    .client-card {
+      --card-accent: var(--acid);
+      position: relative;
+      min-height: 20rem;
+      display: flex;
+      align-items: flex-end;
+      isolation: isolate;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 1.1rem;
+      background: #17171d;
+      text-decoration: none;
+      transform: translateY(var(--stagger, 0));
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1), border-color .25s ease;
+    }
+
+    .client-card:nth-child(3n + 2) { --card-accent: var(--violet); }
+    .client-card:nth-child(3n) { --card-accent: var(--cyan); }
+    .client-card:nth-child(even) { --stagger: 1.5rem; }
+
+    .client-card::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 45% 0 0;
+      background: linear-gradient(transparent, rgba(8,8,10,.9));
+      pointer-events: none;
+    }
+
+    .client-card::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      inset: auto 0 0;
+      height: .28rem;
+      background: var(--card-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .client-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(.25) contrast(1.08);
+      transform: scale(1.025);
+      transition: transform .55s cubic-bezier(.16, 1, .3, 1), filter .35s ease;
+    }
+
+    .client-card-copy {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      padding: 1rem;
+    }
+
+    .client-name {
+      display: block;
+      font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.035em;
+    }
+
+    .client-handle {
+      display: block;
+      margin-top: .45rem;
+      color: rgba(255,255,255,.68);
+      font: .68rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .04em;
+    }
+
+    .client-arrow {
+      position: absolute;
+      z-index: 3;
+      top: .75rem;
+      right: .75rem;
+      width: 2rem;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background: var(--card-accent);
+      border-radius: 50%;
+      font-weight: 900;
+      transform: translate3d(.35rem, -.35rem, 0) rotate(-8deg);
+      opacity: 0;
+      transition: opacity .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .client-card:hover,
+    .client-card:focus-visible {
+      border-color: var(--card-accent);
+      transform: translateY(calc(var(--stagger, 0px) - .45rem));
+    }
+
+    .client-card:hover::after,
+    .client-card:focus-visible::after { transform: scaleX(1); }
+
+    .client-card:hover img,
+    .client-card:focus-visible img { filter: saturate(1) contrast(1.04); transform: scale(1.09); }
+
+    .client-card:hover .client-arrow,
+    .client-card:focus-visible .client-arrow { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
+
     .contact-card {
       position: relative;
       padding: clamp(2rem, 7vw, 6rem);
@@ -531,6 +704,10 @@
       to { transform: translateY(120%); }
     }
 
+    @keyframes client-roll {
+      to { transform: translateX(-50%); }
+    }
+
     @media (hover: hover) {
       .work-card:hover .work-visual::after { animation: scan 1.05s ease-out; }
     }
@@ -547,6 +724,10 @@
       .work-card,
       .work-card:nth-child(2) { min-height: 0; margin-top: 0; }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
+      .clients-intro { grid-template-columns: 1fr; gap: .8rem; }
+      .clients-intro p { max-width: 35rem; }
+      .client-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .client-card { min-height: 22rem; }
     }
 
     @media (max-width: 560px) {
@@ -557,6 +738,13 @@
       .button { width: 100%; }
       .reel-window { min-height: 20rem; }
       .work-visual { min-height: 12rem; }
+      .client-marquee { margin-block: .75rem 2rem; }
+      .client-grid { gap: .55rem; }
+      .client-card { min-height: 14.25rem; border-radius: .85rem; }
+      .client-card:nth-child(even) { --stagger: .65rem; }
+      .client-card-copy { padding: .75rem; }
+      .client-name { font-size: .98rem; }
+      .client-handle { font-size: .6rem; }
       footer { flex-direction: column; }
     }
 
@@ -566,6 +754,7 @@
       .reveal { opacity: 1; transform: none; }
       .scroll-progress { display: none; }
       .reel { transform: rotate(1.6deg) !important; }
+      .client-marquee-track { transform: translateX(-12%); }
     }
   </style>
 </head>
@@ -582,6 +771,7 @@
       <div class="nav-links">
         <a href="#work">Work</a>
         <a href="#approach">Approach</a>
+        <a href="#clients">Clients</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -671,10 +861,78 @@
       </div>
     </section>
 
+    <section class="clients-section" id="clients">
+      <div class="clients-intro shell reveal">
+        <span class="section-index">03 / CLIENTS</span>
+        <h2>Selected clients</h2>
+        <p>A selection of creators I’ve edited for. Tap a portrait to visit their X profile.</p>
+      </div>
+
+      <div class="client-marquee" aria-hidden="true">
+        <div class="client-marquee-track">
+          <span>MiruneMochi</span><span>KYRIO</span><span>YUY</span><span>Gorudan</span><span>Chibi</span><span>Kenji</span><span>Kureepy</span><span>RiiKami</span><span>Trickywi</span><span>PhoenixX</span>
+          <span>MiruneMochi</span><span>KYRIO</span><span>YUY</span><span>Gorudan</span><span>Chibi</span><span>Kenji</span><span>Kureepy</span><span>RiiKami</span><span>Trickywi</span><span>PhoenixX</span>
+        </div>
+      </div>
+
+      <div class="client-grid shell">
+        <a class="client-card reveal" href="https://x.com/MiruneMochi" target="_blank" rel="noopener noreferrer" aria-label="Visit MiruneMochi on X">
+          <img src="assets/clients/mirunemochi.png" alt="MiruneMochi" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">MiruneMochi</span><span class="client-handle">@MiruneMochi</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/KyrioCifer" target="_blank" rel="noopener noreferrer" aria-label="Visit KYRIO on X">
+          <img src="assets/clients/kyrio.jpg" alt="KYRIO" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">KYRIO</span><span class="client-handle">@KyrioCifer</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/YUY_IX" target="_blank" rel="noopener noreferrer" aria-label="Visit YUY on X">
+          <img src="assets/clients/yuy.jpg" alt="YUY" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">YUY</span><span class="client-handle">@YUY_IX</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/g0rudan" target="_blank" rel="noopener noreferrer" aria-label="Visit Gorudan on X">
+          <img src="assets/clients/gorudan.jpg" alt="Gorudan" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">Gorudan</span><span class="client-handle">@g0rudan</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/chibidoki" target="_blank" rel="noopener noreferrer" aria-label="Visit Chibi on X">
+          <img src="assets/clients/chibi.jpg" alt="Chibi" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">Chibi</span><span class="client-handle">@chibidoki</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/SunKenjiVT" target="_blank" rel="noopener noreferrer" aria-label="Visit Kenji on X">
+          <img src="assets/clients/kenji.jpg" alt="Kenji" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">Kenji</span><span class="client-handle">@SunKenjiVT</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/Kureepyvtuber" target="_blank" rel="noopener noreferrer" aria-label="Visit Kureepy on X">
+          <img src="assets/clients/kureepy.jpg" alt="Kureepy" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">Kureepy</span><span class="client-handle">@Kureepyvtuber</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/RiiKami" target="_blank" rel="noopener noreferrer" aria-label="Visit RiiKami on X">
+          <img src="assets/clients/riikami.jpg" alt="RiiKami" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">RiiKami</span><span class="client-handle">@RiiKami</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/Trickywii" target="_blank" rel="noopener noreferrer" aria-label="Visit Trickywi on X">
+          <img src="assets/clients/trickywi.jpg" alt="Trickywi" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">Trickywi</span><span class="client-handle">@Trickywii</span></span>
+        </a>
+        <a class="client-card reveal" href="https://x.com/PhoenixxVT" target="_blank" rel="noopener noreferrer" aria-label="Visit PhoenixX on X">
+          <img src="assets/clients/phoenixx.jpg" alt="PhoenixX" loading="lazy">
+          <span class="client-arrow" aria-hidden="true">↗</span>
+          <span class="client-card-copy"><span class="client-name">PhoenixX</span><span class="client-handle">@PhoenixxVT</span></span>
+        </a>
+      </div>
+    </section>
+
     <section id="contact">
       <div class="shell">
         <div class="contact-card reveal">
-          <span class="section-index">03 / CONTACT</span>
+          <span class="section-index">04 / CONTACT</span>
           <h2>Let’s make it move.</h2>
           <p>Commission details and contact information will be added soon. Follow website updates on GitHub.</p>
           <a class="button" href="https://github.com/SentoYuina" rel="noopener">GitHub profile <span aria-hidden="true">↗</span></a>
@@ -781,3 +1039,4 @@
   </script>
 </body>
 </html>
+
