@@ -690,6 +690,11 @@
       transition: border-color .2s ease, box-shadow .2s ease;
     }
 
+    .orbit-node-inner {
+      width: clamp(3.6rem, 6vw, 5.4rem);
+      border-width: 1px;
+    }
+
     .orbit-node:nth-of-type(3n + 2) { --node-accent: var(--violet); }
     .orbit-node:nth-of-type(3n) { --node-accent: var(--cyan); }
 
@@ -870,6 +875,7 @@
       .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
       .orbit-core::before { top: .38rem; }
       .orbit-node { width: clamp(3.1rem, 14vw, 3.75rem); }
+      .orbit-node-inner { width: clamp(2.35rem, 11vw, 2.85rem); }
       .orbit-node-label { display: none; }
       footer { flex-direction: column; }
     }
@@ -915,7 +921,7 @@
         </div>
 
         <div class="client-orbit-wrap">
-          <p class="orbit-caption"><strong>24</strong> creators in the orbit · still growing</p>
+          <p class="orbit-caption"><strong>24</strong> creators · two 3D orbits · still growing</p>
           <div class="client-orbit" aria-label="Interactive horizontal 3D ring of selected clients">
             <span class="orbit-ring ring-a" aria-hidden="true"></span>
             <span class="orbit-ring ring-b" aria-hidden="true"></span>
@@ -1116,10 +1122,23 @@
       items.forEach((item) => observer.observe(item));
     }
 
-    const orbitPoints = orbitNodes.map((_, index) => (Math.PI * 2 * index) / orbitNodes.length);
+    const outerCount = Math.ceil(orbitNodes.length / 2);
+    const innerCount = orbitNodes.length - outerCount;
+    const orbitLayout = orbitNodes.map((node, index) => {
+      const ring = index < outerCount ? 0 : 1;
+      const localIndex = ring === 0 ? index : index - outerCount;
+      const count = ring === 0 ? outerCount : innerCount;
+      node.classList.toggle('orbit-node-inner', ring === 1);
+      return {
+        ring,
+        angle: (Math.PI * 2 * localIndex) / count + (ring === 1 ? Math.PI / Math.max(1, count) : 0)
+      };
+    });
 
-    let orbitAngle = -.72;
-    let orbitSpeed = prefersReducedMotion ? 0 : 9.2;
+    let outerAngle = -.72;
+    let innerAngle = .36;
+    let outerSpeed = prefersReducedMotion ? 0 : 9.2;
+    let innerSpeed = prefersReducedMotion ? 0 : -7.2;
     let orbitPaused = false;
     let previousFrame = performance.now();
 
@@ -1128,24 +1147,31 @@
       previousFrame = now;
 
       if (!orbitPaused && !prefersReducedMotion) {
-        orbitSpeed += (.16 - orbitSpeed) * (1 - Math.exp(-delta * .92));
-        orbitAngle += orbitSpeed * delta;
+        outerSpeed += (.14 - outerSpeed) * (1 - Math.exp(-delta * .92));
+        innerSpeed += (-.1 - innerSpeed) * (1 - Math.exp(-delta * .92));
+        outerAngle += outerSpeed * delta;
+        innerAngle += innerSpeed * delta;
       }
 
-      const radiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .33 : .34);
-      const radiusY = clientOrbit.clientHeight * .2;
+      const outerRadiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .35 : .36);
+      const outerRadiusY = clientOrbit.clientHeight * .23;
+      const innerRadiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .24 : .25);
+      const innerRadiusY = clientOrbit.clientHeight * .14;
 
       orbitNodes.forEach((node, index) => {
-        const angle = orbitPoints[index] + orbitAngle;
+        const layout = orbitLayout[index];
+        const angle = layout.angle + (layout.ring === 0 ? outerAngle : innerAngle);
+        const radiusX = layout.ring === 0 ? outerRadiusX : innerRadiusX;
+        const radiusY = layout.ring === 0 ? outerRadiusY : innerRadiusY;
         const rotatedX = Math.cos(angle);
         const depthAxis = Math.sin(angle);
         const depth = (depthAxis + 1) / 2;
-        const perspectiveScale = .48 + depth * .76;
+        const perspectiveScale = (layout.ring === 0 ? .48 : .52) + depth * (layout.ring === 0 ? .76 : .64);
         const activeScale = node.classList.contains('active') ? 1.36 : 1;
 
         node.style.setProperty('--node-depth', depth.toFixed(3));
         node.style.opacity = (.2 + depth * .8).toFixed(3);
-        node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + Math.round(depth * 92));
+        node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + layout.ring * 2 + Math.round(depth * 90));
         node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radiusX}px, ${depthAxis * radiusY}px, 0) scale(${perspectiveScale * activeScale})`;
       });
 
