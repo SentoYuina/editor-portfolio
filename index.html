@@ -114,9 +114,8 @@
       display: flex;
       align-items: center;
       gap: clamp(.85rem, 2.5vw, 2rem);
-      font: 700 .76rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+      font: 700 .84rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .025em;
     }
 
     .nav-links a {
@@ -202,6 +201,36 @@
       flex-wrap: wrap;
       gap: .8rem;
       margin-top: 2rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      margin-top: 1.55rem;
+    }
+
+    .mood-tags span {
+      padding: .58rem .82rem;
+      color: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      font: 800 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .045em;
+      transform: rotate(var(--tilt, 0deg));
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .mood-tags span:nth-child(1) { --tilt: -2deg; }
+    .mood-tags span:nth-child(2) { --tilt: 1.5deg; }
+    .mood-tags span:nth-child(3) { --tilt: -1deg; }
+    .mood-tags span:nth-child(4) { --tilt: 2deg; }
+
+    .mood-tags span:hover {
+      transform: rotate(0deg) translateY(-3px);
+      background: rgba(255,103,77,.14);
+      border-color: var(--acid);
     }
 
     .button {
@@ -386,6 +415,10 @@
       overflow: hidden;
       transition: transform .25s ease, border-color .25s ease;
     }
+
+    .work-card:nth-child(1) { border-radius: 1.8rem 1.8rem .8rem 1.8rem; }
+    .work-card:nth-child(2) { border-radius: .8rem 1.8rem 1.8rem 1.8rem; }
+    .work-card:nth-child(3) { border-radius: 1.8rem .8rem 1.8rem 1.8rem; }
 
     .work-card:hover { transform: translateY(-5px); border-color: rgba(255,103,77,.78); }
 
@@ -708,7 +741,7 @@
     }
 
     .contact-card::after {
-      content: "CUT";
+      content: "LET’S GO";
       position: absolute;
       right: -1rem;
       bottom: -2.2rem;
@@ -844,9 +877,9 @@
       </a>
       <div class="nav-links">
         <a href="#work">Work</a>
-        <a href="#approach">Approach</a>
+        <a href="#approach">How I edit</a>
         <a href="#clients">Clients</a>
-        <a href="#contact">Contact</a>
+        <a href="#contact">Say hi</a>
       </div>
     </nav>
   </header>
@@ -856,19 +889,19 @@
       <div class="client-showcase-inner shell" id="clients">
         <div class="client-showcase-head">
           <div>
-            <span class="section-index">SELECTED / COLLABORATIONS</span>
+            <span class="section-index">THE CREATOR ORBIT</span>
             <h2 class="client-showcase-title">Clients</h2>
           </div>
-          <p>A growing orbit of creators I’ve edited for. Hover to hold a moment; select a portrait to visit their profile.</p>
+          <p>A bunch of lovely creators I’ve had the chance to edit for. Hover to pause; click a face to say hi.</p>
         </div>
 
         <div class="client-orbit-wrap">
-          <p class="orbit-caption"><strong>24</strong> selected clients · 3D ring</p>
+          <p class="orbit-caption"><strong>24</strong> creators in the orbit · still growing</p>
           <div class="client-orbit" aria-label="Interactive horizontal 3D ring of selected clients">
             <span class="orbit-ring ring-a" aria-hidden="true"></span>
             <span class="orbit-ring ring-b" aria-hidden="true"></span>
             <span class="orbit-ring ring-c" aria-hidden="true"></span>
-            <span class="orbit-core" aria-hidden="true">Client<br>orbit</span>
+            <span class="orbit-core" aria-hidden="true">Good<br>people</span>
 
             <a class="orbit-node" href="https://x.com/MiruneMochi" target="_blank" rel="noopener noreferrer" aria-label="Visit MiruneMochi on X">
               <img src="assets/clients/mirunemochi.png" alt="" decoding="async"><span class="orbit-node-label">MiruneMochi</span>
@@ -943,7 +976,7 @@
               <img src="assets/clients/coda.jpg" alt="" decoding="async"><span class="orbit-node-label">coda</span>
             </a>
           </div>
-          <p class="orbit-help">Hover to pause · click to visit ↗</p>
+          <p class="orbit-help">Hover = pause · click = say hi ↗</p>
         </div>
       </div>
     </section>
@@ -951,12 +984,18 @@
     <section class="hero">
       <div class="hero-grid shell">
         <div>
-          <p class="eyebrow">Video editor · Portfolio 2026</p>
-          <h1 class="hero-title reveal">Cut the <span>noise.</span></h1>
-          <p class="hero-copy reveal">Rhythm, emotion and story all live in the cut. Selected edits by SentoYuina will be featured here.</p>
+          <p class="eyebrow">Video editor · Chaos tamer · Malaysia</p>
+          <h1 class="hero-title reveal">Make it <span>hit.</span></h1>
+          <p class="hero-copy reveal">I turn raw footage into videos that feel fast, funny, emotional—or all three.</p>
+          <div class="mood-tags reveal" aria-label="Editing style">
+            <span>FAST CUTS</span>
+            <span>BIG FEELS</span>
+            <span>GOOD CHAOS</span>
+            <span>CLEAN FINISH</span>
+          </div>
           <div class="hero-actions reveal">
-            <a class="button primary" href="#work">View selected work <span aria-hidden="true">↘</span></a>
-            <a class="button" href="#contact">Start a project</a>
+            <a class="button primary" href="#work">See the good stuff <span aria-hidden="true">↘</span></a>
+            <a class="button" href="#contact">Let’s make something</a>
           </div>
         </div>
       </div>
@@ -966,28 +1005,28 @@
       <div class="shell">
         <div class="section-head reveal">
           <span class="section-index">01 / WORK</span>
-          <h2>Selected cuts</h2>
+          <h2>Stuff I’ve cut</h2>
         </div>
         <div class="works-grid">
           <article class="work-card reveal">
             <div class="work-visual" aria-hidden="true">01</div>
             <div>
-              <h3>Feature project</h3>
-              <p>Project link and case notes coming soon.</p>
+              <h3>Long-form edits</h3>
+              <p>Big moments, tight pacing, zero dead air.</p>
             </div>
           </article>
           <article class="work-card reveal">
             <div class="work-visual" aria-hidden="true">02</div>
             <div>
-              <h3>Short-form project</h3>
-              <p>Project link and case notes coming soon.</p>
+              <h3>Short-form chaos</h3>
+              <p>Hooks, captions and punchlines built to land fast.</p>
             </div>
           </article>
           <article class="work-card reveal">
             <div class="work-visual" aria-hidden="true">03</div>
             <div>
-              <h3>Motion project</h3>
-              <p>Project link and case notes coming soon.</p>
+              <h3>Motion &amp; polish</h3>
+              <p>The tiny details that make an edit feel finished.</p>
             </div>
           </article>
         </div>
@@ -997,21 +1036,21 @@
     <section id="approach">
       <div class="manifesto-grid shell">
         <div>
-          <span class="section-index">02 / APPROACH</span>
-          <p class="manifesto-copy reveal">Every cut should move the story forward.</p>
+          <span class="section-index">02 / HOW I EDIT</span>
+          <p class="manifesto-copy reveal">Fast where it should hit. Quiet where it should breathe.</p>
         </div>
         <div class="principles">
           <article class="principle reveal">
             <strong>01</strong>
-            <div><h3>Rhythm</h3><p>Pacing that gives picture and sound room to breathe.</p></div>
+            <div><h3>Rhythm</h3><p>I cut to feeling first—then make every beat earn its place.</p></div>
           </article>
           <article class="principle reveal">
             <strong>02</strong>
-            <div><h3>Clarity</h3><p>Every transition, caption and effect supports the message.</p></div>
+            <div><h3>Clarity</h3><p>Effects are fun. Knowing when not to use them is better.</p></div>
           </article>
           <article class="principle reveal">
             <strong>03</strong>
-            <div><h3>Detail</h3><p>Even a one-frame pause can change how a moment feels.</p></div>
+            <div><h3>Detail</h3><p>One frame, one sound, one tiny pause can change the whole joke.</p></div>
           </article>
         </div>
       </div>
@@ -1020,10 +1059,10 @@
     <section id="contact">
       <div class="shell">
         <div class="contact-card reveal">
-          <span class="section-index">03 / CONTACT</span>
-          <h2>Let’s make it move.</h2>
-          <p>Commission details and contact information will be added soon. Follow website updates on GitHub.</p>
-          <a class="button" href="https://github.com/SentoYuina" rel="noopener">GitHub profile <span aria-hidden="true">↗</span></a>
+          <span class="section-index">03 / SAY HI</span>
+          <h2>Got footage? Let’s cook.</h2>
+          <p>Commissions and contact details are coming soon. For now, catch updates on GitHub.</p>
+          <a class="button" href="https://github.com/SentoYuina" rel="noopener">Peek behind the scenes <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
