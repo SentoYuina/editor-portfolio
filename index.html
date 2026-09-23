@@ -470,41 +470,9 @@
     }
 
     .client-showcase-inner {
-      position: relative;
-      z-index: 2;
       display: grid;
       gap: .5rem;
     }
-
-    .emote-layer {
-      position: absolute;
-      z-index: 1;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .emote {
-      --turn: 0deg;
-      --delay: .2s;
-      position: absolute;
-      width: clamp(4.8rem, 8vw, 8.5rem);
-      height: auto;
-      opacity: 0;
-      filter: drop-shadow(0 1rem 1.4rem rgba(0,0,0,.42));
-      transform-origin: 50% 70%;
-    }
-
-    body.loaded .emote {
-      animation:
-        emote-pop .72s cubic-bezier(.16, 1.35, .3, 1) var(--delay) both,
-        emote-float 4.8s ease-in-out calc(var(--delay) + .72s) infinite;
-    }
-
-    .emote-squish { --turn: 9deg; --delay: .12s; top: 13%; left: 43%; width: clamp(4.5rem, 7vw, 7rem); }
-    .emote-clap { --turn: 8deg; --delay: .3s; right: -1%; bottom: 18%; }
-    .emote-drool { --turn: -10deg; --delay: .45s; left: -1%; bottom: 15%; }
-    .emote-smug { --turn: -7deg; --delay: .6s; top: 29%; right: 1.5%; width: clamp(4rem, 6vw, 6rem); }
 
     .client-showcase-head {
       display: flex;
@@ -809,16 +777,6 @@
       50% { opacity: 1; }
     }
 
-    @keyframes emote-pop {
-      from { opacity: 0; transform: translateY(2rem) scale(.2) rotate(calc(var(--turn) - 14deg)); }
-      to { opacity: .96; transform: translateY(0) scale(1) rotate(var(--turn)); }
-    }
-
-    @keyframes emote-float {
-      0%, 100% { opacity: .96; transform: translate3d(0, 0, 0) rotate(var(--turn)); }
-      50% { opacity: 1; transform: translate3d(0, -12px, 0) rotate(calc(var(--turn) + 3deg)); }
-    }
-
     @media (hover: hover) {
       .work-card:hover .work-visual::after { animation: scan 1.05s ease-out; }
     }
@@ -847,11 +805,6 @@
       .client-showcase-head { padding-inline: .25rem; }
       .client-showcase-head p { font-size: .9rem; }
       .client-showcase-title { font-size: clamp(4.2rem, 23vw, 6rem); }
-      .emote { width: 4.5rem; }
-      .emote-squish { top: 26%; left: auto; right: .25rem; width: 3.8rem; }
-      .emote-clap { right: .25rem; bottom: 2%; width: 4.6rem; }
-      .emote-drool { left: .25rem; bottom: 1%; width: 4.6rem; }
-      .emote-smug { top: 27%; left: .25rem; right: auto; width: 3.65rem; }
       .hero { min-height: 78svh; padding-top: 6.5rem; }
       .hero-grid { gap: 1rem; }
       h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
@@ -900,12 +853,6 @@
 
   <main id="content">
     <section class="client-showcase" id="top">
-      <div class="emote-layer" aria-hidden="true">
-        <img class="emote emote-squish" src="assets/emotes/squish.png" alt="" decoding="async">
-        <img class="emote emote-clap" src="assets/emotes/clap.png" alt="" decoding="async">
-        <img class="emote emote-drool" src="assets/emotes/drool.png" alt="" decoding="async">
-        <img class="emote emote-smug" src="assets/emotes/smug.png" alt="" decoding="async">
-      </div>
       <div class="client-showcase-inner shell" id="clients">
         <div class="client-showcase-head">
           <div>
