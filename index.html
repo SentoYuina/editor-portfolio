@@ -1019,7 +1019,7 @@
     const orbitPoints = orbitNodes.map((_, index) => (Math.PI * 2 * index) / orbitNodes.length);
 
     let orbitAngle = -.72;
-    let orbitSpeed = prefersReducedMotion ? 0 : 4.6;
+    let orbitSpeed = prefersReducedMotion ? 0 : 9.2;
     let orbitPaused = false;
     let previousFrame = performance.now();
 
@@ -1028,7 +1028,7 @@
       previousFrame = now;
 
       if (!orbitPaused && !prefersReducedMotion) {
-        orbitSpeed += (.16 - orbitSpeed) * (1 - Math.exp(-delta * 1.35));
+        orbitSpeed += (.16 - orbitSpeed) * (1 - Math.exp(-delta * .92));
         orbitAngle += orbitSpeed * delta;
       }
 
