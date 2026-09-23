@@ -520,6 +520,7 @@
     .client-showcase-inner {
       display: grid;
       gap: .5rem;
+      min-width: 0;
     }
 
     .client-showcase-head {
@@ -527,6 +528,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 2rem;
+      min-width: 0;
       padding-inline: .5rem;
     }
 
@@ -752,8 +754,11 @@
 
     .client-marquee {
       width: 100%;
+      min-width: 0;
+      max-width: 100%;
       margin-top: -1rem;
       padding: 1rem 0 .25rem;
+      overflow: hidden;
       border-top: 1px solid var(--line);
     }
 
@@ -772,6 +777,8 @@
 
     .client-marquee-viewport {
       width: 100%;
+      min-width: 0;
+      max-width: 100%;
       overflow: hidden;
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
       mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
@@ -1197,6 +1204,8 @@
   </footer>
 
   <script>
+    document.body.classList.add('loaded');
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const items = document.querySelectorAll('.reveal');
     const progressBar = document.querySelector('.scroll-progress');
@@ -1219,8 +1228,6 @@
     clientStripClone.setAttribute('aria-hidden', 'true');
     clientStripClone.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
     clientStrip.appendChild(clientStripClone);
-
-    requestAnimationFrame(() => document.body.classList.add('loaded'));
 
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
       items.forEach((item) => item.classList.add('visible'));
