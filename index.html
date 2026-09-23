@@ -641,8 +641,7 @@
     .orbit-node:nth-of-type(3n + 2) { --node-accent: var(--violet); }
     .orbit-node:nth-of-type(3n) { --node-accent: var(--cyan); }
 
-    .orbit-node img,
-    .orbit-node .client-sprite {
+    .orbit-node img {
       width: 100%;
       height: 100%;
       display: block;
@@ -652,14 +651,6 @@
       transition: filter .22s ease;
       pointer-events: none;
     }
-
-    .client-sprite {
-      background-image: url('assets/clients/review-clients.png');
-      background-repeat: no-repeat;
-      background-size: 1067.5% 1722.5%;
-    }
-
-    .sprite-starlit { background-position: .26% 50.23%; }
 
     .orbit-node-label {
       position: absolute;
@@ -686,9 +677,7 @@
     }
 
     .orbit-node.active img,
-    .orbit-node.active .client-sprite,
-    .orbit-node:focus-visible img,
-    .orbit-node:focus-visible .client-sprite { filter: saturate(1.1) contrast(1.03); }
+    .orbit-node:focus-visible img { filter: saturate(1.1) contrast(1.03); }
 
     .orbit-node.active .orbit-node-label,
     .orbit-node:focus-visible .orbit-node-label {
@@ -930,7 +919,7 @@
               <img src="assets/clients/roebunny.jpg" alt="" decoding="async"><span class="orbit-node-label">RoeBunnyVT</span>
             </a>
             <a class="orbit-node" href="https://www.youtube.com/results?search_query=Starlit+VTuber" target="_blank" rel="noopener noreferrer" aria-label="Find Starlit on YouTube">
-              <span class="client-sprite sprite-starlit" aria-hidden="true"></span><span class="orbit-node-label">Starlit</span>
+              <img src="assets/clients/starlit.png" alt="" decoding="async"><span class="orbit-node-label">Starlit</span>
             </a>
           </div>
           <p class="orbit-help">Hover to pause · click to visit ↗</p>
