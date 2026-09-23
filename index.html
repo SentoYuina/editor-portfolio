@@ -464,8 +464,9 @@
       overflow: hidden;
       border-bottom: 1px solid var(--line);
       background:
-        radial-gradient(ellipse at 50% 58%, rgba(121,99,255,.14), transparent 48%),
-        linear-gradient(180deg, rgba(255,255,255,.018), transparent 36%);
+        radial-gradient(circle at 8% 30%, rgba(255,103,77,.15), transparent 24rem),
+        radial-gradient(ellipse at 72% 58%, rgba(121,99,255,.24), transparent 52%),
+        linear-gradient(180deg, rgba(255,255,255,.025), transparent 40%);
     }
 
     .client-showcase-inner {
@@ -475,10 +476,25 @@
 
     .client-showcase-head {
       display: flex;
-      align-items: end;
+      align-items: center;
       justify-content: space-between;
       gap: 2rem;
       padding-inline: .5rem;
+    }
+
+    .client-showcase-title {
+      margin: .1rem 0 0;
+      color: var(--paper);
+      font-size: clamp(5.2rem, 12vw, 10rem);
+      font-weight: 950;
+      line-height: .72;
+      letter-spacing: -.09em;
+      text-transform: uppercase;
+      text-shadow: .06em .06em 0 rgba(121,99,255,.18);
+    }
+
+    body.loaded .client-showcase-title {
+      animation: impact-title .9s cubic-bezier(.16, 1, .3, 1) both;
     }
 
     .client-showcase-head p {
@@ -494,6 +510,7 @@
       min-width: 0;
       display: grid;
       place-items: center;
+      margin-top: -1.8rem;
     }
 
     .orbit-caption {
@@ -513,7 +530,7 @@
     .client-orbit {
       position: relative;
       width: min(100%, 72rem);
-      aspect-ratio: 2.12;
+      aspect-ratio: 2;
       isolation: isolate;
       perspective: 1100px;
       opacity: 0;
@@ -530,15 +547,15 @@
       content: "";
       position: absolute;
       z-index: 0;
-      inset: 24% 1% 20%;
+      inset: 22% 14% 18%;
       border-radius: 50%;
       background:
         radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.11), transparent 13%),
-        radial-gradient(ellipse at 50% 50%, rgba(121,99,255,.22), rgba(8,8,10,.14) 57%, transparent 69%);
+        radial-gradient(ellipse at 50% 50%, rgba(121,99,255,.3), rgba(8,8,10,.12) 57%, transparent 70%);
       box-shadow:
         inset 0 -2rem 4rem rgba(8,8,10,.86),
-        0 1.5rem 6rem rgba(121,99,255,.18),
-        0 0 2.8rem rgba(255,103,77,.08);
+        0 1.5rem 7rem rgba(121,99,255,.28),
+        0 0 3.5rem rgba(255,103,77,.12);
       transform: perspective(800px) rotateX(10deg);
       pointer-events: none;
     }
@@ -547,9 +564,9 @@
       content: "";
       position: absolute;
       z-index: 58;
-      inset: 24% 1% 20%;
-      border: 2px solid transparent;
-      border-bottom-color: rgba(255,103,77,.58);
+      inset: 22% 14% 18%;
+      border: 3px solid transparent;
+      border-bottom-color: rgba(255,103,77,.8);
       border-radius: 50%;
       filter: drop-shadow(0 .4rem .8rem rgba(255,103,77,.24));
       pointer-events: none;
@@ -558,9 +575,10 @@
     .orbit-ring {
       position: absolute;
       z-index: 42;
-      inset: 24% 1% 20%;
-      border: 1px solid rgba(255,255,255,.18);
+      inset: 22% 14% 18%;
+      border: 1px solid rgba(255,255,255,.24);
       border-radius: 50%;
+      animation: ring-breathe 3.2s ease-in-out infinite;
       pointer-events: none;
     }
 
@@ -573,8 +591,8 @@
       z-index: 46;
       top: 50%;
       left: 50%;
-      width: 9rem;
-      height: 4.5rem;
+      width: 10rem;
+      height: 5rem;
       display: grid;
       place-items: center;
       color: rgba(243,241,233,.78);
@@ -607,14 +625,14 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: clamp(3.75rem, 6.3vw, 5.65rem);
+      width: clamp(4.8rem, 8.5vw, 7.5rem);
       aspect-ratio: 1;
       display: block;
       color: var(--paper);
       border: 2px solid rgba(255,255,255,.28);
       border-radius: 50%;
       background: var(--panel);
-      box-shadow: 0 .7rem 2rem rgba(0,0,0,.48);
+      box-shadow: 0 .9rem 2.6rem rgba(0,0,0,.62), 0 0 0 1px rgba(8,8,10,.55);
       text-decoration: none;
       will-change: transform, opacity;
       transition: border-color .2s ease, box-shadow .2s ease;
@@ -644,7 +662,7 @@
       background: rgba(8,8,10,.9);
       border: 1px solid rgba(255,255,255,.18);
       border-radius: 999px;
-      font: 800 .62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      font: 800 .68rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
       letter-spacing: .02em;
       transform: translate(-50%, 35%);
       opacity: calc(.45 + var(--node-depth, .5) * .55);
@@ -749,6 +767,16 @@
       to { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
     }
 
+    @keyframes impact-title {
+      from { opacity: 0; letter-spacing: -.16em; transform: translateX(-2.5rem) scaleX(.9); }
+      to { opacity: 1; letter-spacing: -.09em; transform: translateX(0) scaleX(1); }
+    }
+
+    @keyframes ring-breathe {
+      0%, 100% { opacity: .52; }
+      50% { opacity: 1; }
+    }
+
     @media (hover: hover) {
       .work-card:hover .work-visual::after { animation: scan 1.05s ease-out; }
     }
@@ -776,6 +804,7 @@
       .client-showcase-inner { gap: 1.25rem; }
       .client-showcase-head { padding-inline: .25rem; }
       .client-showcase-head p { font-size: .9rem; }
+      .client-showcase-title { font-size: clamp(4.2rem, 23vw, 6rem); }
       .hero { min-height: 78svh; padding-top: 6.5rem; }
       .hero-grid { gap: 1rem; }
       h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
@@ -788,7 +817,7 @@
       .orbit-help { display: none; }
       .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
       .orbit-core::before { top: .38rem; }
-      .orbit-node { width: clamp(2.8rem, 13vw, 3.4rem); }
+      .orbit-node { width: clamp(3.1rem, 14vw, 3.75rem); }
       .orbit-node-label { display: none; }
       footer { flex-direction: column; }
     }
@@ -826,7 +855,10 @@
     <section class="client-showcase" id="top">
       <div class="client-showcase-inner shell" id="clients">
         <div class="client-showcase-head">
-          <span class="section-index">CLIENTS / SELECTED COLLABORATIONS</span>
+          <div>
+            <span class="section-index">SELECTED / COLLABORATIONS</span>
+            <h2 class="client-showcase-title">Clients</h2>
+          </div>
           <p>A growing orbit of creators I’ve edited for. Hover to hold a moment; select a portrait to visit their X.</p>
         </div>
 
@@ -1000,19 +1032,19 @@
         orbitAngle += orbitSpeed * delta;
       }
 
-      const radiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .39 : .43);
-      const radiusY = clientOrbit.clientHeight * .255;
+      const radiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .33 : .34);
+      const radiusY = clientOrbit.clientHeight * .2;
 
       orbitNodes.forEach((node, index) => {
         const angle = orbitPoints[index] + orbitAngle;
         const rotatedX = Math.cos(angle);
         const depthAxis = Math.sin(angle);
         const depth = (depthAxis + 1) / 2;
-        const perspectiveScale = .56 + depth * .62;
-        const activeScale = node.classList.contains('active') ? 1.42 : 1;
+        const perspectiveScale = .48 + depth * .76;
+        const activeScale = node.classList.contains('active') ? 1.36 : 1;
 
         node.style.setProperty('--node-depth', depth.toFixed(3));
-        node.style.opacity = (.34 + depth * .66).toFixed(3);
+        node.style.opacity = (.2 + depth * .8).toFixed(3);
         node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + Math.round(depth * 92));
         node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radiusX}px, ${depthAxis * radiusY}px, 0) scale(${perspectiveScale * activeScale})`;
       });
