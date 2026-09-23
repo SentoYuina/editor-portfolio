@@ -139,7 +139,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.14fr) minmax(19rem, .86fr);
+      grid-template-columns: minmax(0, .88fr) minmax(28rem, 1.12fr);
       gap: clamp(2rem, 6vw, 6.5rem);
       align-items: center;
     }
@@ -466,178 +466,183 @@
     .principle h3 { margin: 0 0 .35rem; font-size: 1.35rem; }
     .principle p { margin: 0; color: var(--muted); }
 
-    .clients-section {
+    .client-orbit-wrap {
       position: relative;
-      padding-bottom: clamp(6rem, 12vw, 11rem);
-      overflow: hidden;
-    }
-
-    .clients-intro {
+      min-width: 0;
       display: grid;
-      grid-template-columns: 7rem 1fr minmax(15rem, 25rem);
-      gap: 1.5rem;
-      align-items: end;
-      padding-bottom: 2rem;
+      place-items: center;
     }
 
-    .clients-intro p {
-      margin: 0 0 .35rem;
+    .orbit-caption {
+      position: absolute;
+      z-index: 5;
+      top: 1rem;
+      left: 0;
+      margin: 0;
       color: var(--muted);
-      font-size: 1.02rem;
-    }
-
-    .client-marquee {
-      width: 100%;
-      margin: 1.5rem 0 3rem;
-      padding: .85rem 0;
-      overflow: hidden;
-      color: var(--ink);
-      background: var(--acid);
-      border-block: 1px solid rgba(255,255,255,.22);
-      transform: rotate(-1.2deg) scale(1.025);
-    }
-
-    .client-marquee-track {
-      width: max-content;
-      display: flex;
-      align-items: center;
-      animation: client-roll 26s linear infinite;
-      will-change: transform;
-    }
-
-    .client-marquee span {
-      display: inline-flex;
-      align-items: center;
-      gap: 1.2rem;
-      padding-right: 1.2rem;
-      font-size: clamp(1.8rem, 4.6vw, 4.4rem);
-      font-weight: 950;
-      line-height: .95;
-      letter-spacing: -.055em;
+      font: 700 .72rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      white-space: nowrap;
     }
 
-    .client-marquee span::after {
-      content: "✦";
-      color: var(--paper);
-      font-size: .55em;
-    }
+    .orbit-caption strong { color: var(--acid); }
 
-    .client-grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: .75rem;
-    }
-
-    .client-card {
-      --card-accent: var(--acid);
+    .client-orbit {
       position: relative;
-      min-height: 20rem;
-      display: flex;
-      align-items: flex-end;
+      width: min(49vw, 37rem);
+      aspect-ratio: 1;
       isolation: isolate;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 1.1rem;
-      background: #17171d;
-      text-decoration: none;
-      transform: translateY(var(--stagger, 0));
-      transition: transform .35s cubic-bezier(.16, 1, .3, 1), border-color .25s ease;
+      border-radius: 50%;
+      perspective: 900px;
+      opacity: 0;
+      transform: scale(.78) rotate(-7deg);
+      filter: blur(12px);
+      transition: filter .8s ease;
     }
 
-    .client-card:nth-child(3n + 2) { --card-accent: var(--violet); }
-    .client-card:nth-child(3n) { --card-accent: var(--cyan); }
-    .client-card:nth-child(even) { --stagger: 1.5rem; }
+    body.loaded .client-orbit {
+      animation: orbit-enter 1s cubic-bezier(.16, 1, .3, 1) .12s forwards;
+    }
 
-    .client-card::before {
+    .client-orbit::before {
       content: "";
       position: absolute;
-      z-index: 1;
-      inset: 45% 0 0;
-      background: linear-gradient(transparent, rgba(8,8,10,.9));
+      z-index: -3;
+      inset: 12%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255,255,255,.15), transparent 15%),
+        radial-gradient(circle at 48% 50%, rgba(121,99,255,.17), rgba(8,8,10,.08) 62%, transparent 69%);
+      box-shadow:
+        inset -2.5rem -2rem 5rem rgba(8,8,10,.95),
+        0 0 7rem rgba(121,99,255,.17),
+        0 0 2.5rem rgba(255,103,77,.09);
+    }
+
+    .orbit-ring {
+      position: absolute;
+      z-index: -2;
+      inset: 11%;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50%;
       pointer-events: none;
     }
 
-    .client-card::after {
-      content: "";
+    .orbit-ring.ring-a { transform: rotateX(68deg) rotateZ(-8deg); }
+    .orbit-ring.ring-b { border-color: rgba(105,231,255,.2); transform: rotateY(66deg) rotateZ(19deg); }
+    .orbit-ring.ring-c { inset: 20%; border-color: rgba(255,103,77,.25); transform: rotateX(72deg) rotateZ(72deg); }
+
+    .orbit-core {
       position: absolute;
-      z-index: 2;
-      inset: auto 0 0;
-      height: .28rem;
-      background: var(--card-accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
-    }
-
-    .client-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: saturate(.25) contrast(1.08);
-      transform: scale(1.025);
-      transition: transform .55s cubic-bezier(.16, 1, .3, 1), filter .35s ease;
-    }
-
-    .client-card-copy {
-      position: relative;
-      z-index: 3;
-      width: 100%;
-      padding: 1rem;
-    }
-
-    .client-name {
-      display: block;
-      font-size: clamp(1.05rem, 1.7vw, 1.45rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -.035em;
-    }
-
-    .client-handle {
-      display: block;
-      margin-top: .45rem;
-      color: rgba(255,255,255,.68);
-      font: .68rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
-      letter-spacing: .04em;
-    }
-
-    .client-arrow {
-      position: absolute;
-      z-index: 3;
-      top: .75rem;
-      right: .75rem;
-      width: 2rem;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      width: 7.25rem;
       aspect-ratio: 1;
       display: grid;
       place-items: center;
-      color: var(--ink);
-      background: var(--card-accent);
+      color: rgba(243,241,233,.78);
+      border: 1px solid rgba(255,255,255,.18);
       border-radius: 50%;
-      font-weight: 900;
-      transform: translate3d(.35rem, -.35rem, 0) rotate(-8deg);
-      opacity: 0;
-      transition: opacity .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+      background: rgba(8,8,10,.72);
+      box-shadow: inset 0 0 2rem rgba(121,99,255,.18), 0 0 2rem rgba(8,8,10,.82);
+      transform: translate(-50%, -50%);
+      backdrop-filter: blur(8px);
+      font: 800 .62rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .12em;
+      text-align: center;
+      text-transform: uppercase;
+      pointer-events: none;
     }
 
-    .client-card:hover,
-    .client-card:focus-visible {
-      border-color: var(--card-accent);
-      transform: translateY(calc(var(--stagger, 0px) - .45rem));
+    .orbit-core::before {
+      content: "";
+      width: .45rem;
+      aspect-ratio: 1;
+      position: absolute;
+      top: 1.25rem;
+      border-radius: 50%;
+      background: var(--acid);
+      box-shadow: 0 0 1rem rgba(255,103,77,.9);
     }
 
-    .client-card:hover::after,
-    .client-card:focus-visible::after { transform: scaleX(1); }
+    .orbit-node {
+      --node-accent: var(--acid);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(3.5rem, 6vw, 5.25rem);
+      aspect-ratio: 1;
+      display: block;
+      color: var(--paper);
+      border: 2px solid rgba(255,255,255,.28);
+      border-radius: 50%;
+      background: var(--panel);
+      box-shadow: 0 .7rem 2rem rgba(0,0,0,.48);
+      text-decoration: none;
+      will-change: transform, opacity;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
 
-    .client-card:hover img,
-    .client-card:focus-visible img { filter: saturate(1) contrast(1.04); transform: scale(1.09); }
+    .orbit-node:nth-of-type(3n + 2) { --node-accent: var(--violet); }
+    .orbit-node:nth-of-type(3n) { --node-accent: var(--cyan); }
 
-    .client-card:hover .client-arrow,
-    .client-card:focus-visible .client-arrow { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
+    .orbit-node img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 50%;
+      filter: saturate(.68) contrast(1.05);
+      transition: filter .22s ease;
+      pointer-events: none;
+    }
+
+    .orbit-node-label {
+      position: absolute;
+      left: 50%;
+      bottom: -.62rem;
+      min-width: max-content;
+      padding: .28rem .5rem;
+      color: var(--paper);
+      background: rgba(8,8,10,.9);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      font: 800 .62rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .02em;
+      transform: translate(-50%, 35%);
+      opacity: calc(.45 + var(--node-depth, .5) * .55);
+      transition: opacity .2s ease, color .2s ease, border-color .2s ease;
+      pointer-events: none;
+    }
+
+    .orbit-node.active,
+    .orbit-node:focus-visible {
+      border-color: var(--node-accent);
+      box-shadow: 0 0 0 .3rem rgba(8,8,10,.8), 0 0 2rem var(--node-accent);
+    }
+
+    .orbit-node.active img,
+    .orbit-node:focus-visible img { filter: saturate(1.1) contrast(1.03); }
+
+    .orbit-node.active .orbit-node-label,
+    .orbit-node:focus-visible .orbit-node-label {
+      color: var(--node-accent);
+      border-color: var(--node-accent);
+      opacity: 1;
+    }
+
+    .orbit-help {
+      position: absolute;
+      z-index: 4;
+      right: 0;
+      bottom: 1rem;
+      margin: 0;
+      color: var(--muted);
+      font: .68rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
 
     .contact-card {
       position: relative;
@@ -704,8 +709,8 @@
       to { transform: translateY(120%); }
     }
 
-    @keyframes client-roll {
-      to { transform: translateX(-50%); }
+    @keyframes orbit-enter {
+      to { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
     }
 
     @media (hover: hover) {
@@ -718,33 +723,29 @@
       .hero { padding-top: 7.5rem; }
       .hero-grid,
       .manifesto-grid { grid-template-columns: 1fr; }
-      .reel { width: min(100%, 31rem); justify-self: end; }
-      .reel-window { min-height: 25rem; }
+      .client-orbit-wrap { margin-top: -1rem; }
+      .client-orbit { width: min(90vw, 34rem); }
       .works-grid { grid-template-columns: 1fr; }
       .work-card,
       .work-card:nth-child(2) { min-height: 0; margin-top: 0; }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
-      .clients-intro { grid-template-columns: 1fr; gap: .8rem; }
-      .clients-intro p { max-width: 35rem; }
-      .client-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .client-card { min-height: 22rem; }
     }
 
     @media (max-width: 560px) {
       .shell { width: min(calc(100% - 1.25rem), var(--max)); }
       .nav-links a:not(:last-child) { display: none; }
+      .hero { padding-top: 5.8rem; }
+      .hero-grid { gap: 1rem; }
       h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
       .hero-actions { align-items: stretch; flex-direction: column; }
       .button { width: 100%; }
-      .reel-window { min-height: 20rem; }
       .work-visual { min-height: 12rem; }
-      .client-marquee { margin-block: .75rem 2rem; }
-      .client-grid { gap: .55rem; }
-      .client-card { min-height: 14.25rem; border-radius: .85rem; }
-      .client-card:nth-child(even) { --stagger: .65rem; }
-      .client-card-copy { padding: .75rem; }
-      .client-name { font-size: .98rem; }
-      .client-handle { font-size: .6rem; }
+      .client-orbit-wrap { order: -1; margin-top: 0; }
+      .client-orbit { width: calc(100vw - 1.25rem); }
+      .orbit-caption { top: .25rem; left: .25rem; }
+      .orbit-help { right: .25rem; bottom: .25rem; }
+      .orbit-node { width: clamp(3.25rem, 16vw, 4.2rem); }
+      .orbit-node-label { font-size: .58rem; }
       footer { flex-direction: column; }
     }
 
@@ -754,7 +755,7 @@
       .reveal { opacity: 1; transform: none; }
       .scroll-progress { display: none; }
       .reel { transform: rotate(1.6deg) !important; }
-      .client-marquee-track { transform: translateX(-12%); }
+      .client-orbit { opacity: 1; transform: none; filter: none; }
     }
   </style>
 </head>
@@ -790,18 +791,46 @@
           </div>
         </div>
 
-        <div class="reel reveal" aria-label="Abstract editing timeline preview">
-          <div class="reel-window">
-            <p class="reel-label">Sequence 01 / Main reel</p>
-            <p class="timecode" id="live-timecode" aria-hidden="true">00:00:17:24</p>
-            <p class="reel-count" aria-hidden="true">01</p>
-            <div class="timeline" aria-hidden="true">
-              <span class="playhead"></span>
-              <i class="clip"></i><i class="clip"></i><i class="clip"></i><i class="clip"></i>
-              <i class="clip"></i><i class="clip"></i><i class="clip"></i><i class="clip"></i>
-              <i class="clip"></i><i class="clip"></i><i class="clip"></i><i class="clip"></i>
-            </div>
+        <div class="client-orbit-wrap" id="clients">
+          <p class="orbit-caption"><strong>10</strong> selected clients · live orbit</p>
+          <div class="client-orbit" aria-label="Interactive 3D orbit of selected clients">
+            <span class="orbit-ring ring-a" aria-hidden="true"></span>
+            <span class="orbit-ring ring-b" aria-hidden="true"></span>
+            <span class="orbit-ring ring-c" aria-hidden="true"></span>
+            <span class="orbit-core" aria-hidden="true">Client<br>orbit</span>
+
+            <a class="orbit-node" href="https://x.com/MiruneMochi" target="_blank" rel="noopener noreferrer" aria-label="Visit MiruneMochi on X">
+              <img src="assets/clients/mirunemochi.png" alt="" decoding="async"><span class="orbit-node-label">MiruneMochi</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/KyrioCifer" target="_blank" rel="noopener noreferrer" aria-label="Visit KYRIO on X">
+              <img src="assets/clients/kyrio.jpg" alt="" decoding="async"><span class="orbit-node-label">KYRIO</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/YUY_IX" target="_blank" rel="noopener noreferrer" aria-label="Visit YUY on X">
+              <img src="assets/clients/yuy.jpg" alt="" decoding="async"><span class="orbit-node-label">YUY</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/g0rudan" target="_blank" rel="noopener noreferrer" aria-label="Visit Gorudan on X">
+              <img src="assets/clients/gorudan.jpg" alt="" decoding="async"><span class="orbit-node-label">Gorudan</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/chibidoki" target="_blank" rel="noopener noreferrer" aria-label="Visit Chibi on X">
+              <img src="assets/clients/chibi.jpg" alt="" decoding="async"><span class="orbit-node-label">Chibi</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/SunKenjiVT" target="_blank" rel="noopener noreferrer" aria-label="Visit Kenji on X">
+              <img src="assets/clients/kenji.jpg" alt="" decoding="async"><span class="orbit-node-label">Kenji</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Kureepyvtuber" target="_blank" rel="noopener noreferrer" aria-label="Visit Kureepy on X">
+              <img src="assets/clients/kureepy.jpg" alt="" decoding="async"><span class="orbit-node-label">Kureepy</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/RiiKami" target="_blank" rel="noopener noreferrer" aria-label="Visit RiiKami on X">
+              <img src="assets/clients/riikami.jpg" alt="" decoding="async"><span class="orbit-node-label">RiiKami</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Trickywii" target="_blank" rel="noopener noreferrer" aria-label="Visit Trickywi on X">
+              <img src="assets/clients/trickywi.jpg" alt="" decoding="async"><span class="orbit-node-label">Trickywi</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/PhoenixxVT" target="_blank" rel="noopener noreferrer" aria-label="Visit PhoenixX on X">
+              <img src="assets/clients/phoenixx.jpg" alt="" decoding="async"><span class="orbit-node-label">PhoenixX</span>
+            </a>
           </div>
+          <p class="orbit-help">Hover to pause · click to visit ↗</p>
         </div>
       </div>
     </section>
@@ -861,78 +890,10 @@
       </div>
     </section>
 
-    <section class="clients-section" id="clients">
-      <div class="clients-intro shell reveal">
-        <span class="section-index">03 / CLIENTS</span>
-        <h2>Selected clients</h2>
-        <p>A selection of creators I’ve edited for. Tap a portrait to visit their X profile.</p>
-      </div>
-
-      <div class="client-marquee" aria-hidden="true">
-        <div class="client-marquee-track">
-          <span>MiruneMochi</span><span>KYRIO</span><span>YUY</span><span>Gorudan</span><span>Chibi</span><span>Kenji</span><span>Kureepy</span><span>RiiKami</span><span>Trickywi</span><span>PhoenixX</span>
-          <span>MiruneMochi</span><span>KYRIO</span><span>YUY</span><span>Gorudan</span><span>Chibi</span><span>Kenji</span><span>Kureepy</span><span>RiiKami</span><span>Trickywi</span><span>PhoenixX</span>
-        </div>
-      </div>
-
-      <div class="client-grid shell">
-        <a class="client-card reveal" href="https://x.com/MiruneMochi" target="_blank" rel="noopener noreferrer" aria-label="Visit MiruneMochi on X">
-          <img src="assets/clients/mirunemochi.png" alt="MiruneMochi" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">MiruneMochi</span><span class="client-handle">@MiruneMochi</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/KyrioCifer" target="_blank" rel="noopener noreferrer" aria-label="Visit KYRIO on X">
-          <img src="assets/clients/kyrio.jpg" alt="KYRIO" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">KYRIO</span><span class="client-handle">@KyrioCifer</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/YUY_IX" target="_blank" rel="noopener noreferrer" aria-label="Visit YUY on X">
-          <img src="assets/clients/yuy.jpg" alt="YUY" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">YUY</span><span class="client-handle">@YUY_IX</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/g0rudan" target="_blank" rel="noopener noreferrer" aria-label="Visit Gorudan on X">
-          <img src="assets/clients/gorudan.jpg" alt="Gorudan" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">Gorudan</span><span class="client-handle">@g0rudan</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/chibidoki" target="_blank" rel="noopener noreferrer" aria-label="Visit Chibi on X">
-          <img src="assets/clients/chibi.jpg" alt="Chibi" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">Chibi</span><span class="client-handle">@chibidoki</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/SunKenjiVT" target="_blank" rel="noopener noreferrer" aria-label="Visit Kenji on X">
-          <img src="assets/clients/kenji.jpg" alt="Kenji" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">Kenji</span><span class="client-handle">@SunKenjiVT</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/Kureepyvtuber" target="_blank" rel="noopener noreferrer" aria-label="Visit Kureepy on X">
-          <img src="assets/clients/kureepy.jpg" alt="Kureepy" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">Kureepy</span><span class="client-handle">@Kureepyvtuber</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/RiiKami" target="_blank" rel="noopener noreferrer" aria-label="Visit RiiKami on X">
-          <img src="assets/clients/riikami.jpg" alt="RiiKami" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">RiiKami</span><span class="client-handle">@RiiKami</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/Trickywii" target="_blank" rel="noopener noreferrer" aria-label="Visit Trickywi on X">
-          <img src="assets/clients/trickywi.jpg" alt="Trickywi" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">Trickywi</span><span class="client-handle">@Trickywii</span></span>
-        </a>
-        <a class="client-card reveal" href="https://x.com/PhoenixxVT" target="_blank" rel="noopener noreferrer" aria-label="Visit PhoenixX on X">
-          <img src="assets/clients/phoenixx.jpg" alt="PhoenixX" loading="lazy">
-          <span class="client-arrow" aria-hidden="true">↗</span>
-          <span class="client-card-copy"><span class="client-name">PhoenixX</span><span class="client-handle">@PhoenixxVT</span></span>
-        </a>
-      </div>
-    </section>
-
     <section id="contact">
       <div class="shell">
         <div class="contact-card reveal">
-          <span class="section-index">04 / CONTACT</span>
+          <span class="section-index">03 / CONTACT</span>
           <h2>Let’s make it move.</h2>
           <p>Commission details and contact information will be added soon. Follow website updates on GitHub.</p>
           <a class="button" href="https://github.com/SentoYuina" rel="noopener">GitHub profile <span aria-hidden="true">↗</span></a>
@@ -951,8 +912,8 @@
     const items = document.querySelectorAll('.reveal');
     const progressBar = document.querySelector('.scroll-progress');
     const heroTitle = document.querySelector('.hero-title');
-    const reel = document.querySelector('.reel');
-    const timecode = document.querySelector('#live-timecode');
+    const clientOrbit = document.querySelector('.client-orbit');
+    const orbitNodes = [...document.querySelectorAll('.orbit-node')];
 
     heroTitle.addEventListener('animationend', () => {
       heroTitle.style.animation = 'none';
@@ -974,23 +935,73 @@
       items.forEach((item) => observer.observe(item));
     }
 
-    if (!prefersReducedMotion) {
-      const clockStart = performance.now();
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    const orbitPoints = orbitNodes.map((_, index) => {
+      const y = 1 - (index / Math.max(1, orbitNodes.length - 1)) * 2;
+      const ringRadius = Math.sqrt(Math.max(0, 1 - y * y));
+      const angle = goldenAngle * index;
+      return { x: Math.cos(angle) * ringRadius, y, z: Math.sin(angle) * ringRadius };
+    });
 
-      const updateTimecode = (now) => {
-        const totalFrames = Math.floor((now - clockStart) / (1000 / 24)) + (17 * 24) + 24;
-        const frames = totalFrames % 24;
-        const totalSeconds = Math.floor(totalFrames / 24);
-        const seconds = totalSeconds % 60;
-        const minutes = Math.floor(totalSeconds / 60) % 60;
-        const hours = Math.floor(totalSeconds / 3600);
-        timecode.textContent = [hours, minutes, seconds, frames]
-          .map((value) => String(value).padStart(2, '0'))
-          .join(':');
-        requestAnimationFrame(updateTimecode);
+    let orbitAngle = -.72;
+    let orbitSpeed = prefersReducedMotion ? 0 : 4.6;
+    let orbitPaused = false;
+    let previousFrame = performance.now();
+
+    const renderOrbit = (now) => {
+      const delta = Math.min(.04, Math.max(0, (now - previousFrame) / 1000));
+      previousFrame = now;
+
+      if (!orbitPaused && !prefersReducedMotion) {
+        orbitSpeed += (.16 - orbitSpeed) * (1 - Math.exp(-delta * 1.35));
+        orbitAngle += orbitSpeed * delta;
+      }
+
+      const radius = clientOrbit.clientWidth * .355;
+      const tilt = -.18;
+      const cosY = Math.cos(orbitAngle);
+      const sinY = Math.sin(orbitAngle);
+      const cosX = Math.cos(tilt);
+      const sinX = Math.sin(tilt);
+
+      orbitNodes.forEach((node, index) => {
+        const point = orbitPoints[index];
+        const rotatedX = point.x * cosY + point.z * sinY;
+        const rotatedZ = -point.x * sinY + point.z * cosY;
+        const rotatedY = point.y * cosX - rotatedZ * sinX;
+        const finalZ = point.y * sinX + rotatedZ * cosX;
+        const depth = (finalZ + 1) / 2;
+        const perspectiveScale = .7 + depth * .46;
+        const activeScale = node.classList.contains('active') ? 1.42 : 1;
+
+        node.style.setProperty('--node-depth', depth.toFixed(3));
+        node.style.opacity = (.48 + depth * .52).toFixed(3);
+        node.style.zIndex = node.classList.contains('active') ? 200 : String(10 + Math.round(depth * 80));
+        node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radius}px, ${rotatedY * radius}px, 0) scale(${perspectiveScale * activeScale})`;
+      });
+
+      requestAnimationFrame(renderOrbit);
+    };
+
+    orbitNodes.forEach((node) => {
+      const activate = () => {
+        orbitPaused = true;
+        node.classList.add('active');
+      };
+      const deactivate = () => {
+        node.classList.remove('active');
+        orbitPaused = orbitNodes.some((item) => item.classList.contains('active'));
       };
 
-      requestAnimationFrame(updateTimecode);
+      node.addEventListener('pointerenter', activate);
+      node.addEventListener('pointerleave', deactivate);
+      node.addEventListener('focus', activate);
+      node.addEventListener('blur', deactivate);
+    });
+
+    requestAnimationFrame(renderOrbit);
+
+    if (!prefersReducedMotion) {
 
       let ticking = false;
       const updateScrollMotion = () => {
@@ -1002,11 +1013,9 @@
           const heroProgress = Math.min(1, scrollY / Math.max(1, innerHeight));
           heroTitle.style.transform = `translate3d(0, ${heroProgress * -34}px, 0)`;
           heroTitle.style.setProperty('--outline-x', `${heroProgress * 24}px`);
-          reel.style.setProperty('--reel-lift', `${heroProgress * 42}px`);
         } else {
           heroTitle.style.transform = '';
           heroTitle.style.setProperty('--outline-x', '0px');
-          reel.style.setProperty('--reel-lift', '0px');
         }
         ticking = false;
       };
@@ -1020,21 +1029,6 @@
 
       addEventListener('resize', updateScrollMotion);
       updateScrollMotion();
-
-      if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        reel.addEventListener('pointermove', (event) => {
-          const rect = reel.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width - .5;
-          const y = (event.clientY - rect.top) / rect.height - .5;
-          reel.style.setProperty('--tilt-y', `${x * 7}deg`);
-          reel.style.setProperty('--tilt-x', `${y * -7}deg`);
-        });
-
-        reel.addEventListener('pointerleave', () => {
-          reel.style.setProperty('--tilt-y', '0deg');
-          reel.style.setProperty('--tilt-x', '0deg');
-        });
-      }
     }
   </script>
 </body>
