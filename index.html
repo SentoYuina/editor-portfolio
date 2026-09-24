@@ -805,6 +805,7 @@
         0 2rem 5rem rgba(0,0,0,.35);
       transform: translate(-50%, -50%);
       transition: z-index 0s, box-shadow .35s ease;
+      pointer-events: none;
     }
 
     .testimonial-universe.has-selection .testimonial-core {
@@ -939,6 +940,7 @@
     }
     .testimonial-byline a:hover,
     .testimonial-byline a:focus-visible { color: var(--acid); }
+    .testimonial-byline a { pointer-events: auto; }
 
     .testimonial-cloud {
       position: absolute;
