@@ -560,7 +560,6 @@
       left: 1rem;
       right: 1rem;
       height: .28rem;
-      pointer-events: none;
       opacity: .65;
       background: repeating-linear-gradient(90deg, rgba(255,242,234,.24) 0 .55rem, transparent .55rem 1.05rem);
     }
@@ -940,7 +939,6 @@
     }
     .testimonial-byline a:hover,
     .testimonial-byline a:focus-visible { color: var(--acid); }
-    .testimonial-byline a { pointer-events: auto; }
 
     .testimonial-cloud {
       position: absolute;
@@ -953,7 +951,7 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: clamp(9rem, 15vw, 11.5rem);
+      width: clamp(9rem, 15vw, 10.5rem);
       padding: 0;
       color: var(--muted);
       border: 0;
@@ -2205,13 +2203,9 @@
       }
     }
 
-    const testimonialOrbitPoints = testimonialTabs.map((_, index) => {
-      const sphereY = 1 - (2 * (index + .5)) / testimonialTabs.length;
-      return {
-        longitude: index * Math.PI * (3 - Math.sqrt(5)),
-        latitude: Math.asin(sphereY)
-      };
-    });
+    const testimonialOrbitPoints = testimonialTabs.map((_, index) =>
+      (Math.PI * 2 * index) / testimonialTabs.length
+    );
     let testimonialOrbitAngle = -.45;
     let testimonialOrbitSpeed = prefersReducedMotion ? 0 : 2.4;
     let testimonialOrbitPaused = false;
@@ -2229,18 +2223,17 @@
           testimonialOrbitAngle += testimonialOrbitSpeed * delta;
         }
 
-        const radiusX = Math.max(0, testimonialStage.clientWidth * .41 - 70);
-        const radiusY = testimonialStage.clientHeight * .36;
+        const sampleTab = testimonialTabs[0];
+        const radiusX = Math.max(0, testimonialStage.clientWidth / 2 - sampleTab.offsetWidth / 2 - 18);
+        const radiusY = Math.max(0, testimonialStage.clientHeight / 2 - sampleTab.offsetHeight / 2 - 24);
 
         testimonialTabs.forEach((tab, index) => {
-          const point = testimonialOrbitPoints[index];
-          const longitude = point.longitude + testimonialOrbitAngle;
-          const latitudeScale = Math.cos(point.latitude);
-          const x = Math.sin(longitude) * latitudeScale * radiusX;
-          const y = Math.sin(point.latitude) * radiusY + Math.cos(longitude) * latitudeScale * 18;
-          const z = Math.cos(longitude) * latitudeScale;
-          const depth = (z + 1) / 2;
-          const scale = .68 + depth * .58;
+          const angle = testimonialOrbitPoints[index] + testimonialOrbitAngle;
+          const x = Math.cos(angle) * radiusX;
+          const depthAxis = Math.sin(angle);
+          const y = depthAxis * radiusY;
+          const depth = (depthAxis + 1) / 2;
+          const scale = .65 + depth * .48;
           const opacity = .34 + depth * .66;
 
           tab.querySelector('.testimonial-chip').style.opacity = opacity.toFixed(3);
