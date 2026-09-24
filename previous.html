@@ -1,0 +1,1525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SentoYuina — Video Editor portfolio.">
+  <meta name="theme-color" content="#170d1f">
+  <title>SentoYuina — Video Editor</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23170d1f'/%3E%3Cpath d='M16 18h32v8H16zm0 20h32v8H16z' fill='%23ff70ad'/%3E%3Cpath d='M27 14h10v36H27z' fill='%239a7cff'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #170d1f;
+      --panel: #281535;
+      --paper: #fff2ea;
+      --muted: #cbb8cf;
+      --line: rgba(255, 242, 234, .19);
+      --acid: #ff70ad;
+      --violet: #9a7cff;
+      --cyan: #ffb357;
+      --radius: 1.35rem;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      color: var(--paper);
+      background:
+        radial-gradient(circle at 78% 12%, rgba(154, 124, 255, .28), transparent 32rem),
+        radial-gradient(circle at 8% 72%, rgba(255, 112, 173, .16), transparent 30rem),
+        radial-gradient(circle at 48% 105%, rgba(255, 179, 87, .08), transparent 30rem),
+        var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      z-index: 50;
+      inset: 0 0 auto;
+      height: 3px;
+      background: linear-gradient(90deg, var(--acid), var(--violet), var(--cyan));
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    a { color: inherit; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 100;
+      top: .75rem;
+      left: .75rem;
+      padding: .7rem 1rem;
+      color: var(--ink);
+      background: var(--acid);
+      border-radius: 999px;
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .shell {
+      width: min(calc(100% - 2rem), var(--max));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto;
+      border-bottom: 1px solid var(--line);
+      background: rgba(23, 13, 31, .76);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      min-height: 4.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      color: var(--ink);
+      background: var(--acid);
+      border-radius: .55rem;
+      font: 800 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(.85rem, 2.5vw, 2rem);
+      font: 700 .84rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .025em;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--acid); }
+
+    main { display: block; }
+
+    .hero {
+      min-height: 82svh;
+      padding: 8.5rem 0 4rem;
+      display: grid;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+
+    .hero-grid > div { max-width: 64rem; }
+
+    .eyebrow,
+    .section-index,
+    .timecode,
+    .meta {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .09em;
+    }
+
+    .timecode,
+    .meta { text-transform: uppercase; }
+
+    .eyebrow,
+    .section-index {
+      font-family: inherit;
+      font-weight: 850;
+      letter-spacing: .01em;
+      text-transform: none;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin: 0 0 1.6rem;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: .7rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--acid);
+      box-shadow: 0 0 1.2rem rgba(255, 112, 173, .72);
+    }
+
+    h1 {
+      max-width: 9ch;
+      margin: 0;
+      font-size: clamp(4.2rem, 10.6vw, 9.2rem);
+      line-height: .82;
+      letter-spacing: -.075em;
+      will-change: transform;
+    }
+
+    h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 242, 234, .8);
+      transform: translate3d(var(--outline-x, 0), 0, 0);
+      will-change: transform;
+    }
+
+    .hero-copy {
+      max-width: 35rem;
+      margin: 2rem 0 0;
+      color: #ead9e9;
+      font-size: clamp(1.02rem, 2vw, 1.28rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .8rem;
+      margin-top: 2rem;
+    }
+
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      margin-top: 1.55rem;
+    }
+
+    .mood-tags span {
+      padding: .58rem .82rem;
+      color: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      font: 800 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .045em;
+      transform: rotate(var(--tilt, 0deg));
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .mood-tags span:nth-child(1) { --tilt: -2deg; }
+    .mood-tags span:nth-child(2) { --tilt: 1.5deg; }
+    .mood-tags span:nth-child(3) { --tilt: -1deg; }
+    .mood-tags span:nth-child(4) { --tilt: 2deg; }
+
+    .mood-tags span:hover {
+      transform: rotate(0deg) translateY(-3px);
+      background: rgba(255,112,173,.16);
+      border-color: var(--acid);
+    }
+
+    .mood-tags span:nth-child(1) { color: var(--ink); background: var(--acid); border-color: var(--acid); }
+    .mood-tags span:nth-child(2) { background: rgba(154,124,255,.24); border-color: rgba(154,124,255,.66); }
+    .mood-tags span:nth-child(3) { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+    .mood-tags span:nth-child(4) { background: rgba(255,242,234,.1); }
+
+    .button {
+      min-height: 3.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .65rem;
+      padding: .8rem 1.15rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--paper);
+    }
+
+    .button.primary {
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--acid), #ff9178);
+      border-color: var(--acid);
+    }
+
+    .reel {
+      position: relative;
+      padding: .75rem;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + .35rem);
+      background: rgba(255, 255, 255, .025);
+      box-shadow: 0 2rem 8rem rgba(0, 0, 0, .34);
+      transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) rotateZ(1.6deg) translate3d(0, var(--reel-lift, 0px), 0);
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform .18s ease-out, border-color .25s ease;
+    }
+
+    .reel:hover { border-color: rgba(255, 112, 173, .6); }
+
+    .reel-window {
+      position: relative;
+      min-height: 31rem;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, transparent 0 48%, rgba(255, 112, 173, .96) 48% 52%, transparent 52%),
+        linear-gradient(35deg, rgba(154, 124, 255, .9), rgba(23, 13, 31, .12) 46%),
+        #281535;
+    }
+
+    .reel-window::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .32;
+      background-image: repeating-linear-gradient(90deg, transparent 0 39px, rgba(255,255,255,.14) 40px);
+      mix-blend-mode: overlay;
+    }
+
+    .reel-label,
+    .reel-count {
+      position: absolute;
+      z-index: 2;
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .reel-label {
+      top: 1.25rem;
+      left: 1.25rem;
+      font-size: .75rem;
+    }
+
+    .reel-count {
+      right: 1.25rem;
+      bottom: .2rem;
+      color: rgba(255,255,255,.92);
+      font-size: clamp(6rem, 12vw, 10rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.08em;
+    }
+
+    .timeline {
+      position: absolute;
+      z-index: 3;
+      inset: auto 1rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3px;
+      padding: .65rem;
+      background: rgba(23, 13, 31, .9);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: .7rem;
+    }
+
+    .playhead {
+      position: absolute;
+      z-index: 4;
+      top: -.35rem;
+      bottom: -.35rem;
+      left: .7rem;
+      width: 2px;
+      background: var(--paper);
+      box-shadow: 0 0 .65rem rgba(255,255,255,.8);
+      animation: scrub 4.5s cubic-bezier(.45, 0, .55, 1) infinite alternate;
+    }
+
+    .playhead::before {
+      content: "";
+      position: absolute;
+      top: -.18rem;
+      left: 50%;
+      width: .45rem;
+      aspect-ratio: 1;
+      background: var(--paper);
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .clip {
+      height: .48rem;
+      border-radius: .12rem;
+      background: var(--cyan);
+    }
+
+    .clip:nth-child(3n) { background: var(--violet); }
+    .clip:nth-child(4n) { background: var(--acid); }
+
+    .timecode {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      color: rgba(255,255,255,.75);
+      font-size: .72rem;
+      transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    section { padding: clamp(5rem, 10vw, 9rem) 0; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      gap: 1.5rem;
+      align-items: end;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-index { color: var(--acid); font-size: .78rem; }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2.7rem, 6vw, 5.8rem);
+      line-height: .92;
+      letter-spacing: -.055em;
+    }
+
+    #work { padding-block: clamp(4.25rem, 7vw, 6.5rem); }
+    #work h2 { font-size: clamp(2.7rem, 5.2vw, 4.9rem); }
+
+    .work-groups {
+      display: grid;
+      gap: 2.35rem;
+      margin-top: 2rem;
+    }
+
+    .work-group { min-width: 0; }
+
+    .work-group-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0 0 .8rem;
+      padding-inline: .15rem;
+    }
+
+    .work-group-head h3 {
+      margin: 0;
+      font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+      letter-spacing: -.035em;
+    }
+
+    .work-group-head span {
+      color: var(--muted);
+      font: 750 .7rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .work-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    .work-card {
+      position: relative;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: .48rem;
+      color: var(--paper);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 1.05rem;
+      background: rgba(255,242,234,.05);
+      overflow: hidden;
+      scroll-snap-align: start;
+      transition: transform .28s ease, border-color .28s ease, background .28s ease;
+    }
+
+    .work-card:nth-child(2n) { border-radius: .7rem 1.15rem 1.15rem 1.15rem; }
+
+    .work-card:hover {
+      z-index: 2;
+      transform: translateY(-5px) rotate(.18deg);
+      border-color: rgba(255,112,173,.9);
+      background: rgba(255,242,234,.09);
+    }
+
+    .work-visual {
+      position: relative;
+      flex: 0 0 auto;
+      aspect-ratio: 16 / 9;
+      border-radius: .72rem;
+      background: #180d20;
+      overflow: hidden;
+    }
+
+    .shorts-row .work-visual { aspect-ratio: 4 / 5; }
+
+    .work-visual img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .65s cubic-bezier(.2,.75,.2,1), filter .35s ease;
+    }
+
+    .work-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, transparent 42%, rgba(20,8,28,.7) 100%),
+        linear-gradient(135deg, rgba(255,112,173,.14), transparent 44%, rgba(154,124,255,.12));
+    }
+
+    .work-play {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+      width: 2.8rem;
+      height: 2.8rem;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #1c0e24;
+      background: var(--acid);
+      box-shadow: 0 12px 32px rgba(0,0,0,.34);
+      transform: translate(-50%, -50%);
+      transition: transform .28s ease, background .28s ease;
+    }
+
+    .work-play::before {
+      content: "";
+      width: 0;
+      height: 0;
+      margin-left: .2rem;
+      border-top: .37rem solid transparent;
+      border-bottom: .37rem solid transparent;
+      border-left: .6rem solid currentColor;
+    }
+
+    .work-info {
+      min-height: 4.6rem;
+      padding: .75rem .35rem .35rem;
+    }
+
+    .work-client {
+      display: block;
+      margin-bottom: .28rem;
+      color: var(--acid);
+      font: 800 .63rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .work-card h3 {
+      margin: 0;
+      font-size: clamp(.88rem, 1.2vw, 1.05rem);
+      line-height: 1.16;
+      letter-spacing: -.025em;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: clamp(2rem, 8vw, 8rem);
+      align-items: start;
+    }
+
+    .manifesto-copy {
+      margin: 0;
+      font-size: clamp(1.65rem, 3.5vw, 3.35rem);
+      line-height: 1.08;
+      letter-spacing: -.04em;
+    }
+
+    .principles { display: grid; }
+
+    .principle {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr;
+      gap: 1rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .principle:last-child { border-bottom: 1px solid var(--line); }
+    .principle strong { color: var(--acid); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .principle h3 { margin: 0 0 .35rem; font-size: 1.35rem; }
+    .principle p { margin: 0; color: var(--muted); }
+
+    .client-showcase {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 7.25rem 0 3.5rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 8% 30%, rgba(255,112,173,.24), transparent 26rem),
+        radial-gradient(ellipse at 72% 58%, rgba(154,124,255,.33), transparent 54%),
+        radial-gradient(circle at 88% 8%, rgba(255,179,87,.12), transparent 20rem),
+        linear-gradient(180deg, rgba(255,242,234,.045), transparent 42%);
+    }
+
+    .client-showcase-inner {
+      display: grid;
+      gap: .5rem;
+      min-width: 0;
+    }
+
+    .client-showcase-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      min-width: 0;
+      padding-inline: .5rem;
+    }
+
+    .client-showcase-title {
+      display: inline-block;
+      margin: .1rem 0 0;
+      color: #fffaf6;
+      font-size: clamp(6rem, 13vw, 11rem);
+      font-weight: 950;
+      line-height: .72;
+      letter-spacing: -.085em;
+      -webkit-text-stroke: 1px rgba(255,255,255,.22);
+      text-shadow:
+        .035em .035em 0 var(--acid),
+        .07em .07em 0 rgba(154,124,255,.68),
+        0 0 2.8rem rgba(255,112,173,.3);
+    }
+
+    body.loaded .client-showcase-title {
+      animation: impact-title .9s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    .client-showcase-head p {
+      max-width: 28rem;
+      margin: 0;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .client-orbit-wrap {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      display: grid;
+      place-items: center;
+      margin-top: -1.8rem;
+    }
+
+    .orbit-caption {
+      position: absolute;
+      z-index: 5;
+      top: 1rem;
+      left: 0;
+      margin: 0;
+      color: var(--muted);
+      font: 700 .72rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .1em;
+      text-transform: none;
+    }
+
+    .orbit-caption strong { color: var(--acid); }
+
+    .client-orbit {
+      position: relative;
+      width: min(100%, 72rem);
+      aspect-ratio: 2;
+      isolation: isolate;
+      perspective: 1100px;
+      opacity: 0;
+      transform: scale(.78) rotateX(18deg);
+      filter: blur(12px);
+      transition: filter .8s ease;
+    }
+
+    body.loaded .client-orbit {
+      animation: orbit-enter 1s cubic-bezier(.16, 1, .3, 1) .12s forwards;
+    }
+
+    .client-orbit::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 22% 14% 18%;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.11), transparent 13%),
+        radial-gradient(ellipse at 50% 50%, rgba(154,124,255,.34), rgba(23,13,31,.14) 57%, transparent 70%);
+      box-shadow:
+        inset 0 -2rem 4rem rgba(23,13,31,.82),
+        0 1.5rem 7rem rgba(154,124,255,.34),
+        0 0 4rem rgba(255,112,173,.2);
+      transform: perspective(800px) rotateX(10deg);
+      pointer-events: none;
+    }
+
+    .client-orbit::after {
+      content: "";
+      position: absolute;
+      z-index: 58;
+      inset: 22% 14% 18%;
+      border: 3px solid transparent;
+      border-bottom-color: rgba(255,112,173,.9);
+      border-radius: 50%;
+      filter: drop-shadow(0 .4rem 1rem rgba(255,112,173,.32));
+      pointer-events: none;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      z-index: 42;
+      inset: 22% 14% 18%;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 50%;
+      animation: ring-breathe 3.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .orbit-ring.ring-a { transform: scale(.82); }
+    .orbit-ring.ring-b { border-color: rgba(255,179,87,.3); transform: scale(.64); }
+    .orbit-ring.ring-c { border-color: rgba(255,112,173,.32); transform: scale(.43); }
+
+    .orbit-core {
+      position: absolute;
+      z-index: 46;
+      top: 50%;
+      left: 50%;
+      width: 10rem;
+      height: 5rem;
+      display: grid;
+      place-items: center;
+      color: rgba(255,242,234,.84);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50%;
+      background: rgba(35,17,47,.76);
+      box-shadow: inset 0 0 2rem rgba(154,124,255,.22), 0 0 2rem rgba(23,13,31,.82);
+      transform: translate(-50%, -45%);
+      backdrop-filter: blur(8px);
+      font: 800 .62rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .12em;
+      text-align: center;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .orbit-core::before {
+      content: "";
+      width: .45rem;
+      aspect-ratio: 1;
+      position: absolute;
+      top: .72rem;
+      border-radius: 50%;
+      background: var(--acid);
+      box-shadow: 0 0 1rem rgba(255,112,173,.9);
+    }
+
+    .orbit-node {
+      --node-accent: var(--acid);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: clamp(4.8rem, 8.5vw, 7.5rem);
+      aspect-ratio: 1;
+      display: block;
+      color: var(--paper);
+      border: 2px solid rgba(255,255,255,.28);
+      border-radius: 50%;
+      background: var(--panel);
+      box-shadow: 0 .9rem 2.6rem rgba(18,7,25,.58), 0 0 0 1px rgba(23,13,31,.55);
+      text-decoration: none;
+      will-change: transform, opacity;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .orbit-node:nth-of-type(3n + 2) { --node-accent: var(--violet); }
+    .orbit-node:nth-of-type(3n) { --node-accent: var(--cyan); }
+
+    .orbit-node img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 50%;
+      filter: saturate(.96) contrast(1.03);
+      transition: filter .22s ease;
+      pointer-events: none;
+    }
+
+    .orbit-node-label {
+      position: absolute;
+      left: 50%;
+      bottom: -.62rem;
+      min-width: max-content;
+      padding: .28rem .5rem;
+      color: var(--paper);
+      background: rgba(35,17,47,.94);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      font: 800 .68rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .02em;
+      transform: translate(-50%, 35%);
+      opacity: calc(.45 + var(--node-depth, .5) * .55);
+      transition: opacity .2s ease, color .2s ease, border-color .2s ease;
+      pointer-events: none;
+    }
+
+    .orbit-node.active,
+    .orbit-node:focus-visible {
+      border-color: var(--node-accent);
+      box-shadow: 0 0 0 .3rem rgba(23,13,31,.82), 0 0 2rem var(--node-accent);
+    }
+
+    .orbit-node.active img,
+    .orbit-node:focus-visible img { filter: saturate(1.1) contrast(1.03); }
+
+    .orbit-node.active .orbit-node-label,
+    .orbit-node:focus-visible .orbit-node-label {
+      color: var(--node-accent);
+      border-color: var(--node-accent);
+      opacity: 1;
+    }
+
+    .orbit-help {
+      position: absolute;
+      z-index: 4;
+      right: 0;
+      bottom: 1rem;
+      margin: 0;
+      color: var(--muted);
+      font: .68rem/1.35 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .06em;
+      text-transform: none;
+    }
+
+    .client-marquee {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      margin-top: -1rem;
+      padding: 1.1rem 0 .5rem;
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+    }
+
+    .client-marquee-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0 0 .35rem;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 750;
+    }
+
+    .client-marquee-head strong { color: var(--acid); }
+
+    .client-marquee-viewport {
+      width: 100%;
+      min-width: 0;
+      min-height: 8.25rem;
+      max-width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      overflow-y: hidden;
+      cursor: grab;
+      border: 1px solid rgba(255,242,234,.07);
+      border-radius: 1.25rem;
+      background:
+        linear-gradient(90deg, rgba(255,100,174,.055), transparent 22%, transparent 78%, rgba(159,123,255,.06)),
+        rgba(255,242,234,.018);
+      scrollbar-width: none;
+      touch-action: pan-x;
+      overscroll-behavior-inline: contain;
+      user-select: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+
+    .client-marquee-viewport::-webkit-scrollbar { display: none; }
+    .client-marquee-viewport.dragging { cursor: grabbing; }
+
+    .client-marquee-track {
+      width: max-content;
+      display: flex;
+      gap: .8rem;
+      padding: 1.25rem clamp(.75rem, 2vw, 1.35rem);
+    }
+
+    .client-marquee-group { display: flex; gap: .8rem; }
+
+    .client-strip-card {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      min-width: max-content;
+      padding: .48rem .85rem .48rem .48rem;
+      color: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,242,234,.055);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .client-strip-card:hover,
+    .client-strip-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--acid);
+      background: rgba(255,112,173,.14);
+    }
+
+    .client-strip-card img {
+      width: 3rem;
+      height: 3rem;
+      display: block;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .client-strip-card .orbit-node-label {
+      position: static;
+      min-width: 0;
+      padding: 0;
+      color: inherit;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      transform: none;
+      opacity: 1;
+    }
+
+    .contact-card {
+      position: relative;
+      padding: clamp(2rem, 7vw, 6rem);
+      overflow: hidden;
+      color: var(--ink);
+      background: linear-gradient(135deg, #fff2ea, #ffd8e9 58%, #f2dcff);
+      border-radius: calc(var(--radius) + .6rem);
+    }
+
+    .contact-card::after {
+      content: "LET’S GO";
+      position: absolute;
+      right: -1rem;
+      bottom: -2.2rem;
+      color: rgba(69, 25, 73, .07);
+      font-size: clamp(8rem, 24vw, 20rem);
+      font-weight: 950;
+      line-height: .7;
+      letter-spacing: -.12em;
+    }
+
+    .contact-card h2 { position: relative; z-index: 1; max-width: 10ch; }
+    .contact-card p { position: relative; z-index: 1; max-width: 38rem; margin: 1.4rem 0 2rem; font-size: 1.08rem; }
+    .contact-card .button { position: relative; z-index: 1; color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font: .74rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(1.2rem);
+      filter: blur(8px);
+      transition: opacity .65s ease, transform .65s ease, filter .65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @keyframes title-enter {
+      from { opacity: 0; transform: translate3d(0, 1.2em, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    @keyframes copy-enter {
+      from { opacity: 0; transform: translate3d(0, 1rem, 0); }
+      to { opacity: 1; transform: translate3d(0, 0, 0); }
+    }
+
+    @keyframes scrub {
+      from { left: .7rem; }
+      to { left: calc(100% - .7rem); }
+    }
+
+    @keyframes scan {
+      from { transform: translateY(-120%); }
+      to { transform: translateY(120%); }
+    }
+
+    @keyframes orbit-enter {
+      to { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+    }
+
+    @keyframes impact-title {
+      from { opacity: 0; letter-spacing: -.16em; transform: translateX(-2.5rem) scaleX(.9) rotate(-3deg); }
+      to { opacity: 1; letter-spacing: -.085em; transform: translateX(0) scaleX(1) rotate(-1.2deg); }
+    }
+
+    @keyframes ring-breathe {
+      0%, 100% { opacity: .52; }
+      50% { opacity: 1; }
+    }
+
+    @media (hover: hover) {
+      .work-card:hover .work-visual img { transform: scale(1.055); filter: saturate(1.1) contrast(1.04); }
+      .work-card:hover .work-play { background: var(--hot); transform: translate(-50%, -50%) scale(1.12) rotate(-4deg); }
+    }
+
+    :focus-visible { outline: 3px solid var(--acid); outline-offset: 4px; }
+
+    @media (max-width: 840px) {
+      .hero { padding-top: 7.5rem; }
+      .hero-grid,
+      .manifesto-grid { grid-template-columns: 1fr; }
+      .client-showcase-head { align-items: start; flex-direction: column; gap: .5rem; }
+      .client-showcase-head p { text-align: left; }
+      .client-orbit-wrap { margin-top: 0; }
+      .client-orbit { width: min(96vw, 58rem); }
+      .work-row {
+        display: flex;
+        gap: .7rem;
+        padding-bottom: .65rem;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+      }
+      .work-row .work-card { flex: 0 0 min(72vw, 19rem); }
+      .shorts-row .work-card { flex-basis: min(52vw, 13.5rem); }
+      .section-head { grid-template-columns: 1fr; gap: .8rem; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(calc(100% - 1.25rem), var(--max)); }
+      .nav-links a:not(:last-child) { display: none; }
+      .client-showcase { min-height: 72svh; padding: 6rem 0 2.5rem; }
+      .client-showcase-inner { gap: 1.25rem; }
+      .client-showcase-head { padding-inline: .25rem; }
+      .client-showcase-head p { font-size: .9rem; }
+      .client-showcase-title { font-size: clamp(4.2rem, 23vw, 6rem); }
+      .hero { min-height: 78svh; padding-top: 6.5rem; }
+      .hero-grid { gap: 1rem; }
+      h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
+      .hero-actions { align-items: stretch; flex-direction: column; }
+      .button { width: 100%; }
+      .work-group-head span { font-size: .62rem; }
+      .client-orbit-wrap { margin-top: 0; }
+      .client-orbit { width: 100%; }
+      .orbit-caption { top: .25rem; left: .25rem; }
+      .orbit-help { display: none; }
+      .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
+      .orbit-core::before { top: .38rem; }
+      .orbit-node { width: clamp(3.1rem, 14vw, 3.75rem); }
+      .orbit-node-label { display: none; }
+      .client-marquee { margin-top: -.25rem; }
+      .client-marquee-head { align-items: flex-start; flex-direction: column; gap: .1rem; padding-inline: .25rem; }
+      .client-marquee-viewport { min-height: 7.5rem; border-radius: 1rem; }
+      .client-strip-card { padding: .4rem .7rem .4rem .4rem; font-size: .76rem; }
+      .client-strip-card img { width: 2.5rem; height: 2.5rem; }
+      .client-strip-card .orbit-node-label { display: block; }
+      footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      .scroll-progress { display: none; }
+      .reel { transform: rotate(1.6deg) !important; }
+      .client-orbit { opacity: 1; transform: none; filter: none; }
+      .client-marquee-viewport { mask-image: none; -webkit-mask-image: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="SentoYuina home">
+        <span class="brand-mark" aria-hidden="true">SY</span>
+        <span>SentoYuina</span>
+      </a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#approach">How I edit</a>
+        <a href="#clients">Clients</a>
+        <a href="#contact">Say hi</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="client-showcase" id="top">
+      <div class="client-showcase-inner shell" id="clients">
+        <div class="client-showcase-head">
+          <div>
+            <span class="section-index">the creator orbit ✦</span>
+            <h2 class="client-showcase-title">Clients</h2>
+          </div>
+          <p>Eight featured collaborators up front, with the full client crew rolling just below.</p>
+        </div>
+
+        <div class="client-orbit-wrap">
+          <p class="orbit-caption"><strong>8</strong> featured creators · 3D orbit</p>
+          <div class="client-orbit" aria-label="Interactive horizontal 3D ring of eight featured clients">
+            <span class="orbit-ring ring-a" aria-hidden="true"></span>
+            <span class="orbit-ring ring-b" aria-hidden="true"></span>
+            <span class="orbit-ring ring-c" aria-hidden="true"></span>
+            <span class="orbit-core" aria-hidden="true">Good<br>people</span>
+
+            <a class="orbit-node" href="https://x.com/MiruneMochi" target="_blank" rel="noopener noreferrer" aria-label="Visit MiruneMochi on X">
+              <img src="assets/clients/mirunemochi.png" alt="" decoding="async"><span class="orbit-node-label">MiruneMochi</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/KyrioCifer" target="_blank" rel="noopener noreferrer" aria-label="Visit KYRIO on X">
+              <img src="assets/clients/kyrio.jpg" alt="" decoding="async"><span class="orbit-node-label">KYRIO</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/YUY_IX" target="_blank" rel="noopener noreferrer" aria-label="Visit YUY on X">
+              <img src="assets/clients/yuy.jpg" alt="" decoding="async"><span class="orbit-node-label">YUY</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/g0rudan" target="_blank" rel="noopener noreferrer" aria-label="Visit Gorudan on X">
+              <img src="assets/clients/gorudan.jpg" alt="" decoding="async"><span class="orbit-node-label">Gorudan</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/chibidoki" target="_blank" rel="noopener noreferrer" aria-label="Visit Chibi on X">
+              <img src="assets/clients/chibi.jpg" alt="" decoding="async"><span class="orbit-node-label">Chibi</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/SunKenjiVT" target="_blank" rel="noopener noreferrer" aria-label="Visit Kenji on X">
+              <img src="assets/clients/kenji.jpg" alt="" decoding="async"><span class="orbit-node-label">Kenji</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Kureepyvtuber" target="_blank" rel="noopener noreferrer" aria-label="Visit Kureepy on X">
+              <img src="assets/clients/kureepy.jpg" alt="" decoding="async"><span class="orbit-node-label">Kureepy</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/RiiKami" target="_blank" rel="noopener noreferrer" aria-label="Visit RiiKami on X">
+              <img src="assets/clients/riikami.jpg" alt="" decoding="async"><span class="orbit-node-label">RiiKami</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Trickywii" target="_blank" rel="noopener noreferrer" aria-label="Visit Trickywi on X">
+              <img src="assets/clients/trickywi.jpg" alt="" decoding="async"><span class="orbit-node-label">Trickywi</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/PhoenixxVT" target="_blank" rel="noopener noreferrer" aria-label="Visit PhoenixX on X">
+              <img src="assets/clients/phoenixx.jpg" alt="" decoding="async"><span class="orbit-node-label">PhoenixX</span>
+            </a>
+            <a class="orbit-node" href="https://ytjobs.co/youtube-channel/266162" target="_blank" rel="noopener noreferrer" aria-label="Visit 六六 Ch. on YTJobs">
+              <img src="assets/clients/liuliu.jpg" alt="" decoding="async"><span class="orbit-node-label">六六 Ch.</span>
+            </a>
+            <a class="orbit-node" href="https://ytjobs.co/youtube-channel/185650" target="_blank" rel="noopener noreferrer" aria-label="Visit Chitzee on YTJobs">
+              <img src="assets/clients/chitzee.jpg" alt="" decoding="async"><span class="orbit-node-label">Chitzee</span>
+            </a>
+            <a class="orbit-node" href="https://ytjobs.co/youtube-channel/266168" target="_blank" rel="noopener noreferrer" aria-label="Visit 千田悠依奈 ch. on YTJobs">
+              <img src="assets/clients/senda-yuina.jpg" alt="" decoding="async"><span class="orbit-node-label">千田悠依奈</span>
+            </a>
+            <a class="orbit-node" href="https://www.youtube.com/@Laoly" target="_blank" rel="noopener noreferrer" aria-label="Visit 老李 Laoly Ch. on YouTube">
+              <img src="assets/clients/laoly.jpg" alt="" decoding="async"><span class="orbit-node-label">老李 Laoly</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Yami7ways" target="_blank" rel="noopener noreferrer" aria-label="Visit Yami7ways on X">
+              <img src="assets/clients/yami7ways.jpg" alt="" decoding="async"><span class="orbit-node-label">Yami7ways</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/RoeBunnyVT" target="_blank" rel="noopener noreferrer" aria-label="Visit RoeBunnyVT on X">
+              <img src="assets/clients/roebunny.jpg" alt="" decoding="async"><span class="orbit-node-label">RoeBunnyVT</span>
+            </a>
+            <a class="orbit-node" href="https://www.youtube.com/results?search_query=Starlit+VTuber" target="_blank" rel="noopener noreferrer" aria-label="Find Starlit on YouTube">
+              <img src="assets/clients/starlit.png" alt="" decoding="async"><span class="orbit-node-label">Starlit</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/vtultimo" target="_blank" rel="noopener noreferrer" aria-label="Visit Ultimo on X">
+              <img src="assets/clients/vtultimo.jpg" alt="" decoding="async"><span class="orbit-node-label">Ultimo</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Callsign_Monk" target="_blank" rel="noopener noreferrer" aria-label="Visit Callsign Monk on X">
+              <img src="assets/clients/callsign-monk.jpg" alt="" decoding="async"><span class="orbit-node-label">Callsign Monk</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/ScarletLillian_" target="_blank" rel="noopener noreferrer" aria-label="Visit ScarletLillian on X">
+              <img src="assets/clients/scarlet-lillian.jpg" alt="" decoding="async"><span class="orbit-node-label">ScarletLillian</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/YaeWuv" target="_blank" rel="noopener noreferrer" aria-label="Visit Yae on X">
+              <img src="assets/clients/yae-wuv.jpg" alt="" decoding="async"><span class="orbit-node-label">Yae</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/HollyVictoriaTV" target="_blank" rel="noopener noreferrer" aria-label="Visit HollyVictoria on X">
+              <img src="assets/clients/holly-victoria.jpg" alt="" decoding="async"><span class="orbit-node-label">HollyVictoria</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/idlefawni" target="_blank" rel="noopener noreferrer" aria-label="Visit idlefawni on X">
+              <img src="assets/clients/idlefawni.jpg" alt="" decoding="async"><span class="orbit-node-label">idlefawni</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/codaisgone" target="_blank" rel="noopener noreferrer" aria-label="Visit coda on X">
+              <img src="assets/clients/coda.jpg" alt="" decoding="async"><span class="orbit-node-label">coda</span>
+            </a>
+          </div>
+          <p class="orbit-help">Hover = pause · click = say hi ↗</p>
+        </div>
+        <div class="client-marquee">
+          <p class="client-marquee-head"><span><strong>16</strong> more lovely people</span><span>Drag or swipe · auto-resumes ↗</span></p>
+          <div class="client-marquee-viewport" tabindex="0" aria-label="Drag or swipe to browse sixteen more clients">
+            <div class="client-marquee-track" id="clientStrip">
+              <div class="client-marquee-group" id="clientStripGroup"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-grid shell">
+        <div>
+          <p class="eyebrow">Video editor · Chaos tamer · Malaysia</p>
+          <h1 class="hero-title reveal">Make it <span>hit.</span></h1>
+          <p class="hero-copy reveal">I turn raw footage into videos that feel fast, funny, emotional—or all three.</p>
+          <div class="mood-tags reveal" aria-label="Editing style">
+            <span>FAST CUTS</span>
+            <span>BIG FEELS</span>
+            <span>GOOD CHAOS</span>
+            <span>CLEAN FINISH</span>
+          </div>
+          <div class="hero-actions reveal">
+            <a class="button primary" href="#work">See the good stuff <span aria-hidden="true">↘</span></a>
+            <a class="button" href="#contact">Let’s make something</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="shell">
+        <div class="section-head reveal">
+          <span class="section-index">01 / work</span>
+          <h2>Stuff I’ve cut</h2>
+        </div>
+        <div class="work-groups">
+          <div class="work-group">
+            <div class="work-group-head"><h3>Long form</h3><span>5 edits · full stories</span></div>
+            <div class="work-row long-row">
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=JWRSim0J6zE" target="_blank" rel="noopener noreferrer" aria-label="Watch Kenji being himself for 11 minutes and 3 seconds on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/JWRSim0J6zE/maxresdefault.jpg" alt="Kenji being himself video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">Kenji</span><h3>Kenji being himself for 11 minutes and 3 seconds</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=HgFzjnC1GZI" target="_blank" rel="noopener noreferrer" aria-label="Watch The New Vtuber Meta on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/HgFzjnC1GZI/maxresdefault.jpg" alt="The New Vtuber Meta video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">Chibidoki</span><h3>The New Vtuber Meta</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=iP7bNcl6Mis" target="_blank" rel="noopener noreferrer" aria-label="Watch Yuy Crashing Out for 10 Minutes on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/iP7bNcl6Mis/maxresdefault.jpg" alt="Yuy Crashing Out for 10 Minutes video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">YUY</span><h3>Yuy Crashing Out for 10 Minutes</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=pXQniIFTzTQ" target="_blank" rel="noopener noreferrer" aria-label="Watch I Accidentally face revealed on stream on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/pXQniIFTzTQ/maxresdefault.jpg" alt="I Accidentally face revealed on stream video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">KYRIO</span><h3>I Accidentally face revealed on stream...</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=QFriOUPdvx8" target="_blank" rel="noopener noreferrer" aria-label="Watch 8 MIN OF CHAT TROLLING TRICKY on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/QFriOUPdvx8/maxresdefault.jpg" alt="8 MIN OF CHAT TROLLING TRICKY video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">Trickywi</span><h3>8 MIN OF CHAT TROLLING TRICKY!</h3></div>
+              </a>
+            </div>
+          </div>
+          <div class="work-group">
+            <div class="work-group-head"><h3>Shorts</h3><span>5 fast hits · vertical edits</span></div>
+            <div class="work-row shorts-row">
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=GGQYLkeZe0M" target="_blank" rel="noopener noreferrer" aria-label="Watch There Is No Greater Feeling Than This on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/GGQYLkeZe0M/maxres2.jpg" alt="There Is No Greater Feeling Than This video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">Ultimo</span><h3>There Is No Greater Feeling Than This</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/shorts/bQUs6Fl5YnA" target="_blank" rel="noopener noreferrer" aria-label="Watch Table throwing is the new abooz on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/bQUs6Fl5YnA/hqdefault.jpg" alt="Table throwing is the new abooz video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">Yura Sorae</span><h3>Table throwing is the new abooz</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=FqpPeRbIxiM" target="_blank" rel="noopener noreferrer" aria-label="Watch She's been drinking what on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/FqpPeRbIxiM/hqdefault.jpg" alt="She's been drinking what video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">Mirune Mochi</span><h3>She's been drinking what?!</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/watch?v=ES1UMQKQ7JA" target="_blank" rel="noopener noreferrer" aria-label="Watch Cringe and Free honestly on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/ES1UMQKQ7JA/hqdefault.jpg" alt="Cringe and Free honestly video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">ScarletLillian</span><h3>Cringe and Free honestly</h3></div>
+              </a>
+              <a class="work-card reveal" href="https://www.youtube.com/shorts/DeYJI9sbX-8" target="_blank" rel="noopener noreferrer" aria-label="Watch FREE VOICE ACTING GIVEAWAY on YouTube">
+                <div class="work-visual"><img src="https://i.ytimg.com/vi/DeYJI9sbX-8/hqdefault.jpg" alt="FREE VOICE ACTING GIVEAWAY video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+                <div class="work-info"><span class="work-client">YanderEgg</span><h3>FREE VOICE ACTING GIVEAWAY!</h3></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <div class="manifesto-grid shell">
+        <div>
+          <span class="section-index">02 / how I edit</span>
+          <p class="manifesto-copy reveal">Fast where it should hit. Quiet where it should breathe.</p>
+        </div>
+        <div class="principles">
+          <article class="principle reveal">
+            <strong>01</strong>
+            <div><h3>Rhythm</h3><p>I cut to feeling first—then make every beat earn its place.</p></div>
+          </article>
+          <article class="principle reveal">
+            <strong>02</strong>
+            <div><h3>Clarity</h3><p>Effects are fun. Knowing when not to use them is better.</p></div>
+          </article>
+          <article class="principle reveal">
+            <strong>03</strong>
+            <div><h3>Detail</h3><p>One frame, one sound, one tiny pause can change the whole joke.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="shell">
+        <div class="contact-card reveal">
+          <span class="section-index">03 / say hi</span>
+          <h2>Got footage? Let’s cook.</h2>
+          <p>Commissions and contact details are coming soon. For now, catch updates on GitHub.</p>
+          <a class="button" href="https://github.com/SentoYuina" rel="noopener">Peek behind the scenes <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell">
+    <span>© 2026 SentoYuina</span>
+    <span>Video editor · Portfolio</span>
+  </footer>
+
+  <script>
+    document.body.classList.add('loaded');
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const items = document.querySelectorAll('.reveal');
+    const progressBar = document.querySelector('.scroll-progress');
+    const clientOrbit = document.querySelector('.client-orbit');
+    const allClientNodes = [...document.querySelectorAll('.orbit-node')];
+    const orbitNodes = allClientNodes.slice(0, 8);
+    const extraClientNodes = allClientNodes.slice(8);
+    const clientStrip = document.querySelector('#clientStrip');
+    const clientStripGroup = document.querySelector('#clientStripGroup');
+
+    extraClientNodes.forEach((node) => {
+      node.classList.remove('orbit-node');
+      node.classList.add('client-strip-card');
+      node.removeAttribute('style');
+      clientStripGroup.appendChild(node);
+    });
+
+    const clientStripClone = clientStripGroup.cloneNode(true);
+    clientStripClone.removeAttribute('id');
+    clientStripClone.setAttribute('aria-hidden', 'true');
+    clientStripClone.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
+    clientStrip.appendChild(clientStripClone);
+
+    const clientStripViewport = document.querySelector('.client-marquee-viewport');
+    let marqueeDragging = false;
+    let marqueeDragged = false;
+    let marqueeStartX = 0;
+    let marqueeStartScroll = 0;
+    let marqueeLastInteraction = performance.now();
+    let marqueePreviousFrame = performance.now();
+
+    const pauseClientMarquee = () => { marqueeLastInteraction = performance.now(); };
+
+    clientStripViewport.addEventListener('pointerdown', (event) => {
+      pauseClientMarquee();
+      if (event.pointerType !== 'mouse') return;
+      marqueeDragging = true;
+      marqueeDragged = false;
+      marqueeStartX = event.clientX;
+      marqueeStartScroll = clientStripViewport.scrollLeft;
+      clientStripViewport.classList.add('dragging');
+      clientStripViewport.setPointerCapture(event.pointerId);
+    });
+
+    clientStripViewport.addEventListener('pointermove', (event) => {
+      if (!marqueeDragging) {
+        if (event.pointerType !== 'mouse') pauseClientMarquee();
+        return;
+      }
+      const distance = event.clientX - marqueeStartX;
+      if (Math.abs(distance) > 7) marqueeDragged = true;
+      clientStripViewport.scrollLeft = marqueeStartScroll - distance;
+      pauseClientMarquee();
+      event.preventDefault();
+    });
+
+    const finishMarqueeDrag = (event) => {
+      if (!marqueeDragging) return;
+      marqueeDragging = false;
+      clientStripViewport.classList.remove('dragging');
+      if (clientStripViewport.hasPointerCapture(event.pointerId)) clientStripViewport.releasePointerCapture(event.pointerId);
+      pauseClientMarquee();
+  setTimeout(() => { marqueeDragged = false; }, 100);
+    };
+
+    clientStripViewport.addEventListener('pointerup', finishMarqueeDrag);
+    clientStripViewport.addEventListener('pointercancel', finishMarqueeDrag);
+    clientStripViewport.addEventListener('wheel', pauseClientMarquee, { passive: true });
+    clientStripViewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') pauseClientMarquee();
+    });
+    clientStripViewport.addEventListener('focusin', pauseClientMarquee);
+    clientStripViewport.addEventListener('focusout', pauseClientMarquee);
+    clientStripViewport.addEventListener('click', (event) => {
+      if (!marqueeDragged) return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+
+    const animateClientMarquee = (now) => {
+      const delta = Math.min(.04, Math.max(0, (now - marqueePreviousFrame) / 1000));
+      marqueePreviousFrame = now;
+
+      if (!prefersReducedMotion && !marqueeDragging && now - marqueeLastInteraction > 2800) {
+        clientStripViewport.scrollLeft += delta * 38;
+        const loopWidth = clientStripGroup.getBoundingClientRect().width + 12.8;
+        if (loopWidth > 0 && clientStripViewport.scrollLeft >= loopWidth) clientStripViewport.scrollLeft -= loopWidth;
+      }
+
+      requestAnimationFrame(animateClientMarquee);
+    };
+
+    requestAnimationFrame(animateClientMarquee);
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      items.forEach((item) => item.classList.add('visible'));
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+
+      items.forEach((item) => observer.observe(item));
+    }
+
+    const orbitPoints = orbitNodes.map((_, index) => (Math.PI * 2 * index) / orbitNodes.length);
+
+    let orbitAngle = -.72;
+    let orbitSpeed = prefersReducedMotion ? 0 : 9.2;
+    let orbitPaused = false;
+    let previousFrame = performance.now();
+
+    const renderOrbit = (now) => {
+      const delta = Math.min(.04, Math.max(0, (now - previousFrame) / 1000));
+      previousFrame = now;
+
+      if (!orbitPaused && !prefersReducedMotion) {
+        orbitSpeed += (.14 - orbitSpeed) * (1 - Math.exp(-delta * .92));
+        orbitAngle += orbitSpeed * delta;
+      }
+
+      const radiusX = clientOrbit.clientWidth * (innerWidth <= 560 ? .35 : .37);
+      const radiusY = clientOrbit.clientHeight * .24;
+
+      orbitNodes.forEach((node, index) => {
+        const angle = orbitPoints[index] + orbitAngle;
+        const rotatedX = Math.cos(angle);
+        const depthAxis = Math.sin(angle);
+        const depth = (depthAxis + 1) / 2;
+        const perspectiveScale = .52 + depth * .8;
+        const activeScale = node.classList.contains('active') ? 1.36 : 1;
+
+        node.style.setProperty('--node-depth', depth.toFixed(3));
+        node.style.opacity = (.2 + depth * .8).toFixed(3);
+        node.style.zIndex = node.classList.contains('active') ? 200 : String(8 + Math.round(depth * 92));
+        node.style.transform = `translate(-50%, -50%) translate3d(${rotatedX * radiusX}px, ${depthAxis * radiusY}px, 0) scale(${perspectiveScale * activeScale})`;
+      });
+
+      requestAnimationFrame(renderOrbit);
+    };
+
+    orbitNodes.forEach((node) => {
+      const activate = () => {
+        orbitPaused = true;
+        node.classList.add('active');
+      };
+      const deactivate = () => {
+        node.classList.remove('active');
+        orbitPaused = orbitNodes.some((item) => item.classList.contains('active'));
+      };
+
+      node.addEventListener('pointerenter', activate);
+      node.addEventListener('pointerleave', deactivate);
+      node.addEventListener('focus', activate);
+      node.addEventListener('blur', deactivate);
+    });
+
+    requestAnimationFrame(renderOrbit);
+
+    if (!prefersReducedMotion) {
+
+      let ticking = false;
+      const updateScrollMotion = () => {
+        const scrollable = document.documentElement.scrollHeight - innerHeight;
+        const progress = scrollable > 0 ? scrollY / scrollable : 0;
+        progressBar.style.transform = `scaleX(${Math.min(1, Math.max(0, progress))})`;
+
+        ticking = false;
+      };
+
+      addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(updateScrollMotion);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      addEventListener('resize', updateScrollMotion);
+      updateScrollMotion();
+    }
+  </script>
+</body>
+</html>
+
