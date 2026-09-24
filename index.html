@@ -386,7 +386,7 @@
       transform: translate(-50%, -50%) rotate(-90deg);
     }
 
-    section { padding: clamp(5rem, 10vw, 9rem) 0; }
+    section { padding: clamp(5rem, 10vw, 9rem) 0; scroll-margin-top: 4.6rem; }
 
     .section-head {
       display: grid;
@@ -406,30 +406,35 @@
       letter-spacing: -.055em;
     }
 
+    .achievements-strip {
+      padding-block: clamp(2.6rem, 4.5vw, 4rem);
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(255,112,173,.045), rgba(154,124,255,.035));
+    }
+
+    .achievement-band {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(24rem, 1.15fr);
+      align-items: end;
+      gap: clamp(2rem, 7vw, 7rem);
+    }
+
+    .achievement-band h2 {
+      max-width: 11ch;
+      margin-top: .45rem;
+      font-size: clamp(2.2rem, 4.4vw, 4rem);
+    }
+
     .hero-stats {
-      max-width: 36rem;
-      margin-top: 1.15rem;
-      padding-top: .75rem;
+      max-width: none;
+      margin: 0;
+      padding-top: .9rem;
       border-top: 1px solid var(--line);
     }
 
-    .hero-stats-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--muted);
-      font: 800 .66rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .hero-stats-head strong { color: var(--acid); }
-
     .hero-stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: .65rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .hero-stat {
@@ -449,7 +454,7 @@
     .achievement-value {
       display: block;
       color: var(--paper);
-      font-size: clamp(1.85rem, 3.2vw, 2.8rem);
+      font-size: clamp(3.2rem, 6.2vw, 5.5rem);
       font-weight: 950;
       line-height: .9;
       letter-spacing: -.07em;
@@ -461,7 +466,7 @@
       margin-top: .3rem;
       overflow: hidden;
       color: var(--muted);
-      font-size: .68rem;
+      font-size: .76rem;
       font-weight: 750;
       line-height: 1.2;
       text-overflow: ellipsis;
@@ -753,11 +758,13 @@
       grid-column: 2;
       grid-row: 1;
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: 1fr;
       align-items: end;
-      gap: 1.25rem;
+      justify-self: start;
+      width: auto;
+      gap: .3rem;
       min-width: 0;
-      padding: 1.2rem 1.25rem;
+      padding: .75rem .9rem;
       border: 1px solid var(--line);
       border-radius: 1.15rem;
       background: rgba(255,255,255,.035);
@@ -768,7 +775,7 @@
       display: inline-block;
       margin: .15rem 0 0;
       color: #fffaf6;
-      font-size: clamp(2rem, 3.8vw, 3.4rem);
+      font-size: clamp(1.85rem, 3vw, 2.8rem);
       font-weight: 900;
       line-height: .9;
       letter-spacing: -.06em;
@@ -907,7 +914,7 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: clamp(4.8rem, 8.5vw, 7.5rem);
+      width: clamp(4rem, 6.8vw, 6rem);
       aspect-ratio: 1;
       display: block;
       color: var(--paper);
@@ -1206,6 +1213,7 @@
       .work-group-head { align-items: flex-start; }
       .work-group-actions { align-items: flex-end; flex-direction: column; gap: .4rem; }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
+      .achievement-band { grid-template-columns: 1fr; gap: 1.25rem; }
     }
 
     @media (max-width: 560px) {
@@ -1213,9 +1221,9 @@
       .nav-links a:not(:last-child) { display: none; }
       .client-showcase { min-height: 100svh; padding: 6rem 0 2.5rem; }
       .client-showcase-inner { gap: 1.25rem; }
-      .client-showcase-head { padding: 1rem; }
+      .client-showcase-head { padding: .75rem .85rem; }
       .client-showcase-head p { font-size: .9rem; }
-      .client-showcase-title { font-size: clamp(2rem, 11vw, 3.2rem); }
+      .client-showcase-title { font-size: clamp(1.8rem, 10vw, 2.8rem); }
       .client-showcase-head { grid-template-columns: 1fr; gap: .45rem; }
       h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
       .hero-actions { align-items: stretch; flex-direction: column; }
@@ -1227,7 +1235,7 @@
       .orbit-help { display: none; }
       .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
       .orbit-core::before { top: .38rem; }
-      .orbit-node { width: clamp(3.1rem, 14vw, 3.75rem); }
+      .orbit-node { width: clamp(2.8rem, 12vw, 3.4rem); }
       .orbit-node-label { display: none; }
       .client-marquee { margin-top: -.25rem; }
       .client-marquee-head { align-items: flex-start; flex-direction: column; gap: .1rem; padding-inline: .25rem; }
@@ -1235,9 +1243,8 @@
       .client-strip-card { padding: .4rem .7rem .4rem .4rem; font-size: .76rem; }
       .client-strip-card img { width: 2.5rem; height: 2.5rem; }
       .client-strip-card .orbit-node-label { display: block; }
-      .hero-stats { max-width: none; }
-      .achievement-value { font-size: clamp(1.8rem, 9vw, 2.7rem); }
-      .hero-stat-label { font-size: .62rem; }
+      .achievement-value { font-size: clamp(3rem, 16vw, 4.6rem); }
+      .hero-stat-label { font-size: .68rem; }
       footer { flex-direction: column; }
     }
 
@@ -1290,35 +1297,16 @@
               <a class="button primary" href="#work">See the good stuff <span aria-hidden="true">↘</span></a>
               <a class="button" href="#contact">Let’s make something</a>
             </div>
-            <div class="hero-stats reveal" aria-label="Achievements">
-              <div class="hero-stats-head"><strong>Achievements</strong><span>and counting ↗</span></div>
-              <div class="hero-stats-grid">
-                <div class="hero-stat">
-                  <strong class="achievement-value" data-target="400" data-suffix="+">400+</strong>
-                  <span class="hero-stat-label">Videos edited</span>
-                </div>
-                <div class="hero-stat">
-                  <strong class="achievement-value" data-target="4" data-suffix="M+">4M+</strong>
-                  <span class="hero-stat-label">Views generated</span>
-                </div>
-                <div class="hero-stat">
-                  <strong class="achievement-value" data-target="50" data-suffix="+">50+</strong>
-                  <span class="hero-stat-label">Clients</span>
-                </div>
-              </div>
-            </div>
           </div>
           <div class="client-showcase-head">
             <div>
               <span class="section-index">the creator orbit ✦</span>
               <h2 class="client-showcase-title">Clients</h2>
             </div>
-            <p>Eight featured collaborators up front, with the full client crew rolling just below.</p>
           </div>
         </div>
 
         <div class="client-orbit-wrap">
-          <p class="orbit-caption"><strong>8</strong> featured creators · 3D orbit</p>
           <div class="client-orbit" aria-label="Interactive horizontal 3D ring of eight featured clients">
             <span class="orbit-ring ring-a" aria-hidden="true"></span>
             <span class="orbit-ring ring-b" aria-hidden="true"></span>
@@ -1411,10 +1399,31 @@
       </div>
     </section>
 
+    <section class="achievements-strip" id="achievements" aria-labelledby="achievements-title">
+      <div class="achievement-band shell">
+        <div class="reveal">
+          <span class="section-index">01 / achievements</span>
+          <h2 id="achievements-title">Proof in the timeline.</h2>
+        </div>
+        <div class="hero-stats reveal" aria-label="Achievements totals">
+          <div class="hero-stats-grid">
+            <div class="hero-stat">
+              <strong class="achievement-value" data-target="600" data-suffix="+">600+</strong>
+              <span class="hero-stat-label">Videos edited</span>
+            </div>
+            <div class="hero-stat">
+              <strong class="achievement-value" data-target="30" data-suffix="+">30+</strong>
+              <span class="hero-stat-label">Clients</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="work">
       <div class="shell">
         <div class="section-head reveal">
-          <span class="section-index">01 / work</span>
+          <span class="section-index">02 / work</span>
           <h2>Stuff I’ve cut</h2>
         </div>
         <div class="work-groups">
@@ -1481,7 +1490,7 @@
     <section id="approach">
       <div class="manifesto-grid shell">
         <div>
-          <span class="section-index">02 / how I edit</span>
+          <span class="section-index">03 / how I edit</span>
           <p class="manifesto-copy reveal">Fast where it should hit. Quiet where it should breathe.</p>
         </div>
         <div class="principles">
@@ -1504,7 +1513,7 @@
     <section id="contact">
       <div class="shell">
         <div class="contact-card reveal">
-          <span class="section-index">03 / say hi</span>
+          <span class="section-index">04 / say hi</span>
           <h2>Got footage? Let’s cook.</h2>
           <p>Commissions and contact details are coming soon. For now, catch updates on GitHub.</p>
           <a class="button" href="https://github.com/SentoYuina" rel="noopener">Peek behind the scenes <span aria-hidden="true">↗</span></a>
@@ -1683,7 +1692,7 @@
       }
 
       const start = performance.now();
-      const duration = 1250;
+      const duration = 1750;
       const step = (now) => {
         const progress = Math.min(1, (now - start) / duration);
         const eased = 1 - Math.pow(1 - progress, 3);
