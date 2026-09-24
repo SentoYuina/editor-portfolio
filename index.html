@@ -412,44 +412,62 @@
 
     .works-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: 1rem;
       margin-top: 2rem;
     }
 
     .work-card {
-      min-height: 24rem;
+      position: relative;
+      grid-column: span 5;
+      min-height: 18rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 1.2rem;
+      padding: .65rem;
+      color: var(--paper);
+      text-decoration: none;
       border: 1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: 1.35rem;
       background: rgba(255,242,234,.055);
       overflow: hidden;
-      transition: transform .25s ease, border-color .25s ease;
+      transition: transform .28s ease, border-color .28s ease, background .28s ease;
     }
 
-    .work-card:nth-child(1) { border-radius: 1.8rem 1.8rem .8rem 1.8rem; }
-    .work-card:nth-child(2) { border-radius: .8rem 1.8rem 1.8rem 1.8rem; }
-    .work-card:nth-child(3) { border-radius: 1.8rem .8rem 1.8rem 1.8rem; }
+    .work-card:nth-child(1) {
+      grid-column: span 7;
+      grid-row: span 2;
+      min-height: 37rem;
+      border-radius: 2rem 2rem .85rem 2rem;
+    }
 
-    .work-card:hover { transform: translateY(-7px) rotate(.35deg); border-color: rgba(255,112,173,.9); }
+    .work-card:nth-child(2) { border-radius: .85rem 1.8rem 1.8rem 1.8rem; }
+    .work-card:nth-child(3) { border-radius: 1.8rem .85rem 1.8rem 1.8rem; }
+    .work-card:nth-child(n + 4) { grid-column: span 4; min-height: 19rem; }
 
-    .work-card:nth-child(2) { margin-top: 3rem; }
+    .work-card:hover {
+      z-index: 2;
+      transform: translateY(-7px) rotate(.25deg);
+      border-color: rgba(255,112,173,.9);
+      background: rgba(255,242,234,.09);
+    }
 
     .work-visual {
       position: relative;
-      min-height: 14rem;
-      display: grid;
-      place-items: center;
-      color: rgba(255,255,255,.64);
-      border-radius: calc(var(--radius) - .4rem);
-      background:
-        linear-gradient(135deg, rgba(154,124,255,.96), rgba(255,112,173,.38) 58%, transparent 72%),
-        repeating-linear-gradient(90deg, #281535 0 1.5rem, #351c44 1.5rem 3rem);
-      font: 800 3rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      flex: 1 1 auto;
+      min-height: 11.5rem;
+      border-radius: 1rem;
+      background: #180d20;
       overflow: hidden;
+    }
+
+    .work-card:nth-child(1) .work-visual { min-height: 27rem; }
+
+    .work-visual img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform .65s cubic-bezier(.2,.75,.2,1), filter .35s ease;
     }
 
     .work-visual::after {
@@ -457,21 +475,73 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(180deg, transparent 0 45%, rgba(255,255,255,.25) 49%, rgba(255,112,173,.42) 50%, transparent 56%);
-      transform: translateY(-120%);
+      background:
+        linear-gradient(180deg, transparent 42%, rgba(20,8,28,.7) 100%),
+        linear-gradient(135deg, rgba(255,112,173,.14), transparent 44%, rgba(154,124,255,.12));
     }
 
-    .work-card:nth-child(2) .work-visual {
-      background: linear-gradient(145deg, #4a2355, #24112f 55%, rgba(255,179,87,.8));
+    .work-play {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+      width: 3.65rem;
+      height: 3.65rem;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #1c0e24;
+      background: var(--acid);
+      box-shadow: 0 12px 32px rgba(0,0,0,.34);
+      transform: translate(-50%, -50%);
+      transition: transform .28s ease, background .28s ease;
     }
 
-    .work-card:nth-child(3) .work-visual {
-      color: var(--ink);
-      background: linear-gradient(145deg, var(--acid), #ff9c7e);
+    .work-play::before {
+      content: "";
+      width: 0;
+      height: 0;
+      margin-left: .2rem;
+      border-top: .48rem solid transparent;
+      border-bottom: .48rem solid transparent;
+      border-left: .75rem solid currentColor;
     }
 
-    .work-card h3 { margin: 1.1rem 0 .25rem; font-size: 1.18rem; }
-    .work-card p { margin: 0; color: var(--muted); }
+    .work-info {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .65rem 1rem;
+      align-items: end;
+      padding: 1rem .5rem .45rem;
+    }
+
+    .work-client {
+      display: block;
+      margin-bottom: .3rem;
+      color: var(--acid);
+      font: 800 .7rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .work-card h3 {
+      max-width: 24ch;
+      margin: 0;
+      font-size: clamp(1rem, 1.55vw, 1.35rem);
+      line-height: 1.12;
+      letter-spacing: -.025em;
+    }
+
+    .work-card:nth-child(1) h3 { font-size: clamp(1.45rem, 2.35vw, 2.2rem); }
+
+    .work-watch {
+      align-self: center;
+      color: var(--muted);
+      font: 750 .68rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
     .manifesto-grid {
       display: grid;
@@ -935,7 +1005,8 @@
     }
 
     @media (hover: hover) {
-      .work-card:hover .work-visual::after { animation: scan 1.05s ease-out; }
+      .work-card:hover .work-visual img { transform: scale(1.055); filter: saturate(1.1) contrast(1.04); }
+      .work-card:hover .work-play { background: var(--hot); transform: translate(-50%, -50%) scale(1.12) rotate(-4deg); }
     }
 
     :focus-visible { outline: 3px solid var(--acid); outline-offset: 4px; }
@@ -950,7 +1021,9 @@
       .client-orbit { width: min(96vw, 58rem); }
       .works-grid { grid-template-columns: 1fr; }
       .work-card,
-      .work-card:nth-child(2) { min-height: 0; margin-top: 0; }
+      .work-card:nth-child(1),
+      .work-card:nth-child(n + 4) { grid-column: auto; grid-row: auto; min-height: 0; }
+      .work-card:nth-child(1) .work-visual { min-height: 18rem; }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
     }
 
@@ -967,7 +1040,10 @@
       h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
       .hero-actions { align-items: stretch; flex-direction: column; }
       .button { width: 100%; }
-      .work-visual { min-height: 12rem; }
+      .work-visual,
+      .work-card:nth-child(1) .work-visual { min-height: 12rem; aspect-ratio: 16 / 9; }
+      .work-info { align-items: start; }
+      .work-watch { display: none; }
       .client-orbit-wrap { margin-top: 0; }
       .client-orbit { width: 100%; }
       .orbit-caption { top: .25rem; left: .25rem; }
@@ -1147,27 +1223,30 @@
           <h2>Stuff I’ve cut</h2>
         </div>
         <div class="works-grid">
-          <article class="work-card reveal">
-            <div class="work-visual" aria-hidden="true">01</div>
-            <div>
-              <h3>Long-form edits</h3>
-              <p>Big moments, tight pacing, zero dead air.</p>
-            </div>
-          </article>
-          <article class="work-card reveal">
-            <div class="work-visual" aria-hidden="true">02</div>
-            <div>
-              <h3>Short-form chaos</h3>
-              <p>Hooks, captions and punchlines built to land fast.</p>
-            </div>
-          </article>
-          <article class="work-card reveal">
-            <div class="work-visual" aria-hidden="true">03</div>
-            <div>
-              <h3>Motion &amp; polish</h3>
-              <p>The tiny details that make an edit feel finished.</p>
-            </div>
-          </article>
+          <a class="work-card reveal" href="https://www.youtube.com/watch?v=JWRSim0J6zE" target="_blank" rel="noopener noreferrer" aria-label="Watch Kenji being himself for 11 minutes and 3 seconds on YouTube">
+            <div class="work-visual"><img src="https://i.ytimg.com/vi/JWRSim0J6zE/maxresdefault.jpg" alt="Kenji being himself video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+            <div class="work-info"><div><span class="work-client">Kenji · long-form</span><h3>Kenji being himself for 11 minutes and 3 seconds</h3></div><span class="work-watch">Watch edit ↗</span></div>
+          </a>
+          <a class="work-card reveal" href="https://www.youtube.com/watch?v=GGQYLkeZe0M" target="_blank" rel="noopener noreferrer" aria-label="Watch There Is No Greater Feeling Than This on YouTube">
+            <div class="work-visual"><img src="https://i.ytimg.com/vi/GGQYLkeZe0M/maxres2.jpg" alt="There Is No Greater Feeling Than This video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+            <div class="work-info"><div><span class="work-client">Ultimo · short-form</span><h3>There Is No Greater Feeling Than This</h3></div><span class="work-watch">Play ↗</span></div>
+          </a>
+          <a class="work-card reveal" href="https://www.youtube.com/watch?v=HgFzjnC1GZI" target="_blank" rel="noopener noreferrer" aria-label="Watch The New Vtuber Meta on YouTube">
+            <div class="work-visual"><img src="https://i.ytimg.com/vi/HgFzjnC1GZI/maxresdefault.jpg" alt="The New Vtuber Meta video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+            <div class="work-info"><div><span class="work-client">Chibidoki · highlights</span><h3>The New Vtuber Meta</h3></div><span class="work-watch">Play ↗</span></div>
+          </a>
+          <a class="work-card reveal" href="https://www.youtube.com/watch?v=iP7bNcl6Mis" target="_blank" rel="noopener noreferrer" aria-label="Watch Yuy Crashing Out for 10 Minutes on YouTube">
+            <div class="work-visual"><img src="https://i.ytimg.com/vi/iP7bNcl6Mis/maxresdefault.jpg" alt="Yuy Crashing Out for 10 Minutes video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+            <div class="work-info"><div><span class="work-client">YUY · highlights</span><h3>Yuy Crashing Out for 10 Minutes</h3></div><span class="work-watch">Play ↗</span></div>
+          </a>
+          <a class="work-card reveal" href="https://www.youtube.com/watch?v=pXQniIFTzTQ" target="_blank" rel="noopener noreferrer" aria-label="Watch I Accidentally face revealed on stream on YouTube">
+            <div class="work-visual"><img src="https://i.ytimg.com/vi/pXQniIFTzTQ/maxresdefault.jpg" alt="I Accidentally face revealed on stream video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+            <div class="work-info"><div><span class="work-client">KYRIO · highlights</span><h3>I Accidentally face revealed on stream...</h3></div><span class="work-watch">Play ↗</span></div>
+          </a>
+          <a class="work-card reveal" href="https://www.youtube.com/watch?v=QFriOUPdvx8" target="_blank" rel="noopener noreferrer" aria-label="Watch 8 MIN OF CHAT TROLLING TRICKY on YouTube">
+            <div class="work-visual"><img src="https://i.ytimg.com/vi/QFriOUPdvx8/maxresdefault.jpg" alt="8 MIN OF CHAT TROLLING TRICKY video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
+            <div class="work-info"><div><span class="work-client">Trickywi · highlights</span><h3>8 MIN OF CHAT TROLLING TRICKY!</h3></div><span class="work-watch">Play ↗</span></div>
+          </a>
         </div>
       </div>
     </section>
