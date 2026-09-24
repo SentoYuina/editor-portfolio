@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Video editing prices and packages from SentoYuina.">
+  <meta name="theme-color" content="#170d1f">
+  <title>Prices — SentoYuina Video Editor</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23170d1f'/%3E%3Cpath d='M16 18h32v8H16zm0 20h32v8H16z' fill='%23ff70ad'/%3E%3Cpath d='M27 14h10v36H27z' fill='%239a7cff'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink:#170d1f; --panel:#281535; --paper:#fff2ea; --muted:#cbb8cf;
+      --line:rgba(255,242,234,.18); --hot:#ff70ad; --violet:#9a7cff; --gold:#ffb357;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--ink);scroll-behavior:smooth}
+    body{margin:0;color:var(--paper);background:radial-gradient(circle at 80% 8%,rgba(154,124,255,.3),transparent 30rem),radial-gradient(circle at 8% 74%,rgba(255,112,173,.18),transparent 28rem),var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+    a{color:inherit}.shell{width:min(calc(100% - 2rem),var(--max));margin-inline:auto}
+    .site-header{position:sticky;z-index:20;top:0;border-bottom:1px solid var(--line);background:rgba(23,13,31,.78);backdrop-filter:blur(18px)}
+    .nav{min-height:4.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:inline-flex;align-items:center;gap:.75rem;font-weight:850;text-decoration:none}
+    .brand-mark{display:grid;place-items:center;width:2rem;height:2rem;color:var(--ink);background:var(--hot);border-radius:.55rem;font:800 .72rem/1 ui-monospace,Consolas,monospace}
+    .nav-links{display:flex;gap:clamp(.8rem,2.4vw,1.8rem);font:750 .8rem/1 ui-monospace,Consolas,monospace}
+    .nav-links a{color:var(--muted);text-decoration:none}.nav-links a:hover,.nav-links a:focus-visible,.nav-links .active{color:var(--hot)}
+    .hero{padding:clamp(4rem,9vw,7.5rem) 0 2.5rem}
+    .eyebrow{margin:0 0 1rem;color:var(--hot);font:800 .72rem/1 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase}
+    h1{max-width:11ch;margin:0;font-size:clamp(3.6rem,9vw,8rem);line-height:.84;letter-spacing:-.075em}
+    h1 span{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(255,242,234,.75)}
+    .hero-copy{max-width:42rem;margin:1.8rem 0 0;color:var(--muted);font-size:clamp(1.05rem,2vw,1.3rem)}
+    .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:2rem 0}
+    .price-card{position:relative;overflow:hidden;padding:clamp(1.4rem,3vw,2.2rem);border:1px solid var(--line);border-radius:1.7rem;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 1.5rem 5rem rgba(0,0,0,.2)}
+    .price-card::after{content:"";position:absolute;width:13rem;height:13rem;right:-6rem;top:-7rem;border-radius:50%;background:var(--glow,var(--hot));opacity:.14;filter:blur(12px)}
+    .card-kicker{color:var(--hot);font:800 .68rem/1 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:.8rem 0 .2rem;font-size:clamp(1.8rem,4vw,3rem);line-height:1;letter-spacing:-.045em}
+    .price{display:flex;align-items:end;gap:.65rem;margin:1.7rem 0 1.1rem}.price strong{font-size:clamp(3.2rem,7vw,5.6rem);line-height:.8;letter-spacing:-.075em}.price span{color:var(--muted);font:750 .72rem/1.35 ui-monospace,Consolas,monospace;text-transform:uppercase}
+    .package{display:flex;justify-content:space-between;gap:1rem;margin:0 0 1.4rem;padding:.85rem 1rem;border:1px solid rgba(255,179,87,.35);border-radius:1rem;background:rgba(255,179,87,.08)}
+    .package strong{color:var(--gold)}.package span{color:var(--muted)}
+    ul{margin:1.2rem 0 0;padding:0;list-style:none}.price-card li{position:relative;padding:.7rem 0 .7rem 1.35rem;border-top:1px solid rgba(255,242,234,.1);color:var(--muted)}.price-card li::before{content:"✦";position:absolute;left:0;color:var(--hot)}
+    .bonus{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center;margin:1rem 0 5rem;padding:clamp(1.25rem,3vw,2rem);border:1px solid rgba(255,112,173,.45);border-radius:1.5rem;background:linear-gradient(100deg,rgba(255,112,173,.16),rgba(154,124,255,.14))}
+    .bonus-mark{display:grid;place-items:center;width:4.5rem;aspect-ratio:1;border-radius:50%;color:var(--ink);background:linear-gradient(135deg,var(--hot),var(--gold));font:900 1.2rem/1 ui-monospace,Consolas,monospace;transform:rotate(-6deg)}
+    .bonus h2{margin:0 0 .4rem;font-size:clamp(1.5rem,3vw,2.3rem)}.bonus p{margin:0;color:var(--muted)}
+    .cta{margin-bottom:5rem;padding:clamp(1.5rem,5vw,3.5rem);border-radius:1.8rem;background:var(--paper);color:var(--ink)}.cta h2{max-width:12ch;font-size:clamp(2.3rem,6vw,5rem)}.cta p{max-width:38rem}.button{display:inline-flex;margin-top:1rem;padding:.9rem 1.2rem;border-radius:999px;background:linear-gradient(120deg,var(--hot),#ff8f88);font-weight:850;text-decoration:none}
+    footer{display:flex;justify-content:space-between;gap:1rem;padding:2rem 0 3rem;color:var(--muted);font:700 .68rem/1.4 ui-monospace,Consolas,monospace;text-transform:uppercase}
+    :focus-visible{outline:3px solid var(--hot);outline-offset:4px}
+    @media(max-width:720px){.price-grid{grid-template-columns:1fr}.nav-links a:first-child{display:none}h1{font-size:clamp(3.4rem,19vw,5.8rem)}.bonus{grid-template-columns:1fr}.package{flex-direction:column;gap:.15rem}footer{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header class="site-header"><nav class="nav shell" aria-label="Main navigation">
+    <a class="brand" href="index.html#top"><span class="brand-mark" aria-hidden="true">SY</span><span>SentoYuina</span></a>
+    <div class="nav-links"><a href="index.html">Portfolio</a><a href="index.html#work">Work</a><a class="active" href="pricing.html" aria-current="page">Prices</a><a href="tos.html">TOS</a></div>
+  </nav></header>
+  <main>
+    <section class="hero shell">
+      <p class="eyebrow">Services &amp; pricing</p>
+      <h1>Clear cuts.<span>Clear rates.</span></h1>
+      <p class="hero-copy">Subtitles, visual effects, and a whole lot of timeline care are already included—no mystery add-ons.</p>
+    </section>
+    <section class="price-grid shell" aria-label="Editing services">
+      <article class="price-card" style="--glow:#ff70ad">
+        <span class="card-kicker">Short-form editing</span><h2>Shorts</h2>
+        <div class="price"><strong>$21</strong><span>per single<br>Short</span></div>
+        <div class="package"><strong>5 Shorts — $100</strong><span>$20 each</span></div>
+        <ul>
+          <li>Full subtitles and visual effects included.</li>
+          <li>Please provide timestamps, a timeline, or Twitch Clips for the moments you want edited.</li>
+          <li>Memes, reaction images, character assets, and extra materials are always appreciated.</li>
+        </ul>
+      </article>
+      <article class="price-card" style="--glow:#9a7cff">
+        <span class="card-kicker">Long-form editing</span><h2>Full videos</h2>
+        <div class="price"><strong>$18</strong><span>per edited<br>minute</span></div>
+        <ul>
+          <li>Full subtitles and visual effects included.</li>
+          <li>Send the full VOD—I’ll review the footage and select suitable moments for the final video.</li>
+          <li>Memes, reaction images, character assets, and extra materials are welcome.</li>
+        </ul>
+      </article>
+    </section>
+    <aside class="bonus shell">
+      <div class="bonus-mark">+1</div>
+      <div><span class="card-kicker">Long-form loyalty bonus</span><h2>Order 2 long-form videos. Get 1 Short free.</h2><p>A little thank-you for keeping the timeline busy.</p></div>
+    </aside>
+    <section class="cta shell"><span class="card-kicker">Before booking</span><h2>Know the process, too.</h2><p>Check the turnaround times, footage requirements, credit rules, and payment details before your project begins.</p><a class="button" href="tos.html">Read the TOS →</a></section>
+  </main>
+  <footer class="shell"><span>© 2026 SentoYuina</span><span>Video editor · Pricing</span></footer>
+</body>
+</html>
+
