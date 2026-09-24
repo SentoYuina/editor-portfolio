@@ -1416,6 +1416,10 @@
 
     .contact-card {
       position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(13rem, .48fr);
+      gap: clamp(1.5rem, 4vw, 4rem);
+      align-items: center;
       padding: clamp(2rem, 7vw, 6rem);
       overflow: hidden;
       color: var(--ink);
@@ -1424,7 +1428,7 @@
     }
 
     .contact-card::after {
-      content: "LET’S GO";
+      content: "HELLO";
       position: absolute;
       right: -1rem;
       bottom: -2.2rem;
@@ -1435,9 +1439,70 @@
       letter-spacing: -.12em;
     }
 
-    .contact-card h2 { position: relative; z-index: 1; max-width: 10ch; }
-    .contact-card p { position: relative; z-index: 1; max-width: 38rem; margin: 1.4rem 0 2rem; font-size: 1.08rem; }
-    .contact-card .button { position: relative; z-index: 1; color: var(--paper); background: var(--ink); border-color: var(--ink); }
+    .contact-copy,
+    .contact-portrait,
+    .contact-links { position: relative; z-index: 1; }
+    .contact-card h2 { max-width: 10ch; }
+    .contact-card p { max-width: 39rem; margin: 1.4rem 0 0; font-size: 1.08rem; }
+
+    .contact-portrait {
+      justify-self: end;
+      width: min(100%, 18rem);
+      aspect-ratio: 1;
+      padding: .55rem;
+      background: rgba(255, 255, 255, .44);
+      border: 1px solid rgba(69, 25, 73, .16);
+      border-radius: 42% 58% 50% 50% / 48% 42% 58% 52%;
+      box-shadow: 0 1.4rem 3.6rem rgba(69, 25, 73, .18);
+      transform: rotate(2.5deg);
+    }
+
+    .contact-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    .contact-links {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    .contact-link {
+      min-width: 0;
+      padding: 1rem 1.1rem;
+      color: var(--ink);
+      background: rgba(255, 255, 255, .52);
+      border: 1px solid rgba(69, 25, 73, .15);
+      border-radius: 1.15rem;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .contact-link:hover {
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 .75rem 1.8rem rgba(69, 25, 73, .12);
+      transform: translateY(-4px) rotate(-.4deg);
+    }
+
+    .contact-link span,
+    .contact-link small { display: block; }
+    .contact-link span {
+      margin-bottom: .35rem;
+      color: #9a3974;
+      font: 800 .68rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .contact-link strong {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: clamp(.9rem, 1.5vw, 1.08rem);
+      line-height: 1.25;
+    }
+    .contact-link small { margin-top: .45rem; color: rgba(69, 25, 73, .68); font-size: .75rem; }
 
     footer {
       display: flex;
@@ -1541,6 +1606,8 @@
       .testimonial-universe { min-height: auto; }
       .testimonial-core { width: 100%; }
       .testimonial-tab { width: auto; }
+      .contact-card { grid-template-columns: minmax(0, 1fr) minmax(9rem, .42fr); }
+      .contact-links { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 560px) {
@@ -1615,6 +1682,10 @@
       .testimonial-chip { min-height: 4rem; grid-template-columns: 2.25rem 1fr; gap: .5rem; padding: .5rem; }
       .testimonial-tab .testimonial-monogram { width: 2.25rem; }
       .testimonial-tab strong { font-size: .72rem; }
+      .contact-card { grid-template-columns: 1fr; padding: 2rem 1.25rem; }
+      .contact-portrait { grid-row: 1; justify-self: start; width: 8rem; }
+      .contact-copy { grid-row: 2; }
+      .contact-links { grid-row: 3; }
       footer { flex-direction: column; }
     }
 
@@ -1982,10 +2053,31 @@
     <section id="contact">
       <div class="shell">
         <div class="contact-card reveal">
-          <span class="section-index">05 / say hi</span>
-          <h2>Got footage? Let’s cook.</h2>
-          <p>Commissions and contact details are coming soon. For now, catch updates on GitHub.</p>
-          <a class="button" href="https://github.com/SentoYuina" rel="noopener">Peek behind the scenes <span aria-hidden="true">↗</span></a>
+          <div class="contact-copy">
+            <span class="section-index">05 / say hi</span>
+            <h2>Hey, I’m Yuina.</h2>
+            <p>I’m a Malaysia-based video editor who loves sharp timing, big reactions, and turning good footage into something people want to keep watching. Got a project—or just a wonderfully chaotic idea? Come say hi.</p>
+          </div>
+          <figure class="contact-portrait" aria-label="SentoYuina character portrait">
+            <img src="assets/sento-yuina.png" alt="SentoYuina character portrait" loading="lazy" decoding="async">
+          </figure>
+          <div class="contact-links" aria-label="Contact SentoYuina">
+            <a class="contact-link" href="mailto:SentoYuina163@gmail.com">
+              <span>Email</span>
+              <strong>SentoYuina163@gmail.com</strong>
+              <small>For projects and enquiries ↗</small>
+            </a>
+            <a class="contact-link" href="https://x.com/SentoYuinaWK" target="_blank" rel="noopener noreferrer">
+              <span>X / Twitter</span>
+              <strong>@SentoYuinaWK</strong>
+              <small>DMs and updates ↗</small>
+            </a>
+            <a class="contact-link" href="https://discord.com/users/866227452400500776" target="_blank" rel="noopener noreferrer">
+              <span>Discord</span>
+              <strong>@sento_yuina</strong>
+              <small>Open my profile and add me ↗</small>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -2416,4 +2508,3 @@
   </script>
 </body>
 </html>
-
