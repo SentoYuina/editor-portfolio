@@ -789,15 +789,15 @@
       z-index: 52;
       left: 50%;
       top: 50%;
-      width: min(28rem, 43%);
-      min-height: 23.5rem;
+      width: min(32rem, 47%);
+      min-height: 22rem;
       padding: 2.1rem;
       overflow: hidden;
       border: 1px solid rgba(255,242,234,.3);
-      border-radius: 47% 53% 48% 52% / 54% 46% 54% 46%;
+      border-radius: 2rem;
       background:
-        radial-gradient(circle at 35% 22%, rgba(255,112,173,.24), transparent 36%),
-        radial-gradient(circle at 74% 78%, rgba(154,124,255,.28), transparent 42%),
+        linear-gradient(135deg, rgba(255,112,173,.13), transparent 42%),
+        radial-gradient(circle at 78% 82%, rgba(154,124,255,.25), transparent 44%),
         rgba(32,16,43,.94);
       box-shadow:
         0 0 0 1rem rgba(154,124,255,.035),
@@ -818,9 +818,11 @@
     .testimonial-core-label {
       position: absolute;
       z-index: 3;
-      top: 1.8rem;
+      top: 1.45rem;
       left: 50%;
       margin: 0;
+      width: max-content;
+      max-width: calc(100% - 3rem);
       color: var(--acid);
       font: 850 .68rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
       letter-spacing: .14em;
@@ -829,15 +831,7 @@
     }
 
     .testimonial-core-intro {
-      position: absolute;
-      z-index: 2;
-      inset: 0;
-      display: grid;
-      place-content: center;
-      gap: .7rem;
-      padding: 3rem;
-      text-align: center;
-      transition: opacity .3s ease, transform .3s ease;
+      display: none;
     }
 
     .testimonial-core-intro strong {
@@ -855,15 +849,9 @@
       text-transform: uppercase;
     }
 
-    .testimonial-universe.has-selection .testimonial-core-intro {
-      opacity: 0;
-      transform: scale(.92);
-      pointer-events: none;
-    }
-
     .testimonial-stack {
       position: absolute;
-      inset: 3.5rem 2.2rem 2rem;
+      inset: 3.8rem 2.2rem 1.8rem;
     }
 
     .testimonial-card {
@@ -1884,7 +1872,7 @@
 
         <div class="testimonial-universe reveal" id="testimonialStage">
           <div class="testimonial-core">
-            <p class="testimonial-core-label">Voices in orbit</p>
+            <p class="testimonial-core-label">Click a voice · hover to pause</p>
             <div class="testimonial-core-intro" aria-hidden="true">
               <strong>Testimonials</strong>
               <span>Click a voice to bring it closer ✦</span>
@@ -2164,6 +2152,7 @@
     requestAnimationFrame(animateClientMarquee);
 
     let activeTestimonial = -1;
+    let testimonialUserPicked = false;
 
     const showTestimonial = (index, focusTab = false) => {
       activeTestimonial = (index + testimonialCards.length) % testimonialCards.length;
@@ -2183,6 +2172,7 @@
 
     testimonialTabs.forEach((tab, index) => {
       tab.addEventListener('click', () => {
+        testimonialUserPicked = true;
         showTestimonial(index);
         document.querySelector('.testimonial-core')?.scrollIntoView({
           behavior: prefersReducedMotion ? 'auto' : 'smooth',
@@ -2192,10 +2182,13 @@
       tab.addEventListener('keydown', (event) => {
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
         event.preventDefault();
+        testimonialUserPicked = true;
         const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
         showTestimonial(index + direction, true);
       });
     });
+
+    showTestimonial(0);
 
     if (testimonialStage) {
       if (prefersReducedMotion || !('IntersectionObserver' in window)) {
@@ -2278,6 +2271,12 @@
     });
 
     requestAnimationFrame(renderTestimonialOrbit);
+    if (!prefersReducedMotion) {
+      setInterval(() => {
+        if (testimonialUserPicked || testimonialOrbitPaused) return;
+        showTestimonial(activeTestimonial + 1);
+      }, 6200);
+    }
 
     const showAchievementValue = (element) => {
       const target = Number(element.dataset.target || 0);
