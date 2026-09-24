@@ -971,9 +971,11 @@
       position: relative;
       inset: auto;
       display: flex;
+      align-items: center;
       gap: .7rem;
-      margin-top: 1rem;
-      padding: .2rem .1rem .8rem;
+      min-height: 7.25rem;
+      margin: 1rem -.35rem -.15rem;
+      padding: 1rem .9rem 1.15rem;
       overflow-x: auto;
       overscroll-behavior-inline: contain;
       scroll-snap-type: inline proximity;
@@ -982,6 +984,10 @@
       cursor: grab;
       user-select: none;
       touch-action: pan-x;
+      border: 1px solid rgba(255, 242, 234, .08);
+      border-radius: 1.25rem;
+      background: linear-gradient(90deg, rgba(255, 112, 173, .035), rgba(154, 124, 255, .045));
+      box-shadow: inset 0 0 2rem rgba(0, 0, 0, .08);
     }
     .testimonial-cloud.dragging {
       cursor: grabbing;
@@ -1496,13 +1502,24 @@
       justify-self: end;
       width: min(100%, 18rem);
       aspect-ratio: 1;
+      margin: 0;
       padding: .55rem;
       background: rgba(255, 255, 255, .44);
       border: 1px solid rgba(69, 25, 73, .16);
       border-radius: 42% 58% 50% 50% / 48% 42% 58% 52%;
       box-shadow: 0 1.4rem 3.6rem rgba(69, 25, 73, .18);
       transform: rotate(2.5deg);
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
     }
+
+    .contact-portrait:hover,
+    .contact-portrait:focus-visible {
+      transform: rotate(0deg) scale(1.035);
+      box-shadow: 0 1.7rem 4.2rem rgba(69, 25, 73, .24), 0 0 0 .35rem rgba(255, 112, 173, .18);
+    }
+
+    .contact-portrait:active { transform: rotate(-2deg) scale(.97); }
 
     .contact-portrait img {
       width: 100%;
@@ -1772,7 +1789,8 @@
         display: flex;
         gap: .65rem;
         margin: 1rem -.75rem 0;
-        padding: .15rem .75rem .8rem;
+        min-height: 6.75rem;
+        padding: .85rem .75rem 1rem;
         overflow-x: auto;
         overscroll-behavior-inline: contain;
         scroll-snap-type: inline proximity;
@@ -1828,9 +1846,9 @@
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu"><span>Menu</span><b aria-hidden="true">＋</b></button>
       <div class="nav-links" id="site-menu">
-        <a href="#work"><em>01</em> Work</a>
-        <a href="#testimonials"><em>02</em> Reviews</a>
-        <a href="#clients"><em>03</em> Clients</a>
+        <a href="#clients"><em>01</em> Clients</a>
+        <a href="#work"><em>02</em> Work</a>
+        <a href="#testimonials"><em>03</em> Reviews</a>
         <a href="pricing.html"><em>04</em> Prices</a>
         <a href="tos.html"><em>05</em> TOS</a>
         <a class="nav-cta" href="#contact">Say hi ↗</a>
@@ -2171,9 +2189,9 @@
             <h2>Hey, I’m Yuina.</h2>
             <p>I’m a video editor who loves sharp timing, big reactions, and turning good footage into something people want to keep watching. Got a project—or just a wonderfully chaotic idea? Come say hi.</p>
           </div>
-          <figure class="contact-portrait" aria-label="SentoYuina character portrait">
+          <button class="contact-portrait" type="button" aria-label="Pop a Yuina emote" title="Psst… click me a few times">
             <img src="assets/sento-yuina.png" alt="SentoYuina character portrait" loading="lazy" decoding="async">
-          </figure>
+          </button>
           <div class="contact-links" aria-label="Contact SentoYuina">
             <a class="contact-link" href="mailto:SentoYuina163@gmail.com">
               <span>Email</span>
@@ -2218,7 +2236,7 @@
     const testimonialCloud = document.querySelector('.testimonial-cloud');
     const testimonialCards = [...document.querySelectorAll('.testimonial-card')];
     const testimonialTabs = [...document.querySelectorAll('.testimonial-tab')];
-    const sayHiTriggers = [...document.querySelectorAll('.nav-cta')];
+    const easterTrigger = document.querySelector('.contact-portrait');
     const mainNav = document.querySelector('.nav');
     const navToggle = document.querySelector('.nav-toggle');
 
@@ -2561,12 +2579,12 @@
       'assets/emotes/gremlin.png',
       'assets/emotes/smug.png'
     ];
-    let sayHiClicks = 0;
+    let easterClicks = 0;
 
     const spawnEasterEmote = (originX, originY, index) => {
       const emote = document.createElement('img');
       const spread = Math.min(innerWidth * .25, 210);
-      const scatter = sayHiClicks > 1;
+      const scatter = easterClicks > 1;
       const x = scatter
         ? 65 + Math.random() * Math.max(0, innerWidth - 130)
         : Math.max(65, Math.min(innerWidth - 65, originX + (Math.random() - .5) * spread * 2));
@@ -2586,13 +2604,11 @@
       setTimeout(() => emote.remove(), prefersReducedMotion ? 850 : 2000);
     };
 
-    sayHiTriggers.forEach((trigger) => {
-      trigger.title = 'Psst… click me a few times';
-      trigger.addEventListener('click', (event) => {
-        sayHiClicks += 1;
-        const clickNumber = sayHiClicks;
+    easterTrigger?.addEventListener('click', (event) => {
+        easterClicks += 1;
+        const clickNumber = easterClicks;
         const amount = Math.min(1 + Math.floor((clickNumber - 1) / 2), 4);
-        const rect = trigger.getBoundingClientRect();
+        const rect = easterTrigger.getBoundingClientRect();
         const originX = event.clientX || rect.left + rect.width / 2;
         const originY = event.clientY || rect.bottom;
         for (let index = 0; index < amount; index += 1) {
@@ -2600,7 +2616,6 @@
             spawnEasterEmote(originX, originY, clickNumber + index);
           }, index * 85);
         }
-      });
     });
 
     const showAchievementValue = (element) => {
