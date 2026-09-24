@@ -701,6 +701,202 @@
       -webkit-line-clamp: 2;
     }
 
+    #testimonials {
+      position: relative;
+      padding-block: clamp(4.5rem, 8vw, 7.5rem);
+      overflow: hidden;
+      border-block: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 18% 35%, rgba(255,112,173,.16), transparent 27rem),
+        radial-gradient(circle at 88% 72%, rgba(154,124,255,.16), transparent 30rem),
+        linear-gradient(135deg, rgba(255,242,234,.035), transparent 55%);
+    }
+
+    #testimonials::before {
+      content: "\201C";
+      position: absolute;
+      top: -5.5rem;
+      right: 3vw;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,242,234,.08);
+      font: 950 25rem/.8 Georgia, serif;
+      pointer-events: none;
+    }
+
+    .testimonial-head {
+      display: grid;
+      grid-template-columns: 7rem minmax(0, 1fr) minmax(14rem, 23rem);
+      gap: 1.5rem;
+      align-items: end;
+    }
+
+    .testimonial-head h2 {
+      max-width: 9ch;
+      font-size: clamp(2.9rem, 6vw, 5.9rem);
+    }
+
+    .testimonial-head p {
+      margin: 0 0 .3rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .testimonial-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(19rem, .55fr);
+      gap: 1rem;
+      margin-top: clamp(2rem, 4vw, 3.25rem);
+    }
+
+    .testimonial-stack {
+      position: relative;
+      min-height: 31rem;
+    }
+
+    .testimonial-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 1px solid rgba(255,242,234,.22);
+      border-radius: 1.7rem;
+      background:
+        linear-gradient(145deg, rgba(255,112,173,.13), rgba(154,124,255,.08) 48%, rgba(23,13,31,.72)),
+        rgba(255,242,234,.045);
+      box-shadow: 0 2rem 7rem rgba(0,0,0,.24);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(1rem) scale(.985) rotate(.35deg);
+      transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1), visibility .45s;
+    }
+
+    .testimonial-card::after {
+      content: attr(data-number);
+      position: absolute;
+      top: 1.3rem;
+      right: 1.5rem;
+      color: rgba(255,242,234,.28);
+      font: 800 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .12em;
+    }
+
+    .testimonial-card.active {
+      z-index: 2;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    .testimonial-quote {
+      max-width: 29ch;
+      margin: 0;
+      font-size: clamp(1.45rem, 2.8vw, 2.65rem);
+      font-weight: 760;
+      line-height: 1.17;
+      letter-spacing: -.035em;
+    }
+
+    .testimonial-quote::before {
+      content: "\201C";
+      display: block;
+      height: 2.3rem;
+      color: var(--acid);
+      font: 900 5.8rem/.75 Georgia, serif;
+      text-shadow: .08em .06em 0 rgba(154,124,255,.55);
+    }
+
+    .testimonial-byline {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+    }
+
+    .testimonial-monogram {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 3.4rem;
+      aspect-ratio: 1;
+      color: var(--ink);
+      border-radius: 50%;
+      background: var(--accent, var(--acid));
+      box-shadow: .22rem .22rem 0 rgba(255,242,234,.12);
+      font: 950 .82rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .testimonial-byline strong { display: block; font-size: 1rem; }
+    .testimonial-byline a {
+      color: var(--muted);
+      font: 700 .74rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      text-decoration: none;
+    }
+    .testimonial-byline a:hover,
+    .testimonial-byline a:focus-visible { color: var(--acid); }
+
+    .testimonial-picker {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-content: start;
+      gap: .65rem;
+      padding: .75rem;
+      border: 1px solid var(--line);
+      border-radius: 1.5rem;
+      background: rgba(255,242,234,.035);
+    }
+
+    .testimonial-tab {
+      min-width: 0;
+      min-height: 5.2rem;
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .7rem;
+      color: var(--muted);
+      border: 1px solid transparent;
+      border-radius: 1rem;
+      background: rgba(255,242,234,.035);
+      cursor: pointer;
+      text-align: left;
+      transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    .testimonial-tab:hover,
+    .testimonial-tab:focus-visible { color: var(--paper); transform: translateY(-2px); }
+    .testimonial-tab[aria-selected="true"] {
+      color: var(--paper);
+      border-color: rgba(255,112,173,.75);
+      background: linear-gradient(135deg, rgba(255,112,173,.2), rgba(154,124,255,.12));
+    }
+
+    .testimonial-tab .testimonial-monogram { width: 2.55rem; font-size: .66rem; }
+    .testimonial-tab strong {
+      display: block;
+      overflow: hidden;
+      font-size: .8rem;
+      line-height: 1.15;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .testimonial-tab small {
+      display: block;
+      margin-top: .18rem;
+      color: inherit;
+      font: 650 .59rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace;
+      opacity: .72;
+    }
+
+    .testimonial-picker-note {
+      grid-column: 1 / -1;
+      margin: .25rem .25rem 0;
+      color: var(--muted);
+      font: 650 .64rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+    }
+
     .manifesto-grid {
       display: grid;
       grid-template-columns: .8fr 1.2fr;
@@ -1214,6 +1410,12 @@
       .work-group-actions { align-items: flex-end; flex-direction: column; gap: .4rem; }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
       .achievement-band { grid-template-columns: 1fr; gap: 1.25rem; }
+      .testimonial-head { grid-template-columns: 1fr; gap: .75rem; }
+      .testimonial-head p { max-width: 34rem; }
+      .testimonial-stage { grid-template-columns: 1fr; }
+      .testimonial-stack { min-height: 29rem; }
+      .testimonial-picker { grid-template-columns: repeat(4, 1fr); }
+      .testimonial-picker-note { grid-column: 1 / -1; }
     }
 
     @media (max-width: 560px) {
@@ -1245,6 +1447,13 @@
       .client-strip-card .orbit-node-label { display: block; }
       .achievement-value { font-size: clamp(2.2rem, 12vw, 3.4rem); }
       .hero-stat-label { font-size: .62rem; }
+      .testimonial-head h2 { font-size: clamp(2.8rem, 14vw, 4.6rem); }
+      .testimonial-stack { min-height: 31rem; }
+      .testimonial-card { padding: 1.35rem; border-radius: 1.25rem; }
+      .testimonial-quote { font-size: clamp(1.2rem, 5.2vw, 1.5rem); }
+      .testimonial-picker { grid-template-columns: 1fr 1fr; padding: .5rem; }
+      .testimonial-tab { min-height: 4.25rem; }
+      .testimonial-tab .testimonial-monogram { width: 2.2rem; }
       footer { flex-direction: column; }
     }
 
@@ -1257,6 +1466,8 @@
       .reel { transform: rotate(1.6deg) !important; }
       .client-orbit { opacity: 1; transform: none; filter: none; }
       .client-marquee-viewport { mask-image: none; -webkit-mask-image: none; }
+      .testimonial-card { opacity: 0; transform: none; }
+      .testimonial-card.active { opacity: 1; }
     }
   </style>
 </head>
@@ -1272,6 +1483,7 @@
       </a>
       <div class="nav-links">
         <a href="#work">Work</a>
+        <a href="#testimonials">Reviews</a>
         <a href="#approach">How I edit</a>
         <a href="#clients">Clients</a>
         <a href="#contact">Say hi</a>
@@ -1491,10 +1703,91 @@
       </div>
     </section>
 
+    <section id="testimonials" aria-labelledby="testimonials-title">
+      <div class="shell">
+        <div class="testimonial-head reveal">
+          <span class="section-index">03 / testimonials</span>
+          <h2 id="testimonials-title">They said it.</h2>
+          <p>Real notes from the people whose footage has lived on my timeline.</p>
+        </div>
+
+        <div class="testimonial-stage reveal" id="testimonialStage">
+          <div class="testimonial-stack" aria-live="polite">
+            <article class="testimonial-card active" id="testimonial-kyrio" data-number="01 / 07" aria-hidden="false">
+              <p class="testimonial-quote">The best thing about working with Yuina is his commitment to finishing on time, creativity, and excellent sense of video pacing. He gets things done quickly without sacrificing quality.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--acid)">KY</span>
+                <div><strong>Kyrio</strong><a href="https://x.com/KyrioCifer" target="_blank" rel="noopener noreferrer">@KyrioCifer ↗</a></div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" id="testimonial-roe" data-number="02 / 07" aria-hidden="true">
+              <p class="testimonial-quote">Yuina’s sense of humor makes it easy for me to trust him with choosing clips and adding the perfect memes. He is incredibly kind and easy to work with, and the quality he delivers is outstanding.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--violet)">RB</span>
+                <div><strong>RoeBunny</strong><a href="https://x.com/RoeBunnyVT" target="_blank" rel="noopener noreferrer">@RoeBunnyVT ↗</a></div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" id="testimonial-scarlet" data-number="03 / 07" aria-hidden="true">
+              <p class="testimonial-quote">Yuina is incredibly clear with communication and understands exactly what I’m looking for in an edit. He not only delivers what I ask for—he often improves on it.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--cyan)">SM</span>
+                <div><strong>ScarletMother</strong><a href="https://x.com/_scarletmother" target="_blank" rel="noopener noreferrer">@_scarletmother ↗</a></div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" id="testimonial-yami" data-number="04 / 07" aria-hidden="true">
+              <p class="testimonial-quote">I really love the communication—being able to clearly communicate with someone working on a project for me is a huge thing, and Yuina does that exceptionally well.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--acid)">Y7</span>
+                <div><strong>Yami7ways</strong><a href="https://x.com/Yami7ways" target="_blank" rel="noopener noreferrer">@Yami7ways ↗</a></div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" id="testimonial-yuy" data-number="05 / 07" aria-hidden="true">
+              <p class="testimonial-quote">Yuina is very, very timely and his work is super quality. I’d totally recommend him.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--violet)">YY</span>
+                <div><strong>YUY</strong><a href="https://x.com/YUY_IX" target="_blank" rel="noopener noreferrer">@YUY_IX ↗</a></div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" id="testimonial-crash" data-number="06 / 07" aria-hidden="true">
+              <p class="testimonial-quote">I loved the creativity behind each project and how everything came together. I’d recommend Yuina to a friend—begrudgingly, because that means more people in the queue.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--cyan)">CV</span>
+                <div><strong>CrashVS</strong><a href="https://x.com/CrashVSX" target="_blank" rel="noopener noreferrer">@CrashVSX ↗</a></div>
+              </div>
+            </article>
+
+            <article class="testimonial-card" id="testimonial-fawni" data-number="07 / 07" aria-hidden="true">
+              <p class="testimonial-quote">Yuina has a great eye for bringing concepts to life and noticing small details that become great content. They work hard, communicate clearly, and consistently exceed my expectations.</p>
+              <div class="testimonial-byline">
+                <span class="testimonial-monogram" style="--accent: var(--acid)">FA</span>
+                <div><strong>Fawni</strong><a href="https://x.com/idlefawni" target="_blank" rel="noopener noreferrer">@idlefawni ↗</a></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="testimonial-picker" role="tablist" aria-label="Choose a client testimonial">
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="true" aria-controls="testimonial-kyrio" data-testimonial="0"><span class="testimonial-monogram" style="--accent: var(--acid)">KY</span><span><strong>Kyrio</strong><small>On-time + creative</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-roe" data-testimonial="1"><span class="testimonial-monogram" style="--accent: var(--violet)">RB</span><span><strong>RoeBunny</strong><small>Perfect memes</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-scarlet" data-testimonial="2"><span class="testimonial-monogram" style="--accent: var(--cyan)">SM</span><span><strong>ScarletMother</strong><small>Clear vision</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-yami" data-testimonial="3"><span class="testimonial-monogram" style="--accent: var(--acid)">Y7</span><span><strong>Yami7ways</strong><small>Communication</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-yuy" data-testimonial="4"><span class="testimonial-monogram" style="--accent: var(--violet)">YY</span><span><strong>YUY</strong><small>Fast + quality</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-crash" data-testimonial="5"><span class="testimonial-monogram" style="--accent: var(--cyan)">CV</span><span><strong>CrashVS</strong><small>Creative collab</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-fawni" data-testimonial="6"><span class="testimonial-monogram" style="--accent: var(--acid)">FA</span><span><strong>Fawni</strong><small>Details matter</small></span></button>
+            <p class="testimonial-picker-note">Pick a name · auto-plays every 8 seconds</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="approach">
       <div class="manifesto-grid shell">
         <div>
-          <span class="section-index">03 / how I edit</span>
+          <span class="section-index">04 / how I edit</span>
           <p class="manifesto-copy reveal">Fast where it should hit. Quiet where it should breathe.</p>
         </div>
         <div class="principles">
@@ -1517,7 +1810,7 @@
     <section id="contact">
       <div class="shell">
         <div class="contact-card reveal">
-          <span class="section-index">04 / say hi</span>
+          <span class="section-index">05 / say hi</span>
           <h2>Got footage? Let’s cook.</h2>
           <p>Commissions and contact details are coming soon. For now, catch updates on GitHub.</p>
           <a class="button" href="https://github.com/SentoYuina" rel="noopener">Peek behind the scenes <span aria-hidden="true">↗</span></a>
@@ -1544,6 +1837,9 @@
     const extraClientNodes = allClientNodes.slice(8);
     const clientStrip = document.querySelector('#clientStrip');
     const clientStripGroup = document.querySelector('#clientStripGroup');
+    const testimonialStage = document.querySelector('#testimonialStage');
+    const testimonialCards = [...document.querySelectorAll('.testimonial-card')];
+    const testimonialTabs = [...document.querySelectorAll('.testimonial-tab')];
 
     extraClientNodes.forEach((node) => {
       node.classList.remove('orbit-node');
@@ -1685,6 +1981,59 @@
     };
 
     requestAnimationFrame(animateClientMarquee);
+
+    let activeTestimonial = 0;
+    let testimonialTimer = null;
+
+    const showTestimonial = (index, focusTab = false) => {
+      activeTestimonial = (index + testimonialCards.length) % testimonialCards.length;
+      testimonialCards.forEach((card, cardIndex) => {
+        const isActive = cardIndex === activeTestimonial;
+        card.classList.toggle('active', isActive);
+        card.setAttribute('aria-hidden', String(!isActive));
+      });
+      testimonialTabs.forEach((tab, tabIndex) => {
+        const isActive = tabIndex === activeTestimonial;
+        tab.setAttribute('aria-selected', String(isActive));
+        tab.tabIndex = isActive ? 0 : -1;
+      });
+      if (focusTab) testimonialTabs[activeTestimonial].focus();
+    };
+
+    const stopTestimonialAutoplay = () => {
+      if (testimonialTimer !== null) window.clearInterval(testimonialTimer);
+      testimonialTimer = null;
+    };
+
+    const startTestimonialAutoplay = () => {
+      stopTestimonialAutoplay();
+      if (prefersReducedMotion || !testimonialCards.length) return;
+      testimonialTimer = window.setInterval(() => showTestimonial(activeTestimonial + 1), 8000);
+    };
+
+    testimonialTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        showTestimonial(index);
+        startTestimonialAutoplay();
+      });
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowLeft' || event.key === 'ArrowUp' ? -1 : 1;
+        showTestimonial(activeTestimonial + direction, true);
+        startTestimonialAutoplay();
+      });
+    });
+
+    if (testimonialStage) {
+      testimonialStage.addEventListener('pointerenter', stopTestimonialAutoplay);
+      testimonialStage.addEventListener('pointerleave', startTestimonialAutoplay);
+      testimonialStage.addEventListener('focusin', stopTestimonialAutoplay);
+      testimonialStage.addEventListener('focusout', (event) => {
+        if (!testimonialStage.contains(event.relatedTarget)) startTestimonialAutoplay();
+      });
+      startTestimonialAutoplay();
+    }
 
     const showAchievementValue = (element) => {
       const target = Number(element.dataset.target || 0);
