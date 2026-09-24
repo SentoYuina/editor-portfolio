@@ -749,8 +749,9 @@
 
     .testimonial-universe {
       position: relative;
-      min-height: 44rem;
+      min-height: auto;
       margin-top: 1.8rem;
+      padding: 1.6rem;
       overflow: hidden;
       border: 1px solid rgba(255,242,234,.13);
       border-radius: 2rem;
@@ -763,17 +764,7 @@
 
     .testimonial-universe::before,
     .testimonial-universe::after {
-      content: "";
-      position: absolute;
-      z-index: 0;
-      left: 50%;
-      top: 50%;
-      width: 66%;
-      height: 49%;
-      border: 1px solid rgba(154,124,255,.2);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) rotate(-7deg);
-      pointer-events: none;
+      display: none;
     }
 
     .testimonial-universe::after {
@@ -784,12 +775,12 @@
     }
 
     .testimonial-core {
-      position: absolute;
-      z-index: 52;
-      left: 50%;
-      top: 50%;
-      width: min(32rem, 47%);
-      min-height: 22rem;
+      position: relative;
+      z-index: 2;
+      left: auto;
+      top: auto;
+      width: 100%;
+      min-height: 21rem;
       padding: 2.1rem;
       overflow: hidden;
       border: 1px solid rgba(255,242,234,.3);
@@ -802,13 +793,13 @@
         0 0 0 1rem rgba(154,124,255,.035),
         0 0 6rem rgba(154,124,255,.22),
         0 2rem 5rem rgba(0,0,0,.35);
-      transform: translate(-50%, -50%);
+      transform: none;
       transition: z-index 0s, box-shadow .35s ease;
       pointer-events: none;
     }
 
     .testimonial-universe.has-selection .testimonial-core {
-      z-index: 150;
+      z-index: 2;
       box-shadow:
         0 0 0 1rem rgba(154,124,255,.055),
         0 0 7rem rgba(255,112,173,.24),
@@ -851,7 +842,7 @@
 
     .testimonial-stack {
       position: absolute;
-      inset: 3.8rem 2.2rem 1.8rem;
+      inset: 3.8rem clamp(1.4rem, 4vw, 4rem) 1.8rem;
     }
 
     .testimonial-card {
@@ -886,7 +877,7 @@
     }
 
     .testimonial-quote {
-      max-width: 34ch;
+      max-width: 48ch;
       margin: 0;
       font-size: clamp(1.06rem, 1.7vw, 1.55rem);
       font-weight: 760;
@@ -941,28 +932,37 @@
     .testimonial-byline a:focus-visible { color: var(--acid); }
 
     .testimonial-cloud {
-      position: absolute;
-      inset: 0;
-      perspective: 75rem;
-      pointer-events: none;
+      position: relative;
+      inset: auto;
+      display: flex;
+      gap: .7rem;
+      margin-top: 1rem;
+      padding: .2rem .1rem .8rem;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: inline proximity;
+      scrollbar-width: none;
+      pointer-events: auto;
     }
+    .testimonial-cloud::-webkit-scrollbar { display: none; }
 
     .testimonial-tab {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: clamp(9rem, 15vw, 10.5rem);
+      position: relative;
+      left: auto;
+      top: auto;
+      flex: 0 0 10.5rem;
+      width: auto;
       padding: 0;
       color: var(--muted);
       border: 0;
       background: transparent;
       cursor: pointer;
-      opacity: 0;
+      opacity: 1;
       pointer-events: auto;
       text-align: left;
-      transform: translate(-50%, -50%) scale(.45);
-      filter: blur(var(--orbit-blur, 0));
-      will-change: transform, opacity, filter;
+      transform: none !important;
+      filter: none !important;
+      will-change: auto;
       transition: opacity .75s ease, filter .25s ease;
       transition-delay: var(--delay);
     }
@@ -983,6 +983,7 @@
       background: rgba(37,19,49,.82);
       box-shadow: 0 .8rem 2.4rem rgba(0,0,0,.2);
       backdrop-filter: blur(12px);
+      opacity: 1 !important;
       transition: color .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease, opacity .12s linear;
     }
 
@@ -1532,9 +1533,9 @@
       .achievement-band { grid-template-columns: 1fr; gap: 1.25rem; }
       .testimonial-head { align-items: flex-start; flex-direction: column; gap: .75rem; }
       .testimonial-head p { max-width: 34rem; text-align: left; }
-      .testimonial-universe { min-height: 40rem; }
-      .testimonial-core { width: min(25rem, 54%); }
-      .testimonial-tab { width: clamp(8.5rem, 21vw, 10.5rem); }
+      .testimonial-universe { min-height: auto; }
+      .testimonial-core { width: 100%; }
+      .testimonial-tab { width: auto; }
     }
 
     @media (max-width: 560px) {
@@ -1866,13 +1867,13 @@
       <div class="shell">
         <div class="testimonial-head reveal">
           <span class="section-index">03 / testimonials</span>
-          <h2 id="testimonials-title">A universe of kind words.</h2>
-          <p>Client notes drift around the orbit. Pick one to bring their words into focus.</p>
+          <h2 id="testimonials-title">Good words. Real people.</h2>
+          <p>Real client notes, one clear spotlight at a time. Pick any name below.</p>
         </div>
 
         <div class="testimonial-universe reveal" id="testimonialStage">
           <div class="testimonial-core">
-            <p class="testimonial-core-label">Click a voice · hover to pause</p>
+            <p class="testimonial-core-label">Pick a client · auto-shuffles until you choose</p>
             <div class="testimonial-core-intro" aria-hidden="true">
               <strong>Testimonials</strong>
               <span>Click a voice to bring it closer ✦</span>
@@ -2007,6 +2008,7 @@
     const clientStrip = document.querySelector('#clientStrip');
     const clientStripGroup = document.querySelector('#clientStripGroup');
     const testimonialStage = document.querySelector('#testimonialStage');
+    const testimonialCloud = document.querySelector('.testimonial-cloud');
     const testimonialCards = [...document.querySelectorAll('.testimonial-card')];
     const testimonialTabs = [...document.querySelectorAll('.testimonial-tab')];
 
@@ -2167,6 +2169,13 @@
         tab.setAttribute('aria-selected', String(isActive));
         tab.tabIndex = 0;
       });
+      if (testimonialCloud && activeTestimonial > 0) {
+        const activeTab = testimonialTabs[activeTestimonial];
+        testimonialCloud.scrollTo({
+          left: activeTab.offsetLeft - testimonialCloud.clientWidth / 2 + activeTab.clientWidth / 2,
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        });
+      }
       if (focusTab) testimonialTabs[activeTestimonial].focus();
     };
 
@@ -2211,6 +2220,7 @@
     let testimonialOrbitPaused = false;
     let testimonialOrbitPreviousFrame = performance.now();
     let testimonialOrbitWasMobile = innerWidth <= 560;
+    const testimonialOrbitEnabled = false;
 
     const renderTestimonialOrbit = (now) => {
       const delta = Math.min(.04, Math.max(0, (now - testimonialOrbitPreviousFrame) / 1000));
@@ -2265,7 +2275,7 @@
       tab.addEventListener('blur', resumeOrbit);
     });
 
-    requestAnimationFrame(renderTestimonialOrbit);
+    if (testimonialOrbitEnabled) requestAnimationFrame(renderTestimonialOrbit);
     if (!prefersReducedMotion) {
       setInterval(() => {
         if (testimonialUserPicked || testimonialOrbitPaused) return;
