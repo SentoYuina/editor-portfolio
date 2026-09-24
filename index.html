@@ -824,7 +824,15 @@
       border-radius: 50%;
       background: var(--accent, var(--acid));
       box-shadow: .22rem .22rem 0 rgba(255,242,234,.12);
+      overflow: hidden;
       font: 950 .82rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .testimonial-monogram img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
 
     .testimonial-byline strong { display: block; font-size: 1rem; }
@@ -1716,7 +1724,7 @@
             <article class="testimonial-card active" id="testimonial-kyrio" data-number="01 / 07" aria-hidden="false">
               <p class="testimonial-quote">The best thing about working with Yuina is his commitment to finishing on time, creativity, and excellent sense of video pacing. He gets things done quickly without sacrificing quality.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--acid)">KY</span>
+                <span class="testimonial-monogram"><img src="assets/clients/kyrio.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>Kyrio</strong><a href="https://x.com/KyrioCifer" target="_blank" rel="noopener noreferrer">@KyrioCifer ↗</a></div>
               </div>
             </article>
@@ -1724,7 +1732,7 @@
             <article class="testimonial-card" id="testimonial-roe" data-number="02 / 07" aria-hidden="true">
               <p class="testimonial-quote">Yuina’s sense of humor makes it easy for me to trust him with choosing clips and adding the perfect memes. He is incredibly kind and easy to work with, and the quality he delivers is outstanding.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--violet)">RB</span>
+                <span class="testimonial-monogram"><img src="assets/clients/roebunny.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>RoeBunny</strong><a href="https://x.com/RoeBunnyVT" target="_blank" rel="noopener noreferrer">@RoeBunnyVT ↗</a></div>
               </div>
             </article>
@@ -1732,7 +1740,7 @@
             <article class="testimonial-card" id="testimonial-scarlet" data-number="03 / 07" aria-hidden="true">
               <p class="testimonial-quote">Yuina is incredibly clear with communication and understands exactly what I’m looking for in an edit. He not only delivers what I ask for—he often improves on it.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--cyan)">SM</span>
+                <span class="testimonial-monogram"><img src="assets/clients/scarlet-mother.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>ScarletMother</strong><a href="https://x.com/_scarletmother" target="_blank" rel="noopener noreferrer">@_scarletmother ↗</a></div>
               </div>
             </article>
@@ -1740,7 +1748,7 @@
             <article class="testimonial-card" id="testimonial-yami" data-number="04 / 07" aria-hidden="true">
               <p class="testimonial-quote">I really love the communication—being able to clearly communicate with someone working on a project for me is a huge thing, and Yuina does that exceptionally well.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--acid)">Y7</span>
+                <span class="testimonial-monogram"><img src="assets/clients/yami7ways.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>Yami7ways</strong><a href="https://x.com/Yami7ways" target="_blank" rel="noopener noreferrer">@Yami7ways ↗</a></div>
               </div>
             </article>
@@ -1748,7 +1756,7 @@
             <article class="testimonial-card" id="testimonial-yuy" data-number="05 / 07" aria-hidden="true">
               <p class="testimonial-quote">Yuina is very, very timely and his work is super quality. I’d totally recommend him.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--violet)">YY</span>
+                <span class="testimonial-monogram"><img src="assets/clients/yuy.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>YUY</strong><a href="https://x.com/YUY_IX" target="_blank" rel="noopener noreferrer">@YUY_IX ↗</a></div>
               </div>
             </article>
@@ -1756,7 +1764,7 @@
             <article class="testimonial-card" id="testimonial-crash" data-number="06 / 07" aria-hidden="true">
               <p class="testimonial-quote">I loved the creativity behind each project and how everything came together. I’d recommend Yuina to a friend—begrudgingly, because that means more people in the queue.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--cyan)">CV</span>
+                <span class="testimonial-monogram"><img src="assets/clients/crashvs.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>CrashVS</strong><a href="https://x.com/CrashVSX" target="_blank" rel="noopener noreferrer">@CrashVSX ↗</a></div>
               </div>
             </article>
@@ -1764,20 +1772,20 @@
             <article class="testimonial-card" id="testimonial-fawni" data-number="07 / 07" aria-hidden="true">
               <p class="testimonial-quote">Yuina has a great eye for bringing concepts to life and noticing small details that become great content. They work hard, communicate clearly, and consistently exceed my expectations.</p>
               <div class="testimonial-byline">
-                <span class="testimonial-monogram" style="--accent: var(--acid)">FA</span>
+                <span class="testimonial-monogram"><img src="assets/clients/idlefawni.jpg" alt="" loading="lazy" decoding="async"></span>
                 <div><strong>Fawni</strong><a href="https://x.com/idlefawni" target="_blank" rel="noopener noreferrer">@idlefawni ↗</a></div>
               </div>
             </article>
           </div>
 
           <div class="testimonial-picker" role="tablist" aria-label="Choose a client testimonial">
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="true" aria-controls="testimonial-kyrio" data-testimonial="0"><span class="testimonial-monogram" style="--accent: var(--acid)">KY</span><span><strong>Kyrio</strong><small>On-time + creative</small></span></button>
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-roe" data-testimonial="1"><span class="testimonial-monogram" style="--accent: var(--violet)">RB</span><span><strong>RoeBunny</strong><small>Perfect memes</small></span></button>
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-scarlet" data-testimonial="2"><span class="testimonial-monogram" style="--accent: var(--cyan)">SM</span><span><strong>ScarletMother</strong><small>Clear vision</small></span></button>
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-yami" data-testimonial="3"><span class="testimonial-monogram" style="--accent: var(--acid)">Y7</span><span><strong>Yami7ways</strong><small>Communication</small></span></button>
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-yuy" data-testimonial="4"><span class="testimonial-monogram" style="--accent: var(--violet)">YY</span><span><strong>YUY</strong><small>Fast + quality</small></span></button>
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-crash" data-testimonial="5"><span class="testimonial-monogram" style="--accent: var(--cyan)">CV</span><span><strong>CrashVS</strong><small>Creative collab</small></span></button>
-            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-fawni" data-testimonial="6"><span class="testimonial-monogram" style="--accent: var(--acid)">FA</span><span><strong>Fawni</strong><small>Details matter</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="true" aria-controls="testimonial-kyrio" data-testimonial="0"><span class="testimonial-monogram"><img src="assets/clients/kyrio.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>Kyrio</strong><small>On-time + creative</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-roe" data-testimonial="1"><span class="testimonial-monogram"><img src="assets/clients/roebunny.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>RoeBunny</strong><small>Perfect memes</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-scarlet" data-testimonial="2"><span class="testimonial-monogram"><img src="assets/clients/scarlet-mother.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>ScarletMother</strong><small>Clear vision</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-yami" data-testimonial="3"><span class="testimonial-monogram"><img src="assets/clients/yami7ways.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>Yami7ways</strong><small>Communication</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-yuy" data-testimonial="4"><span class="testimonial-monogram"><img src="assets/clients/yuy.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>YUY</strong><small>Fast + quality</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-crash" data-testimonial="5"><span class="testimonial-monogram"><img src="assets/clients/crashvs.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>CrashVS</strong><small>Creative collab</small></span></button>
+            <button class="testimonial-tab" type="button" role="tab" aria-selected="false" aria-controls="testimonial-fawni" data-testimonial="6"><span class="testimonial-monogram"><img src="assets/clients/idlefawni.jpg" alt="" loading="lazy" decoding="async"></span><span><strong>Fawni</strong><small>Details matter</small></span></button>
             <p class="testimonial-picker-note">Pick a name · auto-plays every 8 seconds</p>
           </div>
         </div>
