@@ -779,21 +779,26 @@
       width: 100%;
       min-width: 0;
       max-width: 100%;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
+      cursor: grab;
+      scrollbar-width: none;
+      touch-action: pan-x;
+      overscroll-behavior-inline: contain;
+      user-select: none;
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
       mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
     }
+
+    .client-marquee-viewport::-webkit-scrollbar { display: none; }
+    .client-marquee-viewport.dragging { cursor: grabbing; }
 
     .client-marquee-track {
       width: max-content;
       display: flex;
       gap: .8rem;
       padding: .65rem 0 1rem;
-      animation: client-marquee 34s linear infinite;
     }
-
-    .client-marquee-viewport:hover .client-marquee-track,
-    .client-marquee-viewport:focus-within .client-marquee-track { animation-play-state: paused; }
 
     .client-marquee-group { display: flex; gap: .8rem; }
 
@@ -920,11 +925,6 @@
       50% { opacity: 1; }
     }
 
-    @keyframes client-marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(calc(-50% - .4rem)); }
-    }
-
     @media (hover: hover) {
       .work-card:hover .work-visual::after { animation: scan 1.05s ease-out; }
     }
@@ -982,8 +982,7 @@
       .scroll-progress { display: none; }
       .reel { transform: rotate(1.6deg) !important; }
       .client-orbit { opacity: 1; transform: none; filter: none; }
-      .client-marquee-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
-      .client-marquee-track { animation: none; }
+      .client-marquee-viewport { mask-image: none; -webkit-mask-image: none; }
     }
   </style>
 </head>
@@ -1101,8 +1100,8 @@
           <p class="orbit-help">Hover = pause · click = say hi ↗</p>
         </div>
         <div class="client-marquee">
-          <p class="client-marquee-head"><span><strong>16</strong> more lovely people</span><span>Hover to pause · click to visit ↗</span></p>
-          <div class="client-marquee-viewport">
+          <p class="client-marquee-head"><span><strong>16</strong> more lovely people</span><span>Drag or swipe · auto-resumes ↗</span></p>
+          <div class="client-marquee-viewport" tabindex="0" aria-label="Drag or swipe to browse sixteen more clients">
             <div class="client-marquee-track" id="clientStrip">
               <div class="client-marquee-group" id="clientStripGroup"></div>
             </div>
@@ -1228,6 +1227,77 @@
     clientStripClone.setAttribute('aria-hidden', 'true');
     clientStripClone.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
     clientStrip.appendChild(clientStripClone);
+
+    const clientStripViewport = document.querySelector('.client-marquee-viewport');
+    let marqueeDragging = false;
+    let marqueeDragged = false;
+    let marqueeStartX = 0;
+    let marqueeStartScroll = 0;
+    let marqueeLastInteraction = performance.now();
+    let marqueePreviousFrame = performance.now();
+
+    const pauseClientMarquee = () => { marqueeLastInteraction = performance.now(); };
+
+    clientStripViewport.addEventListener('pointerdown', (event) => {
+      pauseClientMarquee();
+      if (event.pointerType !== 'mouse') return;
+      marqueeDragging = true;
+      marqueeDragged = false;
+      marqueeStartX = event.clientX;
+      marqueeStartScroll = clientStripViewport.scrollLeft;
+      clientStripViewport.classList.add('dragging');
+      clientStripViewport.setPointerCapture(event.pointerId);
+    });
+
+    clientStripViewport.addEventListener('pointermove', (event) => {
+      if (!marqueeDragging) {
+        if (event.pointerType !== 'mouse') pauseClientMarquee();
+        return;
+      }
+      const distance = event.clientX - marqueeStartX;
+      if (Math.abs(distance) > 7) marqueeDragged = true;
+      clientStripViewport.scrollLeft = marqueeStartScroll - distance;
+      pauseClientMarquee();
+      event.preventDefault();
+    });
+
+    const finishMarqueeDrag = (event) => {
+      if (!marqueeDragging) return;
+      marqueeDragging = false;
+      clientStripViewport.classList.remove('dragging');
+      if (clientStripViewport.hasPointerCapture(event.pointerId)) clientStripViewport.releasePointerCapture(event.pointerId);
+      pauseClientMarquee();
+  setTimeout(() => { marqueeDragged = false; }, 100);
+    };
+
+    clientStripViewport.addEventListener('pointerup', finishMarqueeDrag);
+    clientStripViewport.addEventListener('pointercancel', finishMarqueeDrag);
+    clientStripViewport.addEventListener('wheel', pauseClientMarquee, { passive: true });
+    clientStripViewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') pauseClientMarquee();
+    });
+    clientStripViewport.addEventListener('focusin', pauseClientMarquee);
+    clientStripViewport.addEventListener('focusout', pauseClientMarquee);
+    clientStripViewport.addEventListener('click', (event) => {
+      if (!marqueeDragged) return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
+
+    const animateClientMarquee = (now) => {
+      const delta = Math.min(.04, Math.max(0, (now - marqueePreviousFrame) / 1000));
+      marqueePreviousFrame = now;
+
+      if (!prefersReducedMotion && !marqueeDragging && now - marqueeLastInteraction > 2800) {
+        clientStripViewport.scrollLeft += delta * 38;
+        const loopWidth = clientStripGroup.getBoundingClientRect().width + 12.8;
+        if (loopWidth > 0 && clientStripViewport.scrollLeft >= loopWidth) clientStripViewport.scrollLeft -= loopWidth;
+      }
+
+      requestAnimationFrame(animateClientMarquee);
+    };
+
+    requestAnimationFrame(animateClientMarquee);
 
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
       items.forEach((item) => item.classList.add('visible'));
