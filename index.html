@@ -2175,7 +2175,13 @@
     };
 
     testimonialTabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => showTestimonial(index));
+      tab.addEventListener('click', () => {
+        showTestimonial(index);
+        document.querySelector('.testimonial-core')?.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          block: 'center'
+        });
+      });
       tab.addEventListener('keydown', (event) => {
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
         event.preventDefault();
