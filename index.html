@@ -434,7 +434,7 @@
 
     .hero-stats-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .hero-stat {
@@ -454,7 +454,7 @@
     .achievement-value {
       display: block;
       color: var(--paper);
-      font-size: clamp(3.2rem, 6.2vw, 5.5rem);
+      font-size: clamp(2.8rem, 5.2vw, 4.8rem);
       font-weight: 950;
       line-height: .9;
       letter-spacing: -.07em;
@@ -1243,8 +1243,8 @@
       .client-strip-card { padding: .4rem .7rem .4rem .4rem; font-size: .76rem; }
       .client-strip-card img { width: 2.5rem; height: 2.5rem; }
       .client-strip-card .orbit-node-label { display: block; }
-      .achievement-value { font-size: clamp(3rem, 16vw, 4.6rem); }
-      .hero-stat-label { font-size: .68rem; }
+      .achievement-value { font-size: clamp(2.2rem, 12vw, 3.4rem); }
+      .hero-stat-label { font-size: .62rem; }
       footer { flex-direction: column; }
     }
 
@@ -1410,6 +1410,10 @@
             <div class="hero-stat">
               <strong class="achievement-value" data-target="600" data-suffix="+">600+</strong>
               <span class="hero-stat-label">Videos edited</span>
+            </div>
+            <div class="hero-stat">
+              <strong class="achievement-value" data-target="4" data-suffix="M+">4M+</strong>
+              <span class="hero-stat-label">Views generated</span>
             </div>
             <div class="hero-stat">
               <strong class="achievement-value" data-target="30" data-suffix="+">30+</strong>
