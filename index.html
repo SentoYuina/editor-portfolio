@@ -449,8 +449,46 @@
       gap: .75rem;
     }
 
-    .work-card {
+    .long-row {
       position: relative;
+      grid-template-columns: 1.12fr .92fr 1fr .88fr 1fr;
+      align-items: center;
+      padding: 1.35rem .75rem 1.15rem;
+      border: 1px solid rgba(255,242,234,.08);
+      border-radius: 1.15rem;
+      background: linear-gradient(90deg, rgba(255,112,173,.045), rgba(154,124,255,.04));
+    }
+
+    .long-row::before,
+    .long-row::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      left: 1rem;
+      right: 1rem;
+      height: .28rem;
+      pointer-events: none;
+      opacity: .65;
+      background: repeating-linear-gradient(90deg, rgba(255,242,234,.24) 0 .55rem, transparent .55rem 1.05rem);
+    }
+
+    .long-row::before { top: .38rem; }
+    .long-row::after { bottom: .38rem; }
+
+    .shorts-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      padding: 1.1rem 1rem .75rem;
+      overflow: visible;
+    }
+
+    .work-card {
+      --tilt: 0deg;
+      --lift: 0rem;
+      position: relative;
+      z-index: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -462,14 +500,29 @@
       background: rgba(255,242,234,.05);
       overflow: hidden;
       scroll-snap-align: start;
+      transform: translateY(var(--lift)) rotate(var(--tilt));
       transition: transform .28s ease, border-color .28s ease, background .28s ease;
     }
 
     .work-card:nth-child(2n) { border-radius: .7rem 1.15rem 1.15rem 1.15rem; }
 
-    .work-card:hover {
-      z-index: 2;
-      transform: translateY(-5px) rotate(.18deg);
+    .long-row .work-card:nth-child(1) { --tilt: -1.25deg; --lift: .2rem; }
+    .long-row .work-card:nth-child(2) { --tilt: .85deg; --lift: -.28rem; }
+    .long-row .work-card:nth-child(3) { --tilt: -.45deg; --lift: .16rem; }
+    .long-row .work-card:nth-child(4) { --tilt: 1.15deg; --lift: -.34rem; }
+    .long-row .work-card:nth-child(5) { --tilt: -.7deg; --lift: .08rem; }
+
+    .shorts-row .work-card { flex: 1 1 0; max-width: 14.5rem; }
+    .shorts-row .work-card:not(:first-child) { margin-left: -.8rem; }
+    .shorts-row .work-card:nth-child(1) { --tilt: -4deg; --lift: .8rem; z-index: 1; }
+    .shorts-row .work-card:nth-child(2) { --tilt: -2deg; --lift: .28rem; z-index: 2; }
+    .shorts-row .work-card:nth-child(3) { --tilt: 0deg; --lift: -.18rem; z-index: 3; }
+    .shorts-row .work-card:nth-child(4) { --tilt: 2deg; --lift: .28rem; z-index: 2; }
+    .shorts-row .work-card:nth-child(5) { --tilt: 4deg; --lift: .8rem; z-index: 1; }
+
+    .work-row .work-card:hover {
+      z-index: 10;
+      transform: translateY(calc(var(--lift) - .48rem)) rotate(0deg) scale(1.035);
       border-color: rgba(255,112,173,.9);
       background: rgba(255,242,234,.09);
     }
@@ -981,6 +1034,13 @@
     }
 
     .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+    .work-row .work-card.reveal.visible { transform: translateY(var(--lift)) rotate(var(--tilt)); }
+
+    @media (hover: hover) {
+      .work-row .work-card.reveal.visible:hover {
+        transform: translateY(calc(var(--lift) - .48rem)) rotate(0deg) scale(1.035);
+      }
+    }
 
     @keyframes title-enter {
       from { opacity: 0; transform: translate3d(0, 1.2em, 0); }
@@ -1040,6 +1100,11 @@
         scroll-snap-type: x mandatory;
         scrollbar-width: thin;
       }
+      .long-row,
+      .shorts-row { justify-content: flex-start; overflow-x: auto; }
+      .long-row { padding: 1.1rem .7rem .9rem; }
+      .shorts-row { padding: 1rem .35rem .8rem; }
+      .work-row .work-card:nth-child(n) { margin-left: 0; transform: none; }
       .work-row .work-card { flex: 0 0 min(72vw, 19rem); }
       .shorts-row .work-card { flex-basis: min(52vw, 13.5rem); }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
@@ -1080,6 +1145,7 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation: none !important; transition: none !important; }
       .reveal { opacity: 1; transform: none; }
+      .work-row .work-card.reveal.visible { transform: none; }
       .scroll-progress { display: none; }
       .reel { transform: rotate(1.6deg) !important; }
       .client-orbit { opacity: 1; transform: none; filter: none; }
