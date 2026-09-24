@@ -1040,12 +1040,17 @@
       gap: 1rem;
       padding: 1.5rem 0;
       border-top: 1px solid var(--line);
+      color: inherit;
+      text-decoration: none;
+      transition: padding-left .2s ease, color .2s ease;
     }
 
     .principle:last-child { border-bottom: 1px solid var(--line); }
     .principle strong { color: var(--acid); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
     .principle h3 { margin: 0 0 .35rem; font-size: 1.35rem; }
     .principle p { margin: 0; color: var(--muted); }
+    .principle:hover,
+    .principle:focus-visible { padding-left: .7rem; color: var(--acid); }
 
     .client-showcase {
       position: relative;
@@ -1641,8 +1646,9 @@
       <div class="nav-links">
         <a href="#work">Work</a>
         <a href="#testimonials">Reviews</a>
-        <a href="#approach">How I edit</a>
         <a href="#clients">Clients</a>
+        <a href="pricing.html">Prices</a>
+        <a href="tos.html">TOS</a>
         <a href="#contact">Say hi</a>
       </div>
     </nav>
@@ -1954,25 +1960,21 @@
       </div>
     </section>
 
-    <section id="approach">
+    <section id="details">
       <div class="manifesto-grid shell">
         <div>
-          <span class="section-index">04 / how I edit</span>
-          <p class="manifesto-copy reveal">Fast where it should hit. Quiet where it should breathe.</p>
+          <span class="section-index">04 / before we start</span>
+          <p class="manifesto-copy reveal">Clear prices. Clear expectations.</p>
         </div>
         <div class="principles">
-          <article class="principle reveal">
+          <a class="principle reveal" href="pricing.html">
             <strong>01</strong>
-            <div><h3>Rhythm</h3><p>I cut to feeling first—then make every beat earn its place.</p></div>
-          </article>
-          <article class="principle reveal">
+            <div><h3>Prices ↗</h3><p>Shorts, long-form rates, what’s included, and the loyalty bonus.</p></div>
+          </a>
+          <a class="principle reveal" href="tos.html">
             <strong>02</strong>
-            <div><h3>Clarity</h3><p>Effects are fun. Knowing when not to use them is better.</p></div>
-          </article>
-          <article class="principle reveal">
-            <strong>03</strong>
-            <div><h3>Detail</h3><p>One frame, one sound, one tiny pause can change the whole joke.</p></div>
-          </article>
+            <div><h3>Terms of Service ↗</h3><p>Turnaround times, footage requirements, usage, credit, and payment.</p></div>
+          </a>
         </div>
       </div>
     </section>
