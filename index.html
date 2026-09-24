@@ -94,39 +94,75 @@
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: .75rem;
+      gap: .65rem;
       text-decoration: none;
       font-weight: 800;
       letter-spacing: -.02em;
     }
 
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 2rem;
-      height: 2rem;
-      color: var(--ink);
-      background: var(--acid);
-      border-radius: .55rem;
-      font: 800 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    .brand-avatar {
+      width: 2.55rem;
+      height: 2.55rem;
+      object-fit: cover;
+      border: 2px solid var(--acid);
+      border-radius: 50%;
+      box-shadow: .18rem .18rem 0 var(--violet);
+      transform: rotate(-4deg);
+    }
+
+    .brand-copy { display: grid; gap: .05rem; }
+    .brand-copy strong { font-size: .94rem; line-height: 1; }
+    .brand-copy small {
+      color: var(--muted);
+      font: 750 .54rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .13em;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: clamp(.85rem, 2.5vw, 2rem);
-      font: 700 .84rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
-      letter-spacing: .025em;
+      gap: .1rem;
+      padding: .28rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 242, 234, .035);
+      font: 750 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
     }
 
     .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: .28rem;
+      padding: .62rem .72rem;
       color: var(--muted);
+      border-radius: 999px;
       text-decoration: none;
-      transition: color .2s ease;
+      transition: color .2s ease, background .2s ease, transform .2s ease;
     }
 
+    .nav-links a em { color: var(--acid); font-size: .52rem; font-style: normal; }
+
     .nav-links a:hover,
-    .nav-links a:focus-visible { color: var(--acid); }
+    .nav-links a:focus-visible { color: var(--paper); background: rgba(255, 242, 234, .08); transform: translateY(-1px); }
+    .nav-links .nav-cta { margin-left: .18rem; color: var(--ink); background: var(--paper); }
+    .nav-links .nav-cta:hover,
+    .nav-links .nav-cta:focus-visible { color: var(--ink); background: var(--acid); }
+
+    .nav-toggle {
+      display: none;
+      min-height: 2.65rem;
+      align-items: center;
+      gap: .55rem;
+      padding: .65rem .82rem;
+      color: var(--ink);
+      border: 0;
+      border-radius: 999px;
+      background: var(--paper);
+      font: 800 .72rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      cursor: pointer;
+    }
+
+    .nav-toggle b { color: var(--acid); font-size: 1rem; transition: transform .2s ease; }
 
     main { display: block; }
 
@@ -943,6 +979,13 @@
       scroll-snap-type: inline proximity;
       scrollbar-width: none;
       pointer-events: auto;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-x;
+    }
+    .testimonial-cloud.dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
     }
     .testimonial-cloud::-webkit-scrollbar { display: none; }
 
@@ -1442,7 +1485,11 @@
     .contact-copy,
     .contact-portrait,
     .contact-links { position: relative; z-index: 1; }
-    .contact-card h2 { max-width: 10ch; }
+    .contact-card h2 {
+      max-width: 10ch;
+      line-height: .94;
+      letter-spacing: -.055em;
+    }
     .contact-card p { max-width: 39rem; margin: 1.4rem 0 0; font-size: 1.08rem; }
 
     .contact-portrait {
@@ -1462,6 +1509,36 @@
       height: 100%;
       object-fit: cover;
       border-radius: inherit;
+    }
+
+    .easter-emote {
+      position: fixed;
+      z-index: 1000;
+      left: var(--egg-x);
+      top: var(--egg-y);
+      width: clamp(4.75rem, 9vw, 7.5rem);
+      aspect-ratio: 1;
+      object-fit: contain;
+      pointer-events: none;
+      filter: drop-shadow(0 .65rem 1.05rem rgba(34, 12, 38, .3));
+      transform-origin: center;
+      animation: emote-pop 1.85s cubic-bezier(.16, .82, .28, 1) forwards;
+    }
+
+    @keyframes emote-pop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -42%) scale(.12) rotate(0deg);
+      }
+      14% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.12) rotate(calc(var(--egg-spin) * -.15));
+      }
+      74% { opacity: 1; }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--egg-drift)), calc(-50% - var(--egg-rise))) scale(.78) rotate(var(--egg-spin));
+      }
     }
 
     .contact-links {
@@ -1612,14 +1689,48 @@
 
     @media (max-width: 560px) {
       .shell { width: min(calc(100% - 1.25rem), var(--max)); }
-      .nav-links a:not(:last-child) { display: none; }
+      .brand-copy small { display: none; }
+      .nav { position: relative; gap: .65rem; }
+      .nav-toggle { display: inline-flex; }
+      .nav-links {
+        position: absolute;
+        top: calc(100% + .55rem);
+        right: 0;
+        width: min(17rem, calc(100vw - 1.25rem));
+        display: none;
+        align-items: stretch;
+        flex-direction: column;
+        gap: .15rem;
+        padding: .55rem;
+        border: 1px solid rgba(255, 242, 234, .22);
+        border-radius: 1.25rem;
+        background: rgba(23, 13, 31, .97);
+        box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, .42);
+      }
+      .nav.open .nav-links { display: flex; }
+      .nav.open .nav-links a {
+        display: flex;
+        justify-content: space-between;
+        padding: .82rem .9rem;
+        border-radius: .85rem;
+      }
+      .nav-links .nav-cta { margin: .2rem 0 0; }
+      .nav.open .nav-toggle b { transform: rotate(45deg); }
       .client-showcase { min-height: 100svh; padding: 6rem 0 2.5rem; }
       .client-showcase-inner { gap: 1.25rem; }
       .client-showcase-head { padding: .75rem .85rem; }
       .client-showcase-head p { font-size: .9rem; }
       .client-showcase-title { font-size: clamp(1.8rem, 10vw, 2.8rem); }
       .client-showcase-head { grid-template-columns: 1fr; gap: .45rem; }
-      h1 { font-size: clamp(3.65rem, 21vw, 6.4rem); }
+      .hero-title { font-size: clamp(3.45rem, 18.5vw, 4.9rem); line-height: .88; }
+      .hero-title span {
+        width: max-content;
+        margin-top: .08em;
+        color: var(--acid);
+        -webkit-text-stroke: 0;
+        text-shadow: none;
+        transform: none;
+      }
       .hero-actions { align-items: stretch; flex-direction: column; }
       .button { width: 100%; }
       .work-group-head span { font-size: .62rem; }
@@ -1701,6 +1812,7 @@
       .testimonial-card { opacity: 0; transform: none; }
       .testimonial-card.active { opacity: 1; }
       .testimonial-chip { animation: none; }
+      .easter-emote { opacity: 1; animation: none !important; }
     }
   </style>
 </head>
@@ -1711,16 +1823,17 @@
   <header class="site-header">
     <nav class="nav shell" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="SentoYuina home">
-        <span class="brand-mark" aria-hidden="true">SY</span>
-        <span>SentoYuina</span>
+        <img class="brand-avatar" src="assets/sento-yuina.png" alt="" aria-hidden="true">
+        <span class="brand-copy"><strong>SentoYuina</strong><small>VIDEO EDITOR</small></span>
       </a>
-      <div class="nav-links">
-        <a href="#work">Work</a>
-        <a href="#testimonials">Reviews</a>
-        <a href="#clients">Clients</a>
-        <a href="pricing.html">Prices</a>
-        <a href="tos.html">TOS</a>
-        <a href="#contact">Say hi</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu"><span>Menu</span><b aria-hidden="true">＋</b></button>
+      <div class="nav-links" id="site-menu">
+        <a href="#work"><em>01</em> Work</a>
+        <a href="#testimonials"><em>02</em> Reviews</a>
+        <a href="#clients"><em>03</em> Clients</a>
+        <a href="pricing.html"><em>04</em> Prices</a>
+        <a href="tos.html"><em>05</em> TOS</a>
+        <a class="nav-cta" href="#contact">Say hi ↗</a>
       </div>
     </nav>
   </header>
@@ -1730,7 +1843,7 @@
       <div class="client-showcase-inner shell" id="clients">
         <div class="hero-client-intro">
           <div class="hero-lead">
-            <p class="eyebrow">Video editor · Chaos tamer · Malaysia</p>
+            <p class="eyebrow">Video editor · Story shaper · Chaos tamer</p>
             <h1 class="hero-title reveal">Make it <span>hit.</span></h1>
             <p class="hero-copy reveal">I turn raw footage into videos that feel fast, funny, emotional—or all three.</p>
             <div class="mood-tags reveal" aria-label="Editing style">
@@ -2056,7 +2169,7 @@
           <div class="contact-copy">
             <span class="section-index">05 / say hi</span>
             <h2>Hey, I’m Yuina.</h2>
-            <p>I’m a Malaysia-based video editor who loves sharp timing, big reactions, and turning good footage into something people want to keep watching. Got a project—or just a wonderfully chaotic idea? Come say hi.</p>
+            <p>I’m a video editor who loves sharp timing, big reactions, and turning good footage into something people want to keep watching. Got a project—or just a wonderfully chaotic idea? Come say hi.</p>
           </div>
           <figure class="contact-portrait" aria-label="SentoYuina character portrait">
             <img src="assets/sento-yuina.png" alt="SentoYuina character portrait" loading="lazy" decoding="async">
@@ -2105,6 +2218,27 @@
     const testimonialCloud = document.querySelector('.testimonial-cloud');
     const testimonialCards = [...document.querySelectorAll('.testimonial-card')];
     const testimonialTabs = [...document.querySelectorAll('.testimonial-tab')];
+    const sayHiTriggers = [...document.querySelectorAll('.nav-cta')];
+    const mainNav = document.querySelector('.nav');
+    const navToggle = document.querySelector('.nav-toggle');
+
+    const closeMobileNav = () => {
+      mainNav?.classList.remove('open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    };
+
+    navToggle?.addEventListener('click', () => {
+      const isOpen = mainNav?.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+    });
+    document.querySelectorAll('#site-menu a').forEach((link) => link.addEventListener('click', closeMobileNav));
+    document.addEventListener('click', (event) => {
+      if (!mainNav?.classList.contains('open') || mainNav.contains(event.target)) return;
+      closeMobileNav();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMobileNav();
+    });
 
     extraClientNodes.forEach((node) => {
       node.classList.remove('orbit-node');
@@ -2291,6 +2425,50 @@
       });
     });
 
+    if (testimonialCloud) {
+      let dragging = false;
+      let dragged = false;
+      let startX = 0;
+      let startScroll = 0;
+
+      const finishTestimonialDrag = (event) => {
+        if (!dragging) return;
+        dragging = false;
+        testimonialCloud.classList.remove('dragging');
+        if (event?.pointerId !== undefined && testimonialCloud.hasPointerCapture?.(event.pointerId)) {
+          testimonialCloud.releasePointerCapture(event.pointerId);
+        }
+      };
+
+      testimonialCloud.addEventListener('pointerdown', (event) => {
+        if (event.pointerType === 'touch') return;
+        dragging = true;
+        dragged = false;
+        startX = event.clientX;
+        startScroll = testimonialCloud.scrollLeft;
+        testimonialCloud.classList.add('dragging');
+        testimonialCloud.setPointerCapture?.(event.pointerId);
+      });
+
+      testimonialCloud.addEventListener('pointermove', (event) => {
+        if (!dragging) return;
+        const distance = event.clientX - startX;
+        if (Math.abs(distance) > 6) dragged = true;
+        testimonialCloud.scrollLeft = startScroll - distance;
+        if (dragged) event.preventDefault();
+      });
+
+      testimonialCloud.addEventListener('pointerup', finishTestimonialDrag);
+      testimonialCloud.addEventListener('pointercancel', finishTestimonialDrag);
+      testimonialCloud.addEventListener('lostpointercapture', finishTestimonialDrag);
+      testimonialCloud.addEventListener('click', (event) => {
+        if (!dragged) return;
+        event.preventDefault();
+        event.stopPropagation();
+        dragged = false;
+      }, true);
+    }
+
     showTestimonial(0);
 
     if (testimonialStage) {
@@ -2376,6 +2554,54 @@
         showTestimonial(activeTestimonial + 1);
       }, 6200);
     }
+
+    const easterEmotes = [
+      'assets/emotes/squish.png',
+      'assets/emotes/cheer.png',
+      'assets/emotes/gremlin.png',
+      'assets/emotes/smug.png'
+    ];
+    let sayHiClicks = 0;
+
+    const spawnEasterEmote = (originX, originY, index) => {
+      const emote = document.createElement('img');
+      const spread = Math.min(innerWidth * .25, 210);
+      const scatter = sayHiClicks > 1;
+      const x = scatter
+        ? 65 + Math.random() * Math.max(0, innerWidth - 130)
+        : Math.max(65, Math.min(innerWidth - 65, originX + (Math.random() - .5) * spread * 2));
+      const y = scatter
+        ? 150 + Math.random() * Math.max(0, innerHeight - 300)
+        : Math.max(135, Math.min(innerHeight - 85, originY + 100));
+      emote.className = 'easter-emote';
+      emote.src = easterEmotes[index % easterEmotes.length];
+      emote.alt = '';
+      emote.setAttribute('aria-hidden', 'true');
+      emote.style.setProperty('--egg-x', `${x}px`);
+      emote.style.setProperty('--egg-y', `${y}px`);
+      emote.style.setProperty('--egg-drift', `${Math.round((Math.random() - .5) * 150)}px`);
+      emote.style.setProperty('--egg-rise', `${Math.round(90 + Math.random() * 110)}px`);
+      emote.style.setProperty('--egg-spin', `${Math.round((Math.random() - .5) * 34)}deg`);
+      document.body.appendChild(emote);
+      setTimeout(() => emote.remove(), prefersReducedMotion ? 850 : 2000);
+    };
+
+    sayHiTriggers.forEach((trigger) => {
+      trigger.title = 'Psst… click me a few times';
+      trigger.addEventListener('click', (event) => {
+        sayHiClicks += 1;
+        const clickNumber = sayHiClicks;
+        const amount = Math.min(1 + Math.floor((clickNumber - 1) / 2), 4);
+        const rect = trigger.getBoundingClientRect();
+        const originX = event.clientX || rect.left + rect.width / 2;
+        const originY = event.clientY || rect.bottom;
+        for (let index = 0; index < amount; index += 1) {
+          setTimeout(() => {
+            spawnEasterEmote(originX, originY, clickNumber + index);
+          }, index * 85);
+        }
+      });
+    });
 
     const showAchievementValue = (element) => {
       const target = Number(element.dataset.target || 0);
