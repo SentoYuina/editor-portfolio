@@ -443,6 +443,36 @@
       text-transform: uppercase;
     }
 
+    .work-group-actions {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+    }
+
+    .more-work {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.15rem;
+      padding: .48rem .72rem;
+      color: var(--paper);
+      border: 1px solid rgba(255,112,173,.52);
+      border-radius: 999px;
+      background: rgba(255,112,173,.09);
+      text-decoration: none;
+      font: 800 .67rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: color .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    .more-work:hover,
+    .more-work:focus-visible {
+      color: var(--ink);
+      background: var(--acid);
+      transform: translateY(-2px);
+    }
+
     .work-row {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1107,6 +1137,8 @@
       .work-row .work-card:nth-child(n) { margin-left: 0; transform: none; }
       .work-row .work-card { flex: 0 0 min(72vw, 19rem); }
       .shorts-row .work-card { flex-basis: min(52vw, 13.5rem); }
+      .work-group-head { align-items: flex-start; }
+      .work-group-actions { align-items: flex-end; flex-direction: column; gap: .4rem; }
       .section-head { grid-template-columns: 1fr; gap: .8rem; }
     }
 
@@ -1305,7 +1337,10 @@
         </div>
         <div class="work-groups">
           <div class="work-group">
-            <div class="work-group-head"><h3>Long form</h3><span>5 edits · full stories</span></div>
+            <div class="work-group-head">
+              <h3>Long form</h3>
+              <div class="work-group-actions"><span>5 edits · full stories</span><a class="more-work" href="https://www.youtube.com/playlist?list=PLojAoMvTCmvy_-rFwwef4it4sF5HW5qfV" target="_blank" rel="noopener noreferrer">More edits ↗</a></div>
+            </div>
             <div class="work-row long-row">
               <a class="work-card reveal" href="https://www.youtube.com/watch?v=JWRSim0J6zE" target="_blank" rel="noopener noreferrer" aria-label="Watch Kenji being himself for 11 minutes and 3 seconds on YouTube">
                 <div class="work-visual"><img src="https://i.ytimg.com/vi/JWRSim0J6zE/maxresdefault.jpg" alt="Kenji being himself video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
@@ -1330,7 +1365,10 @@
             </div>
           </div>
           <div class="work-group">
-            <div class="work-group-head"><h3>Shorts</h3><span>5 fast hits · vertical edits</span></div>
+            <div class="work-group-head">
+              <h3>Shorts</h3>
+              <div class="work-group-actions"><span>5 fast hits · vertical edits</span><a class="more-work" href="https://www.youtube.com/playlist?list=PLojAoMvTCmvy394ih4s7HsyaJBEU_jvOu" target="_blank" rel="noopener noreferrer">More edits ↗</a></div>
+            </div>
             <div class="work-row shorts-row">
               <a class="work-card reveal" href="https://www.youtube.com/watch?v=GGQYLkeZe0M" target="_blank" rel="noopener noreferrer" aria-label="Watch There Is No Greater Feeling Than This on YouTube">
                 <div class="work-visual"><img src="https://i.ytimg.com/vi/GGQYLkeZe0M/maxres2.jpg" alt="There Is No Greater Feeling Than This video thumbnail" loading="lazy"><span class="work-play" aria-hidden="true"></span></div>
