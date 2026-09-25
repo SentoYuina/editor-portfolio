@@ -43,6 +43,8 @@
     .package{display:flex;justify-content:space-between;gap:1rem;margin:0 0 1.4rem;padding:.85rem 1rem;border:1px solid rgba(255,179,87,.35);border-radius:1rem;background:rgba(255,179,87,.08)}
     .package strong{color:var(--gold)}.package span{color:var(--muted)}
     .service-fit{max-width:38rem;margin:.9rem 0 0;color:var(--muted);font-size:.95rem}.service-fit strong{color:var(--paper)}
+    .info-block{margin-top:1.15rem}.info-block+.info-block{margin-top:.35rem}.info-label{margin:0 0 .35rem;color:var(--hot);font:850 .63rem/1 ui-monospace,Consolas,monospace;letter-spacing:.11em;text-transform:uppercase}.info-block ul{margin-top:.35rem}
+    .service-note{margin:1rem 0 0;padding:.78rem .9rem;border:1px dashed rgba(255,242,234,.15);border-radius:.9rem;color:var(--muted);font-size:.88rem}.service-note strong{color:var(--paper)}
     .sample-link{display:inline-flex;align-items:center;gap:.55rem;margin-top:1.25rem;padding:.7rem .9rem;border:1px solid rgba(255,242,234,.18);border-radius:999px;color:var(--paper);background:rgba(255,242,234,.04);font:800 .68rem/1 ui-monospace,Consolas,monospace;letter-spacing:.04em;text-decoration:none;transition:.2s ease}.sample-link:hover,.sample-link:focus-visible{border-color:var(--hot);color:var(--hot);background:rgba(255,112,173,.08);transform:translateY(-2px)}
     ul{margin:1.2rem 0 0;padding:0;list-style:none}.price-card li{position:relative;padding:.7rem 0 .7rem 1.35rem;border-top:1px solid rgba(255,242,234,.1);color:var(--muted)}.price-card li::before{content:"✦";position:absolute;left:0;color:var(--hot)}
     .reaction-card{grid-column:1/-1;--glow:#ffb357;padding:clamp(1.5rem,4vw,2.75rem)}
@@ -82,26 +84,34 @@
       <article class="price-card" style="--glow:#ff70ad">
         <span class="card-kicker">Short-form editing</span><h2>Shorts</h2>
         <div class="price"><strong>$21</strong><span>per single<br>Short</span></div>
-        <p class="service-fit"><strong>Fast, fully polished edits.</strong> You choose the moment; I turn it into a finished Short.</p>
-        <ul>
-          <li>Full subtitles and visual effects throughout the Short.</li>
-          <li>Please provide timestamps, a timeline, or Twitch Clips for the moments you want edited.</li>
-          <li>VOD scrubbing and content selection are not included.</li>
-          <li>Memes, reaction images, character assets, and extra materials are always appreciated.</li>
-        </ul>
+        <p class="service-fit"><strong>Short, fully edited content.</strong> You provide the clip or timestamp; I polish the entire video.</p>
+        <div class="info-block"><h3 class="info-label">What’s included</h3><ul>
+          <li>Full subtitles.</li>
+          <li>Full visual effects.</li>
+          <li>Editing and pacing throughout the entire video.</li>
+        </ul></div>
+        <div class="info-block"><h3 class="info-label">Footage requirements</h3><ul>
+          <li>Provide timestamps, a timeline, or Twitch Clips for the moments you want edited.</li>
+          <li>VOD scrubbing and content searching are <strong>not included</strong>.</li>
+        </ul></div>
+        <p class="service-note"><strong>Additional notes:</strong> Memes, reaction images, character assets, and other materials are always welcome.</p>
         <div class="package"><strong>5 Shorts — $100</strong><span>$20 each</span></div>
         <a class="sample-link" href="https://www.youtube.com/playlist?list=PLojAoMvTCmvy394ih4s7HsyaJBEU_jvOu" target="_blank" rel="noopener noreferrer">SEE SHORT-FORM EDITS ↗</a>
       </article>
       <article class="price-card" style="--glow:#9a7cff">
         <span class="card-kicker">Long-form editing</span><h2>Full videos</h2>
         <div class="price"><strong>$21</strong><span>per finished<br>minute</span></div>
-        <p class="service-fit"><strong>Full-service storytelling and polish.</strong> Send the VOD and I’ll find, structure, and finish the content.</p>
-        <ul>
-          <li>Full subtitles and visual effects throughout the video.</li>
-          <li>VOD scrubbing and content selection are included.</li>
-          <li>Send the full VOD—I’ll find suitable moments and structure the final video.</li>
-          <li>Memes, reaction images, character assets, and extra materials are welcome.</li>
-        </ul>
+        <p class="service-fit"><strong>Fully edited content with VOD scrubbing.</strong> Send the footage and I’ll find, structure, and finish the story.</p>
+        <div class="info-block"><h3 class="info-label">What’s included</h3><ul>
+          <li>Full subtitles.</li>
+          <li>Full visual effects.</li>
+          <li>Editing and pacing throughout the entire video.</li>
+          <li>VOD scrubbing and content selection.</li>
+        </ul></div>
+        <div class="info-block"><h3 class="info-label">Footage &amp; scope</h3><ul>
+          <li>Send the full VOD—I’ll review the footage, find suitable moments, and structure the final video.</li>
+        </ul></div>
+        <p class="service-note"><strong>Additional notes:</strong> Memes, reaction images, character assets, and other materials can help make the final edit even better.</p>
         <div class="package"><strong>2 Long-form videos — +1 Short free</strong><span>Loyalty bonus</span></div>
         <a class="sample-link" href="https://www.youtube.com/playlist?list=PLojAoMvTCmvy_-rFwwef4it4sF5HW5qfV" target="_blank" rel="noopener noreferrer">SEE LONG-FORM EDITS ↗</a>
       </article>
@@ -141,7 +151,7 @@
             <li>Full subtitles and visual effects throughout the entire video are <strong>not included</strong>.</li>
           </ul>
           <p class="reaction-note">The bundle applies when <strong>3 Reaction Videos are commissioned together</strong>.</p>
-          <div class="reaction-pricing-note"><h3>Priced by final<br>edited length</h3><div><p>Reaction Video pricing is based on the <strong>final edited video length</strong>, not the original VOD or source footage length.</p><p>For example, a 2-hour VOD edited into a 35-minute final video falls under the <strong>21–40 minute</strong> tier. Exceptionally long source footage or projects requiring extensive footage review may need a <strong>custom quote</strong>.</p></div></div>
+          <div class="reaction-pricing-note"><h3>Priced by final<br>edited length</h3><div><p>Reaction Video pricing is based on the <strong>final edited video length</strong>, not the original VOD or source footage length.</p><p>For example, a 2-hour VOD edited into a 35-minute Reaction Video falls under the <strong>21–40 minute tier ($60)</strong>. Exceptionally long source footage, extensive footage review, or editing beyond the standard Reaction scope may need a <strong>custom quote</strong>.</p><p>If the project needs full subtitles, frequent visual effects, memes, motion graphics, or heavy editing throughout, it will be quoted as <strong>Long-form editing instead</strong>.</p></div></div>
         </div>
       </article>
     </section>
