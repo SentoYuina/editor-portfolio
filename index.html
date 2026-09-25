@@ -995,6 +995,12 @@
     }
     .testimonial-cloud::-webkit-scrollbar { display: none; }
 
+    .testimonial-cloud img {
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
     .testimonial-tab {
       position: relative;
       left: auto;
@@ -1255,6 +1261,7 @@
       height: 5rem;
       display: grid;
       place-items: center;
+      padding-top: 1.1rem;
       color: rgba(255,242,234,.84);
       border: 1px solid rgba(255,255,255,.18);
       border-radius: 50%;
@@ -1269,15 +1276,40 @@
       pointer-events: none;
     }
 
-    .orbit-core::before {
-      content: "";
-      width: .45rem;
-      aspect-ratio: 1;
+    .orbit-spin {
       position: absolute;
-      top: .72rem;
+      z-index: 220;
+      top: calc(50% - 1.55rem);
+      left: 50%;
+      width: 1.8rem;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, .78);
       border-radius: 50%;
       background: var(--acid);
-      box-shadow: 0 0 1rem rgba(255,112,173,.9);
+      box-shadow: 0 0 1rem rgba(255,112,173,.9), 0 .35rem .8rem rgba(23,13,31,.45);
+      transform: translate(-50%, -50%);
+      font: 900 1rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background .18s ease, box-shadow .18s ease;
+    }
+
+    .orbit-spin:hover,
+    .orbit-spin:focus-visible {
+      background: var(--cyan);
+      box-shadow: 0 0 1.35rem rgba(125,232,255,.8), 0 .35rem .8rem rgba(23,13,31,.45);
+    }
+
+    .orbit-spin.spinning { animation: orbit-spin-pop .58s cubic-bezier(.2, .86, .26, 1); }
+
+    @keyframes orbit-spin-pop {
+      0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+      55% { transform: translate(-50%, -50%) rotate(245deg) scale(1.2); }
+      100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
     }
 
     .orbit-node {
@@ -1755,8 +1787,8 @@
       .client-orbit { width: 100%; }
       .orbit-caption { top: .25rem; left: .25rem; }
       .orbit-help { display: none; }
-      .orbit-core { width: 6rem; height: 3.2rem; font-size: .54rem; }
-      .orbit-core::before { top: .38rem; }
+      .orbit-core { width: 6rem; height: 3.2rem; padding-top: .78rem; font-size: .54rem; }
+      .orbit-spin { top: calc(50% - 1rem); width: 1.5rem; font-size: .82rem; }
       .orbit-node { width: clamp(2.8rem, 12vw, 3.4rem); }
       .orbit-node-label { display: none; }
       .client-marquee { margin-top: -.25rem; }
@@ -1850,8 +1882,8 @@
         <a href="#work"><em>02</em> Work</a>
         <a href="#testimonials"><em>03</em> Reviews</a>
         <a href="pricing.html"><em>04</em> Prices</a>
-        <a href="tos.html"><em>05</em> TOS</a>
-        <a class="nav-cta" href="#contact">Say hi ↗</a>
+        <a href="tos.html"><em>05</em> Terms of Service</a>
+        <a class="nav-cta" href="#contact">Contact ↗</a>
       </div>
     </nav>
   </header>
@@ -1888,7 +1920,8 @@
             <span class="orbit-ring ring-a" aria-hidden="true"></span>
             <span class="orbit-ring ring-b" aria-hidden="true"></span>
             <span class="orbit-ring ring-c" aria-hidden="true"></span>
-            <span class="orbit-core" aria-hidden="true">Good<br>people</span>
+            <span class="orbit-core" aria-hidden="true">Creator<br>crew</span>
+            <button class="orbit-spin" type="button" aria-label="Spin the client orbit faster" title="Spin the orbit">↻</button>
 
             <a class="orbit-node" href="https://x.com/MiruneMochi" target="_blank" rel="noopener noreferrer" aria-label="Visit MiruneMochi on X">
               <img src="assets/clients/mirunemochi.png" alt="" decoding="async"><span class="orbit-node-label">MiruneMochi</span>
@@ -1966,7 +1999,7 @@
               <img src="assets/clients/crashvs.jpg" alt="" decoding="async"><span class="orbit-node-label">CrashVS</span>
             </a>
           </div>
-          <p class="orbit-help">Hover = pause · click = say hi ↗</p>
+          <p class="orbit-help">Hover = pause · click = visit ↗</p>
         </div>
         <div class="client-marquee">
           <p class="client-marquee-head"><span><strong>17</strong> more lovely people</span><span>Flick to spin · auto-resumes ↗</span></p>
@@ -2185,9 +2218,9 @@
       <div class="shell">
         <div class="contact-card reveal">
           <div class="contact-copy">
-            <span class="section-index">05 / say hi</span>
+            <span class="section-index">05 / contact</span>
             <h2>Hey, I’m Yuina.</h2>
-            <p>I’m a video editor who loves sharp timing, big reactions, and turning good footage into something people want to keep watching. Got a project—or just a wonderfully chaotic idea? Come say hi.</p>
+            <p>I’m a video editor who loves sharp timing, big reactions, and turning good footage into something people want to keep watching. Got a project—or just a wonderfully chaotic idea? Get in touch.</p>
           </div>
           <button class="contact-portrait" type="button" aria-label="Pop a Yuina emote" title="Psst… click me a few times">
             <img src="assets/sento-yuina.png" alt="SentoYuina character portrait" loading="lazy" decoding="async">
@@ -2229,6 +2262,7 @@
     const clientOrbit = document.querySelector('.client-orbit');
     const allClientNodes = [...document.querySelectorAll('.orbit-node')];
     const orbitNodes = allClientNodes.slice(0, 8);
+    const orbitSpinButton = document.querySelector('.orbit-spin');
     const extraClientNodes = allClientNodes.slice(8);
     const clientStrip = document.querySelector('#clientStrip');
     const clientStripGroup = document.querySelector('#clientStripGroup');
@@ -2460,6 +2494,7 @@
 
       testimonialCloud.addEventListener('pointerdown', (event) => {
         if (event.pointerType === 'touch') return;
+        testimonialUserPicked = true;
         dragging = true;
         dragged = false;
         startX = event.clientX;
@@ -2479,6 +2514,7 @@
       testimonialCloud.addEventListener('pointerup', finishTestimonialDrag);
       testimonialCloud.addEventListener('pointercancel', finishTestimonialDrag);
       testimonialCloud.addEventListener('lostpointercapture', finishTestimonialDrag);
+      testimonialCloud.addEventListener('dragstart', (event) => event.preventDefault());
       testimonialCloud.addEventListener('click', (event) => {
         if (!dragged) return;
         event.preventDefault();
@@ -2722,6 +2758,15 @@
       node.addEventListener('focus', activate);
       node.addEventListener('blur', deactivate);
     });
+
+    orbitSpinButton?.addEventListener('click', () => {
+      if (prefersReducedMotion) return;
+      orbitPaused = false;
+      orbitSpeed = Math.min(34, orbitSpeed + 18);
+      orbitSpinButton.classList.remove('spinning');
+      requestAnimationFrame(() => orbitSpinButton.classList.add('spinning'));
+    });
+    orbitSpinButton?.addEventListener('animationend', () => orbitSpinButton.classList.remove('spinning'));
 
     requestAnimationFrame(renderOrbit);
 

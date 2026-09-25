@@ -50,34 +50,34 @@
     footer{display:flex;justify-content:space-between;gap:1rem;padding:2rem 0 3rem;color:var(--muted);font:700 .68rem/1.4 ui-monospace,Consolas,monospace;text-transform:uppercase}
     :focus-visible{outline:3px solid var(--hot);outline-offset:4px}
     @media(max-width:900px){.hero{grid-template-columns:1fr}.rate-reel{min-height:auto}.contact-strip{grid-template-columns:auto 1fr}.contact-actions{grid-column:1/-1;justify-content:flex-start}}
-    @media(max-width:720px){.price-grid{grid-template-columns:1fr}.brand-copy small{display:none}.nav{position:relative;gap:.65rem}.nav-toggle{display:inline-flex}.nav-links{position:absolute;top:calc(100% + .55rem);right:0;width:min(17rem,calc(100vw - 1.25rem));display:none;align-items:stretch;flex-direction:column;gap:.15rem;padding:.55rem;border:1px solid rgba(255,242,234,.22);border-radius:1.25rem;background:rgba(23,13,31,.97);box-shadow:0 1.25rem 3rem rgba(0,0,0,.42)}.nav.open .nav-links{display:flex}.nav.open .nav-links a{display:flex;justify-content:space-between;padding:.82rem .9rem;border-radius:.85rem}.nav-links .nav-cta{margin:.2rem 0 0}.nav.open .nav-toggle b{transform:rotate(45deg)}h1{font-size:clamp(3.4rem,19vw,5.8rem)}.bonus{grid-template-columns:1fr}.package{flex-direction:column;gap:.15rem}.contact-strip{grid-template-columns:1fr}.contact-actions{grid-column:auto}.contact-actions a{flex:1;text-align:center}footer{flex-direction:column}}
+    @media(max-width:720px){.price-grid{grid-template-columns:1fr}.brand-copy small{display:none}.nav{position:relative;gap:.65rem}.nav-toggle{display:inline-flex}.nav-links{position:absolute;top:calc(100% + .55rem);right:0;width:min(17rem,calc(100vw - 1.25rem));display:none;align-items:stretch;flex-direction:column;gap:.15rem;padding:.55rem;border:1px solid rgba(255,242,234,.22);border-radius:1.25rem;background:rgba(23,13,31,.97);box-shadow:0 1.25rem 3rem rgba(0,0,0,.42)}.nav.open .nav-links{display:flex}.nav.open .nav-links a{display:flex;justify-content:space-between;padding:.82rem .9rem;border-radius:.85rem}.nav-links .nav-cta{margin:.2rem 0 0}.nav.open .nav-toggle b{transform:rotate(45deg)}h1{max-width:none;font-size:clamp(3.1rem,15vw,4.8rem);line-height:.9;letter-spacing:-.06em}h1 span{margin-top:.06em;-webkit-text-stroke:1px rgba(255,242,234,.75)}.bonus{grid-template-columns:1fr}.package{flex-direction:column;gap:.15rem;margin:1.25rem 0 0}.contact-strip{grid-template-columns:1fr}.contact-actions{grid-column:auto}.contact-actions a{flex:1;text-align:center}footer{flex-direction:column}}
   </style>
 </head>
 <body>
   <header class="site-header"><nav class="nav shell" aria-label="Main navigation">
     <a class="brand" href="index.html#top"><img class="brand-avatar" src="assets/sento-yuina.png" alt="" aria-hidden="true"><span class="brand-copy"><strong>SentoYuina</strong><small>VIDEO EDITOR</small></span></a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu"><span>Menu</span><b aria-hidden="true">＋</b></button>
-    <div class="nav-links" id="site-menu"><a href="index.html#clients"><em>01</em> Clients</a><a href="index.html#work"><em>02</em> Work</a><a href="index.html#testimonials"><em>03</em> Reviews</a><a class="active" href="pricing.html" aria-current="page"><em>04</em> Prices</a><a href="tos.html"><em>05</em> TOS</a><a class="nav-cta" href="#contact">Say hi ↗</a></div>
+    <div class="nav-links" id="site-menu"><a href="index.html#clients"><em>01</em> Clients</a><a href="index.html#work"><em>02</em> Work</a><a href="index.html#testimonials"><em>03</em> Reviews</a><a class="active" href="pricing.html" aria-current="page"><em>04</em> Prices</a><a href="tos.html"><em>05</em> Terms of Service</a><a class="nav-cta" href="#contact">Contact ↗</a></div>
   </nav></header>
   <main>
     <section class="hero shell">
       <div><p class="eyebrow">Services &amp; pricing</p><h1>Clear cuts.<span>Clear rates.</span></h1><p class="hero-copy">Subtitles, visual effects, and a whole lot of timeline care are already included—no mystery add-ons.</p></div>
-      <aside class="rate-reel" aria-label="Quick rate summary"><div class="rate-reel-label"><span>QUICK PICK</span><span>00:21:18</span></div><div class="rate-stack"><div class="rate-ticket"><span>Single Short</span><strong>$21</strong></div><div class="rate-ticket"><span>Long-form<br>per edited minute</span><strong>$18</strong></div><div class="rate-ticket"><span>2 long videos</span><strong>+1 FREE</strong></div></div></aside>
+      <aside class="rate-reel" aria-label="Quick rate summary"><div class="rate-reel-label"><span>QUICK PICK</span><span>00:21:21</span></div><div class="rate-stack"><div class="rate-ticket"><span>Single Short</span><strong>$21</strong></div><div class="rate-ticket"><span>Long-form<br>per edited minute</span><strong>$21</strong></div><div class="rate-ticket"><span>2 long videos</span><strong>+1 FREE</strong></div></div></aside>
     </section>
     <section class="price-grid shell" aria-label="Editing services">
       <article class="price-card" style="--glow:#ff70ad">
         <span class="card-kicker">Short-form editing</span><h2>Shorts</h2>
         <div class="price"><strong>$21</strong><span>per single<br>Short</span></div>
-        <div class="package"><strong>5 Shorts — $100</strong><span>$20 each</span></div>
         <ul>
           <li>Full subtitles and visual effects included.</li>
           <li>Please provide timestamps, a timeline, or Twitch Clips for the moments you want edited.</li>
           <li>Memes, reaction images, character assets, and extra materials are always appreciated.</li>
         </ul>
+        <div class="package"><strong>5 Shorts — $100</strong><span>$20 each</span></div>
       </article>
       <article class="price-card" style="--glow:#9a7cff">
         <span class="card-kicker">Long-form editing</span><h2>Full videos</h2>
-        <div class="price"><strong>$18</strong><span>per edited<br>minute</span></div>
+        <div class="price"><strong>$21</strong><span>per edited<br>minute</span></div>
         <ul>
           <li>Full subtitles and visual effects included.</li>
           <li>Send the full VOD—I’ll review the footage and select suitable moments for the final video.</li>
