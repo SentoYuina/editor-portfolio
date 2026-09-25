@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Video editing prices and packages from SentoYuina.">
+  <meta name="description" content="Short-form, Long-form, and Reaction Video editing prices and packages from SentoYuina.">
   <meta name="theme-color" content="#170d1f">
   <title>Prices — SentoYuina Video Editor</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23170d1f'/%3E%3Cpath d='M16 18h32v8H16zm0 20h32v8H16z' fill='%23ff70ad'/%3E%3Cpath d='M27 14h10v36H27z' fill='%239a7cff'/%3E%3C/svg%3E">
@@ -35,22 +35,36 @@
     .rate-reel-label{display:flex;justify-content:space-between;color:var(--muted);font:750 .65rem/1 ui-monospace,Consolas,monospace;letter-spacing:.1em}.rate-stack{display:grid;gap:.85rem;margin-top:2.2rem}.rate-ticket{display:grid;grid-template-columns:1fr auto;align-items:end;gap:1rem;padding:1.05rem 1.15rem;border:1px solid rgba(255,242,234,.16);border-radius:1rem;background:rgba(23,13,31,.66);box-shadow:0 .8rem 2rem rgba(0,0,0,.22);transform:rotate(var(--ticket-tilt))}.rate-ticket:nth-child(1){--ticket-tilt:-2deg}.rate-ticket:nth-child(2){--ticket-tilt:1.5deg}.rate-ticket:nth-child(3){--ticket-tilt:-.8deg}.rate-ticket span{color:var(--muted);font:750 .66rem/1.3 ui-monospace,Consolas,monospace;text-transform:uppercase}.rate-ticket strong{color:var(--ticket-color,var(--hot));font-size:clamp(1.8rem,4vw,3rem);line-height:.8;letter-spacing:-.06em}.rate-ticket:nth-child(2){--ticket-color:var(--violet)}.rate-ticket:nth-child(3){--ticket-color:var(--gold)}
     .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;padding:2rem 0}
     .price-card{position:relative;overflow:hidden;padding:clamp(1.4rem,3vw,2.2rem);border:1px solid var(--line);border-radius:1.7rem;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));box-shadow:0 1.5rem 5rem rgba(0,0,0,.2)}
+    .price-grid>.price-card:not(.reaction-card){display:flex;flex-direction:column}.price-grid>.price-card:not(.reaction-card)>.sample-link{align-self:flex-start;margin-top:auto}
     .price-card::after{content:"";position:absolute;width:13rem;height:13rem;right:-6rem;top:-7rem;border-radius:50%;background:var(--glow,var(--hot));opacity:.14;filter:blur(12px)}
     .card-kicker{color:var(--hot);font:800 .68rem/1 ui-monospace,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase}
     h2{margin:.8rem 0 .2rem;font-size:clamp(1.8rem,4vw,3rem);line-height:1;letter-spacing:-.045em}
     .price{display:flex;align-items:end;gap:.65rem;margin:1.7rem 0 1.1rem}.price strong{font-size:clamp(3.2rem,7vw,5.6rem);line-height:.8;letter-spacing:-.075em}.price span{color:var(--muted);font:750 .72rem/1.35 ui-monospace,Consolas,monospace;text-transform:uppercase}
     .package{display:flex;justify-content:space-between;gap:1rem;margin:0 0 1.4rem;padding:.85rem 1rem;border:1px solid rgba(255,179,87,.35);border-radius:1rem;background:rgba(255,179,87,.08)}
     .package strong{color:var(--gold)}.package span{color:var(--muted)}
+    .service-fit{max-width:38rem;margin:.9rem 0 0;color:var(--muted);font-size:.95rem}.service-fit strong{color:var(--paper)}
+    .sample-link{display:inline-flex;align-items:center;gap:.55rem;margin-top:1.25rem;padding:.7rem .9rem;border:1px solid rgba(255,242,234,.18);border-radius:999px;color:var(--paper);background:rgba(255,242,234,.04);font:800 .68rem/1 ui-monospace,Consolas,monospace;letter-spacing:.04em;text-decoration:none;transition:.2s ease}.sample-link:hover,.sample-link:focus-visible{border-color:var(--hot);color:var(--hot);background:rgba(255,112,173,.08);transform:translateY(-2px)}
     ul{margin:1.2rem 0 0;padding:0;list-style:none}.price-card li{position:relative;padding:.7rem 0 .7rem 1.35rem;border-top:1px solid rgba(255,242,234,.1);color:var(--muted)}.price-card li::before{content:"✦";position:absolute;left:0;color:var(--hot)}
+    .reaction-card{grid-column:1/-1;--glow:#ffb357;padding:clamp(1.5rem,4vw,2.75rem)}
+    .reaction-heading{display:grid;grid-template-columns:minmax(0,.72fr) minmax(18rem,1fr);gap:1rem 3rem;align-items:end}.reaction-heading h2{margin-bottom:0}.reaction-intro{max-width:42rem;margin:0;color:var(--muted)}.reaction-intro strong{color:var(--paper)}
+    .reaction-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:2rem}
+    .reaction-plan{position:relative;padding:clamp(1.15rem,2.5vw,1.7rem);border:1px solid rgba(255,242,234,.15);border-radius:1.25rem;background:rgba(23,13,31,.48);box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
+    .reaction-plan.bundle{border-color:rgba(255,112,173,.62);background:linear-gradient(145deg,rgba(255,112,173,.17),rgba(154,124,255,.1));box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 1.1rem 3rem rgba(255,112,173,.1)}
+    .reaction-plan h3{margin:0 0 1rem;font-size:clamp(1.25rem,2.7vw,1.75rem)}
+    .value-badge{position:absolute;top:1rem;right:1rem;padding:.42rem .6rem;border-radius:999px;color:var(--ink);background:linear-gradient(120deg,var(--hot),var(--gold));font:900 .58rem/1 ui-monospace,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase;transform:rotate(2deg)}
+    .reaction-rates{margin:0}.reaction-rate{display:flex;justify-content:space-between;gap:1rem;padding:.74rem 0;border-top:1px solid rgba(255,242,234,.1)}.reaction-rate:first-child{border-top:0}.reaction-rate span{color:var(--muted)}.reaction-rate strong{flex:0 0 auto;color:var(--paper)}.bundle .reaction-rate strong{color:#ffc26f}
+    .reaction-included{display:grid;grid-template-columns:minmax(12rem,.42fr) minmax(0,1fr);gap:1rem 3rem;margin-top:1.2rem;padding-top:.25rem}.reaction-included h3{margin:1.2rem 0 .35rem;font-size:clamp(1.35rem,3vw,2rem)}.reaction-included p{margin:0;color:var(--muted)}.reaction-included ul{margin-top:1.2rem}
+    .reaction-note{grid-column:1/-1;margin:.25rem 0 0;padding:.8rem 1rem;border:1px dashed rgba(255,179,87,.36);border-radius:1rem;color:var(--muted);background:rgba(255,179,87,.06);font-size:.9rem}.reaction-note strong{color:var(--paper)}
+    .reaction-pricing-note{grid-column:1/-1;display:grid;grid-template-columns:minmax(12rem,.42fr) minmax(0,1fr);gap:1rem 3rem;margin-top:.1rem;padding:1.15rem 1.2rem;border:1px solid rgba(154,124,255,.3);border-radius:1rem;background:rgba(154,124,255,.07)}.reaction-pricing-note h3{margin:0;font-size:clamp(1.15rem,2.5vw,1.55rem)}.reaction-pricing-note p{margin:0;color:var(--muted)}.reaction-pricing-note p+p{margin-top:.7rem}.reaction-pricing-note strong{color:var(--paper)}
     .bonus{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center;margin:1rem 0 5rem;padding:clamp(1.25rem,3vw,2rem);border:1px solid rgba(255,112,173,.45);border-radius:1.5rem;background:linear-gradient(100deg,rgba(255,112,173,.16),rgba(154,124,255,.14))}
     .bonus-mark{display:grid;place-items:center;width:4.5rem;aspect-ratio:1;border-radius:50%;color:var(--ink);background:linear-gradient(135deg,var(--hot),var(--gold));font:900 1.2rem/1 ui-monospace,Consolas,monospace;transform:rotate(-6deg)}
     .bonus h2{margin:0 0 .4rem;font-size:clamp(1.5rem,3vw,2.3rem)}.bonus p{margin:0;color:var(--muted)}
-    .cta{margin-bottom:1rem;padding:clamp(1.5rem,5vw,3.5rem);border-radius:1.8rem;background:var(--paper);color:var(--ink)}.cta h2{max-width:12ch;font-size:clamp(2.3rem,6vw,5rem)}.cta p{max-width:38rem}.button{display:inline-flex;margin-top:1rem;padding:.9rem 1.2rem;border-radius:999px;background:linear-gradient(120deg,var(--hot),#ff8f88);font-weight:850;text-decoration:none}
+    .cta{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1.2rem 2rem;margin-bottom:1.25rem;padding:clamp(1.25rem,3vw,2rem);border:1px solid var(--line);border-radius:1.55rem;background:linear-gradient(120deg,rgba(255,112,173,.1),rgba(154,124,255,.09));box-shadow:0 1.2rem 3.5rem rgba(0,0,0,.14);color:var(--paper)}.cta h2{max-width:none;margin:.7rem 0 .45rem;font-size:clamp(1.75rem,3.8vw,3rem)}.cta p{max-width:44rem;margin:0;color:var(--muted)}.button{display:inline-flex;margin:0;padding:.85rem 1.15rem;border-radius:999px;color:var(--ink);background:linear-gradient(120deg,var(--hot),#ff8f88);font-weight:850;text-decoration:none;white-space:nowrap}
     .contact-strip{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1.2rem;margin-bottom:5rem;padding:1rem 1.2rem;border:1px solid var(--line);border-radius:1.4rem;background:rgba(255,242,234,.035)}.contact-strip img{width:4.2rem;height:4.2rem;object-fit:cover;border:2px solid var(--hot);border-radius:50%;transform:rotate(-5deg)}.contact-strip h2{margin:0 0 .25rem;font-size:clamp(1.3rem,2.5vw,2rem)}.contact-strip p{margin:0;color:var(--muted)}.contact-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:.55rem}.contact-actions a{padding:.65rem .8rem;border:1px solid var(--line);border-radius:999px;color:var(--paper);text-decoration:none;font:750 .68rem/1 ui-monospace,Consolas,monospace}.contact-actions a:hover{border-color:var(--hot);color:var(--hot)}
     footer{display:flex;justify-content:space-between;gap:1rem;padding:2rem 0 3rem;color:var(--muted);font:700 .68rem/1.4 ui-monospace,Consolas,monospace;text-transform:uppercase}
     :focus-visible{outline:3px solid var(--hot);outline-offset:4px}
     @media(max-width:900px){.hero{grid-template-columns:1fr}.rate-reel{min-height:auto}.contact-strip{grid-template-columns:auto 1fr}.contact-actions{grid-column:1/-1;justify-content:flex-start}}
-    @media(max-width:720px){.price-grid{grid-template-columns:1fr}.brand-copy small{display:none}.nav{position:relative;gap:.65rem}.nav-toggle{display:inline-flex}.nav-links{position:absolute;top:calc(100% + .55rem);right:0;width:min(17rem,calc(100vw - 1.25rem));display:none;align-items:stretch;flex-direction:column;gap:.15rem;padding:.55rem;border:1px solid rgba(255,242,234,.22);border-radius:1.25rem;background:rgba(23,13,31,.97);box-shadow:0 1.25rem 3rem rgba(0,0,0,.42)}.nav.open .nav-links{display:flex}.nav.open .nav-links a{display:flex;justify-content:space-between;padding:.82rem .9rem;border-radius:.85rem}.nav-links .nav-cta{margin:.2rem 0 0}.nav.open .nav-toggle b{transform:rotate(45deg)}h1{max-width:none;font-size:clamp(3.1rem,15vw,4.8rem);line-height:.9;letter-spacing:-.06em}h1 span{margin-top:.06em;-webkit-text-stroke:1px rgba(255,242,234,.75)}.bonus{grid-template-columns:1fr}.package{flex-direction:column;gap:.15rem;margin:1.25rem 0 0}.contact-strip{grid-template-columns:1fr}.contact-actions{grid-column:auto}.contact-actions a{flex:1;text-align:center}footer{flex-direction:column}}
+    @media(max-width:720px){.price-grid{grid-template-columns:1fr}.brand-copy small{display:none}.nav{position:relative;gap:.65rem}.nav-toggle{display:inline-flex}.nav-links{position:absolute;top:calc(100% + .55rem);right:0;width:min(17rem,calc(100vw - 1.25rem));display:none;align-items:stretch;flex-direction:column;gap:.15rem;padding:.55rem;border:1px solid rgba(255,242,234,.22);border-radius:1.25rem;background:rgba(23,13,31,.97);box-shadow:0 1.25rem 3rem rgba(0,0,0,.42)}.nav.open .nav-links{display:flex}.nav.open .nav-links a{display:flex;justify-content:space-between;padding:.82rem .9rem;border-radius:.85rem}.nav-links .nav-cta{margin:.2rem 0 0}.nav.open .nav-toggle b{transform:rotate(45deg)}h1{max-width:none;font-size:clamp(3.1rem,15vw,4.8rem);line-height:.9;letter-spacing:-.06em}h1 span{margin-top:.06em;-webkit-text-stroke:1px rgba(255,242,234,.75)}.reaction-heading,.reaction-options,.reaction-included,.reaction-pricing-note{grid-template-columns:1fr}.reaction-intro{margin-top:.7rem}.reaction-note{grid-column:auto}.value-badge{position:static;display:inline-flex;margin:-.2rem 0 .85rem;transform:rotate(-1deg)}.bonus{grid-template-columns:1fr}.package{flex-direction:column;gap:.15rem;margin:1.25rem 0 0}.cta{grid-template-columns:1fr}.button{width:100%;justify-content:center}.contact-strip{grid-template-columns:1fr}.contact-actions{grid-column:auto}.contact-actions a{flex:1;text-align:center}footer{flex-direction:column}}
   </style>
 </head>
 <body>
@@ -61,35 +75,77 @@
   </nav></header>
   <main>
     <section class="hero shell">
-      <div><p class="eyebrow">Services &amp; pricing</p><h1>Clear cuts.<span>Clear rates.</span></h1><p class="hero-copy">Subtitles, visual effects, and a whole lot of timeline care are already included—no mystery add-ons.</p></div>
-      <aside class="rate-reel" aria-label="Quick rate summary"><div class="rate-reel-label"><span>QUICK PICK</span><span>00:21:21</span></div><div class="rate-stack"><div class="rate-ticket"><span>Single Short</span><strong>$21</strong></div><div class="rate-ticket"><span>Long-form<br>per edited minute</span><strong>$21</strong></div><div class="rate-ticket"><span>2 long videos</span><strong>+1 FREE</strong></div></div></aside>
+      <div><p class="eyebrow">Services &amp; pricing</p><h1>Clear cuts.<span>Clear rates.</span></h1><p class="hero-copy">Choose the editing depth that fits the content—from fully polished Shorts and story-built videos to lighter, longer Reaction edits.</p></div>
+      <aside class="rate-reel" aria-label="Quick rate summary"><div class="rate-reel-label"><span>QUICK PICK</span><span>00:21:21</span></div><div class="rate-stack"><div class="rate-ticket"><span>Single Short</span><strong>$21</strong></div><div class="rate-ticket"><span>Long-form<br>per finished minute</span><strong>$21</strong></div><div class="rate-ticket"><span>Reaction Video<br>starting at</span><strong>$40</strong></div></div></aside>
     </section>
     <section class="price-grid shell" aria-label="Editing services">
       <article class="price-card" style="--glow:#ff70ad">
         <span class="card-kicker">Short-form editing</span><h2>Shorts</h2>
         <div class="price"><strong>$21</strong><span>per single<br>Short</span></div>
+        <p class="service-fit"><strong>Fast, fully polished edits.</strong> You choose the moment; I turn it into a finished Short.</p>
         <ul>
-          <li>Full subtitles and visual effects included.</li>
+          <li>Full subtitles and visual effects throughout the Short.</li>
           <li>Please provide timestamps, a timeline, or Twitch Clips for the moments you want edited.</li>
+          <li>VOD scrubbing and content selection are not included.</li>
           <li>Memes, reaction images, character assets, and extra materials are always appreciated.</li>
         </ul>
         <div class="package"><strong>5 Shorts — $100</strong><span>$20 each</span></div>
+        <a class="sample-link" href="https://www.youtube.com/playlist?list=PLojAoMvTCmvy394ih4s7HsyaJBEU_jvOu" target="_blank" rel="noopener noreferrer">SEE SHORT-FORM EDITS ↗</a>
       </article>
       <article class="price-card" style="--glow:#9a7cff">
         <span class="card-kicker">Long-form editing</span><h2>Full videos</h2>
-        <div class="price"><strong>$21</strong><span>per edited<br>minute</span></div>
+        <div class="price"><strong>$21</strong><span>per finished<br>minute</span></div>
+        <p class="service-fit"><strong>Full-service storytelling and polish.</strong> Send the VOD and I’ll find, structure, and finish the content.</p>
         <ul>
-          <li>Full subtitles and visual effects included.</li>
-          <li>Send the full VOD—I’ll review the footage and select suitable moments for the final video.</li>
+          <li>Full subtitles and visual effects throughout the video.</li>
+          <li>VOD scrubbing and content selection are included.</li>
+          <li>Send the full VOD—I’ll find suitable moments and structure the final video.</li>
           <li>Memes, reaction images, character assets, and extra materials are welcome.</li>
         </ul>
+        <div class="package"><strong>2 Long-form videos — +1 Short free</strong><span>Loyalty bonus</span></div>
+        <a class="sample-link" href="https://www.youtube.com/playlist?list=PLojAoMvTCmvy_-rFwwef4it4sF5HW5qfV" target="_blank" rel="noopener noreferrer">SEE LONG-FORM EDITS ↗</a>
+      </article>
+      <article class="price-card reaction-card" id="reaction">
+        <div class="reaction-heading">
+          <div><span class="card-kicker">Lighter long-form editing</span><h2>Reaction videos</h2></div>
+          <p class="reaction-intro"><strong>A lighter editing service for much longer reaction content—not a discounted Long-form edit.</strong> The opening receives extra polish, while the remainder focuses on clean cuts and watchable pacing.</p>
+        </div>
+        <div class="reaction-options">
+          <section class="reaction-plan" aria-labelledby="reaction-single-title">
+            <h3 id="reaction-single-title">Single Video</h3>
+            <div class="reaction-rates">
+              <div class="reaction-rate"><span>Up to 20 minutes</span><strong>$40</strong></div>
+              <div class="reaction-rate"><span>21–40 minutes</span><strong>$60</strong></div>
+              <div class="reaction-rate"><span>41–60 minutes</span><strong>$80</strong></div>
+              <div class="reaction-rate"><span>60+ minutes</span><strong>Custom Quote</strong></div>
+            </div>
+          </section>
+          <section class="reaction-plan bundle" aria-labelledby="reaction-bundle-title">
+            <span class="value-badge">Best value</span>
+            <h3 id="reaction-bundle-title">3-Video Bundle</h3>
+            <div class="reaction-rates">
+              <div class="reaction-rate"><span>Up to 20 minutes each</span><strong>$90 · $30/video</strong></div>
+              <div class="reaction-rate"><span>21–40 minutes each</span><strong>$135 · $45/video</strong></div>
+              <div class="reaction-rate"><span>41–60 minutes each</span><strong>$180 · $60/video</strong></div>
+              <div class="reaction-rate"><span>60+ minutes</span><strong>Custom Quote</strong></div>
+            </div>
+          </section>
+        </div>
+        <div class="reaction-included">
+          <div><span class="card-kicker">What’s included</span><h3>A strong opening. Clean all the way through.</h3><p>The first 1–2 minutes get the extra visual punch; the rest stays tight and watchable.</p><a class="sample-link" href="https://www.youtube.com/playlist?list=PLP9yiq4UAS0g" target="_blank" rel="noopener noreferrer">SEE REACTION EDITS ↗</a></div>
+          <ul>
+            <li>Enhanced editing for the first 1–2 minutes, including subtitles and visual effects.</li>
+            <li>Basic cutting and pacing throughout the remainder of the video.</li>
+            <li>Removal of unnecessary pauses, downtime, mistakes, and unwanted sections.</li>
+            <li>Clean and watchable pacing suitable for longer reaction content.</li>
+            <li>Full subtitles and visual effects throughout the entire video are <strong>not included</strong>.</li>
+          </ul>
+          <p class="reaction-note">The bundle applies when <strong>3 Reaction Videos are commissioned together</strong>.</p>
+          <div class="reaction-pricing-note"><h3>Priced by final<br>edited length</h3><div><p>Reaction Video pricing is based on the <strong>final edited video length</strong>, not the original VOD or source footage length.</p><p>For example, a 2-hour VOD edited into a 35-minute final video falls under the <strong>21–40 minute</strong> tier. Exceptionally long source footage or projects requiring extensive footage review may need a <strong>custom quote</strong>.</p></div></div>
+        </div>
       </article>
     </section>
-    <aside class="bonus shell">
-      <div class="bonus-mark">+1</div>
-      <div><span class="card-kicker">Long-form loyalty bonus</span><h2>Order 2 long-form videos. Get 1 Short free.</h2><p>A little thank-you for keeping the timeline busy.</p></div>
-    </aside>
-    <section class="cta shell"><span class="card-kicker">Before booking</span><h2>Know the process, too.</h2><p>Check the turnaround times, footage requirements, credit rules, and payment details before your project begins.</p><a class="button" href="tos.html">Read the TOS →</a></section>
+    <section class="cta shell"><div><span class="card-kicker">Before booking</span><h2>Know the process, too.</h2><p>Check the turnaround times, footage requirements, credit rules, and payment details before your project begins.</p></div><a class="button" href="tos.html">Read the TOS →</a></section>
     <section class="contact-strip shell" id="contact"><img src="assets/sento-yuina.png" alt="SentoYuina character portrait"><div><h2>Ready to make something?</h2><p>Send the idea, footage, or beautifully chaotic plan my way.</p></div><div class="contact-actions"><a href="mailto:SentoYuina163@gmail.com">Email ↗</a><a href="https://x.com/SentoYuinaWK" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://discord.com/users/866227452400500776" target="_blank" rel="noopener noreferrer">Discord ↗</a></div></section>
   </main>
   <footer class="shell"><span>© 2026 SentoYuina</span><span>Video editor · Pricing</span></footer>

@@ -200,7 +200,7 @@
       display: flex;
       align-items: center;
       gap: .8rem;
-      margin: 0 0 1rem;
+      margin: 0;
       color: var(--muted);
       font-size: .82rem;
     }
@@ -213,6 +213,40 @@
       background: var(--acid);
       box-shadow: 0 0 1.2rem rgba(255, 112, 173, .72);
     }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .7rem 1rem;
+      margin: 0 0 1rem;
+    }
+
+    .commission-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .48rem;
+      margin: 0;
+      padding: .5rem .7rem;
+      color: var(--paper);
+      border: 1px solid rgba(126, 234, 190, .42);
+      border-radius: 999px;
+      background: rgba(126, 234, 190, .09);
+      font: 850 .64rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .07em;
+    }
+
+    .commission-status::before {
+      content: "";
+      width: .48rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #7eeabe;
+      box-shadow: 0 0 .85rem rgba(126, 234, 190, .8);
+      animation: statusPulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse { 50% { opacity: .5; transform: scale(.78); } }
 
     h1 {
       max-width: 9ch;
@@ -977,8 +1011,8 @@
       margin: 1rem -.35rem -.15rem;
       padding: 1rem .9rem 1.15rem;
       overflow-x: auto;
-      overscroll-behavior-inline: contain;
-      scroll-snap-type: inline proximity;
+      overscroll-behavior-inline: none;
+      scroll-snap-type: none;
       scrollbar-width: none;
       pointer-events: auto;
       cursor: grab;
@@ -1429,14 +1463,12 @@
       border: 1px solid rgba(255,242,234,.07);
       border-radius: 1.25rem;
       background:
-        linear-gradient(90deg, rgba(255,100,174,.055), transparent 22%, transparent 78%, rgba(159,123,255,.06)),
+        linear-gradient(120deg, rgba(255,100,174,.045), rgba(159,123,255,.055)),
         rgba(255,242,234,.018);
       scrollbar-width: none;
       touch-action: pan-x;
-      overscroll-behavior-inline: contain;
+      overscroll-behavior-inline: none;
       user-select: none;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
     }
 
     .client-marquee-viewport::-webkit-scrollbar { display: none; }
@@ -1518,6 +1550,7 @@
       font-weight: 950;
       line-height: .7;
       letter-spacing: -.12em;
+      pointer-events: none;
     }
 
     .contact-copy,
@@ -1824,8 +1857,8 @@
         min-height: 6.75rem;
         padding: .85rem .75rem 1rem;
         overflow-x: auto;
-        overscroll-behavior-inline: contain;
-        scroll-snap-type: inline proximity;
+        overscroll-behavior-inline: none;
+        scroll-snap-type: none;
         scrollbar-width: none;
       }
       .testimonial-cloud::-webkit-scrollbar { display: none; }
@@ -1835,7 +1868,6 @@
         top: auto;
         flex: 0 0 9.5rem;
         width: auto;
-        scroll-snap-align: center;
         transform: none !important;
         filter: none !important;
         opacity: 1 !important;
@@ -1893,7 +1925,7 @@
       <div class="client-showcase-inner shell" id="clients">
         <div class="hero-client-intro">
           <div class="hero-lead">
-            <p class="eyebrow">Video editor · Story shaper · Chaos tamer</p>
+            <div class="hero-meta"><p class="eyebrow">Video editor · Story shaper · Chaos tamer</p><p class="commission-status">COMMISSIONS OPEN</p></div>
             <h1 class="hero-title reveal">Make it <span>hit.</span></h1>
             <p class="hero-copy reveal">I turn raw footage into videos that feel fast, funny, emotional—or all three.</p>
             <div class="mood-tags reveal" aria-label="Editing style">
@@ -2204,7 +2236,7 @@
         <div class="principles">
           <a class="principle reveal" href="pricing.html">
             <strong>01</strong>
-            <div><h3>Prices ↗</h3><p>Shorts, long-form rates, what’s included, and the loyalty bonus.</p></div>
+            <div><h3>Prices ↗</h3><p>Short-form, Long-form, and lighter Reaction Video options—with samples for each.</p></div>
           </a>
           <a class="principle reveal" href="tos.html">
             <strong>02</strong>
@@ -2299,31 +2331,53 @@
       clientStripGroup.appendChild(node);
     });
 
-    const clientStripClone = clientStripGroup.cloneNode(true);
-    clientStripClone.removeAttribute('id');
-    clientStripClone.setAttribute('aria-hidden', 'true');
-    clientStripClone.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
-    clientStrip.appendChild(clientStripClone);
+    const cloneClientStripGroup = () => {
+      const clone = clientStripGroup.cloneNode(true);
+      clone.removeAttribute('id');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('a').forEach((link) => link.setAttribute('tabindex', '-1'));
+      return clone;
+    };
+    const clientStripCloneBefore = cloneClientStripGroup();
+    const clientStripCloneAfter = cloneClientStripGroup();
+    clientStrip.prepend(clientStripCloneBefore);
+    clientStrip.appendChild(clientStripCloneAfter);
 
     const clientStripViewport = document.querySelector('.client-marquee-viewport');
     let marqueeDragging = false;
     let marqueeDragged = false;
     let marqueeStartX = 0;
-    let marqueeStartScroll = 0;
     let marqueeLastPointerX = 0;
     let marqueeLastPointerTime = 0;
     let marqueeVelocity = 0;
     let marqueeMomentumFrame = null;
     let marqueeLastInteraction = performance.now();
     let marqueePreviousFrame = performance.now();
+    let clientLoopWidth = 0;
+    let clientLoopStart = 0;
 
     const pauseClientMarquee = () => { marqueeLastInteraction = performance.now(); };
-    const loopClientMarquee = () => {
-      const loopWidth = clientStripGroup.getBoundingClientRect().width + 12.8;
-      if (loopWidth > 0 && clientStripViewport.scrollLeft >= loopWidth) {
-        clientStripViewport.scrollLeft -= loopWidth;
+    const measureClientMarquee = (preservePosition = false) => {
+      const previousWidth = clientLoopWidth;
+      const previousOffset = clientStripViewport.scrollLeft - clientLoopStart;
+      clientLoopWidth = clientStripCloneAfter.offsetLeft - clientStripGroup.offsetLeft;
+      clientLoopStart = clientStripGroup.offsetLeft - parseFloat(getComputedStyle(clientStripViewport).paddingLeft || 0);
+      if (!clientLoopWidth) return;
+      if (preservePosition && previousWidth) {
+        clientStripViewport.scrollLeft = clientLoopStart + (previousOffset / previousWidth) * clientLoopWidth;
+      } else {
+        clientStripViewport.scrollLeft = clientLoopStart;
       }
     };
+    const loopClientMarquee = () => {
+      if (!clientLoopWidth) return;
+      const min = clientLoopStart - clientLoopWidth * .5;
+      const max = clientLoopStart + clientLoopWidth * .5;
+      if (clientStripViewport.scrollLeft < min) clientStripViewport.scrollLeft += clientLoopWidth;
+      else if (clientStripViewport.scrollLeft >= max) clientStripViewport.scrollLeft -= clientLoopWidth;
+    };
+
+    requestAnimationFrame(() => measureClientMarquee());
 
     const stopMarqueeMomentum = () => {
       if (marqueeMomentumFrame !== null) cancelAnimationFrame(marqueeMomentumFrame);
@@ -2363,7 +2417,6 @@
       marqueeDragging = true;
       marqueeDragged = false;
       marqueeStartX = event.clientX;
-      marqueeStartScroll = clientStripViewport.scrollLeft;
       marqueeLastPointerX = event.clientX;
       marqueeLastPointerTime = performance.now();
       clientStripViewport.classList.add('dragging');
@@ -2378,12 +2431,14 @@
       const distance = event.clientX - marqueeStartX;
       const now = performance.now();
       const elapsed = Math.max(8, now - marqueeLastPointerTime);
-      const instantVelocity = -((event.clientX - marqueeLastPointerX) / elapsed) * 1350;
+      const pointerDelta = event.clientX - marqueeLastPointerX;
+      const instantVelocity = -(pointerDelta / elapsed) * 1350;
       marqueeVelocity = marqueeVelocity * .32 + instantVelocity * .68;
+      clientStripViewport.scrollLeft -= pointerDelta;
+      loopClientMarquee();
       marqueeLastPointerX = event.clientX;
       marqueeLastPointerTime = now;
       if (Math.abs(distance) > 7) marqueeDragged = true;
-      clientStripViewport.scrollLeft = marqueeStartScroll - distance;
       pauseClientMarquee();
       event.preventDefault();
     });
@@ -2405,6 +2460,7 @@
       stopMarqueeMomentum();
       pauseClientMarquee();
     }, { passive: true });
+    clientStripViewport.addEventListener('scroll', loopClientMarquee, { passive: true });
     clientStripViewport.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         stopMarqueeMomentum();
@@ -2432,9 +2488,49 @@
     };
 
     requestAnimationFrame(animateClientMarquee);
+    addEventListener('resize', () => measureClientMarquee(true));
 
     let activeTestimonial = -1;
     let testimonialUserPicked = false;
+    let testimonialLoopReady = false;
+    let testimonialLoopWidth = 0;
+    let testimonialLoopStart = 0;
+    let testimonialPressedTab = null;
+
+    const cloneTestimonialSet = () => testimonialTabs.map((tab) => {
+      const clone = tab.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('tabindex', '-1');
+      return clone;
+    });
+    const testimonialCloneBefore = cloneTestimonialSet();
+    const testimonialCloneAfter = cloneTestimonialSet();
+    testimonialCloneBefore.slice().reverse().forEach((tab) => testimonialCloud?.prepend(tab));
+    testimonialCloneAfter.forEach((tab) => testimonialCloud?.append(tab));
+    const testimonialStripTabs = testimonialCloud ? [...testimonialCloud.querySelectorAll('.testimonial-tab')] : testimonialTabs;
+
+    const measureTestimonialLoop = (preservePosition = false) => {
+      if (!testimonialCloud || !testimonialCloneAfter[0] || !testimonialTabs[0]) return;
+      const previousWidth = testimonialLoopWidth;
+      const previousOffset = testimonialCloud.scrollLeft - testimonialLoopStart;
+      testimonialLoopWidth = testimonialCloneAfter[0].offsetLeft - testimonialTabs[0].offsetLeft;
+      testimonialLoopStart = testimonialTabs[0].offsetLeft - parseFloat(getComputedStyle(testimonialCloud).paddingLeft || 0);
+      if (!testimonialLoopWidth) return;
+      testimonialLoopReady = true;
+      testimonialCloud.scrollLeft = preservePosition && previousWidth
+        ? testimonialLoopStart + (previousOffset / previousWidth) * testimonialLoopWidth
+        : testimonialLoopStart;
+    };
+
+    const loopTestimonials = () => {
+      if (!testimonialCloud || !testimonialLoopReady) return;
+      const min = testimonialLoopStart - testimonialLoopWidth * .5;
+      const max = testimonialLoopStart + testimonialLoopWidth * .5;
+      if (testimonialCloud.scrollLeft < min) testimonialCloud.scrollLeft += testimonialLoopWidth;
+      else if (testimonialCloud.scrollLeft >= max) testimonialCloud.scrollLeft -= testimonialLoopWidth;
+    };
+
+    requestAnimationFrame(() => measureTestimonialLoop());
 
     const showTestimonial = (index, focusTab = false) => {
       activeTestimonial = (index + testimonialCards.length) % testimonialCards.length;
@@ -2444,13 +2540,20 @@
         card.classList.toggle('active', isActive);
         card.setAttribute('aria-hidden', String(!isActive));
       });
-      testimonialTabs.forEach((tab, tabIndex) => {
-        const isActive = tabIndex === activeTestimonial;
+      testimonialStripTabs.forEach((tab) => {
+        const isActive = Number(tab.dataset.testimonial) === activeTestimonial;
         tab.setAttribute('aria-selected', String(isActive));
-        tab.tabIndex = 0;
+        if (!tab.hasAttribute('aria-hidden')) tab.tabIndex = 0;
       });
-      if (testimonialCloud && activeTestimonial > 0) {
-        const activeTab = testimonialTabs[activeTestimonial];
+      if (testimonialCloud && testimonialLoopReady) {
+        const currentCenter = testimonialCloud.scrollLeft + testimonialCloud.clientWidth / 2;
+        const matchingTabs = testimonialStripTabs.filter((tab) => Number(tab.dataset.testimonial) === activeTestimonial);
+        const activeTab = matchingTabs.reduce((closest, tab) => {
+          const center = tab.offsetLeft + tab.clientWidth / 2;
+          if (!closest) return tab;
+          const closestCenter = closest.offsetLeft + closest.clientWidth / 2;
+          return Math.abs(center - currentCenter) < Math.abs(closestCenter - currentCenter) ? tab : closest;
+        }, null);
         testimonialCloud.scrollTo({
           left: activeTab.offsetLeft - testimonialCloud.clientWidth / 2 + activeTab.clientWidth / 2,
           behavior: prefersReducedMotion ? 'auto' : 'smooth'
@@ -2459,15 +2562,24 @@
       if (focusTab) testimonialTabs[activeTestimonial].focus();
     };
 
-    testimonialTabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        testimonialUserPicked = true;
-        showTestimonial(index);
-        document.querySelector('.testimonial-core')?.scrollIntoView({
-          behavior: prefersReducedMotion ? 'auto' : 'smooth',
-          block: 'center'
-        });
+    const activateTestimonialSelection = (tab) => {
+      if (!tab) return;
+      testimonialUserPicked = true;
+      showTestimonial(Number(tab.dataset.testimonial));
+      document.querySelector('.testimonial-core')?.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'center'
       });
+    };
+
+    testimonialCloud?.addEventListener('click', (event) => {
+      const tab = event.target.closest?.('.testimonial-tab') || testimonialPressedTab;
+      if (!tab || !testimonialCloud.contains(tab)) return;
+      activateTestimonialSelection(tab);
+      testimonialPressedTab = null;
+    });
+
+    testimonialTabs.forEach((tab, index) => {
       tab.addEventListener('keydown', (event) => {
         if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
         event.preventDefault();
@@ -2478,49 +2590,123 @@
     });
 
     if (testimonialCloud) {
-      let dragging = false;
-      let dragged = false;
-      let startX = 0;
-      let startScroll = 0;
+      let testimonialDragging = false;
+      let testimonialDragged = false;
+      let testimonialStartX = 0;
+      let testimonialLastX = 0;
+      let testimonialLastTime = 0;
+      let testimonialVelocity = 0;
+      let testimonialMomentumFrame = null;
+      let testimonialLastInteraction = performance.now();
+      let testimonialPreviousFrame = performance.now();
+
+      const pauseTestimonialRail = () => { testimonialLastInteraction = performance.now(); };
+      const stopTestimonialMomentum = () => {
+        if (testimonialMomentumFrame !== null) cancelAnimationFrame(testimonialMomentumFrame);
+        testimonialMomentumFrame = null;
+        testimonialVelocity = 0;
+      };
+
+      const startTestimonialMomentum = () => {
+        if (prefersReducedMotion || Math.abs(testimonialVelocity) < 24) return;
+        testimonialVelocity = Math.max(-1750, Math.min(1750, testimonialVelocity * 1.3));
+        let previousFrame = performance.now();
+        const glide = (now) => {
+          const delta = Math.min(.035, Math.max(0, (now - previousFrame) / 1000));
+          previousFrame = now;
+          testimonialCloud.scrollLeft += testimonialVelocity * delta;
+          loopTestimonials();
+          testimonialVelocity *= Math.exp(-delta * 2.55);
+          pauseTestimonialRail();
+          if (Math.abs(testimonialVelocity) > 8) testimonialMomentumFrame = requestAnimationFrame(glide);
+          else {
+            testimonialVelocity = 0;
+            testimonialMomentumFrame = null;
+            pauseTestimonialRail();
+          }
+        };
+        testimonialMomentumFrame = requestAnimationFrame(glide);
+      };
 
       const finishTestimonialDrag = (event) => {
-        if (!dragging) return;
-        dragging = false;
+        if (!testimonialDragging) return;
+        testimonialDragging = false;
         testimonialCloud.classList.remove('dragging');
         if (event?.pointerId !== undefined && testimonialCloud.hasPointerCapture?.(event.pointerId)) {
           testimonialCloud.releasePointerCapture(event.pointerId);
         }
+        pauseTestimonialRail();
+        if (event?.type === 'pointerup' && testimonialDragged) {
+          startTestimonialMomentum();
+        } else {
+          testimonialVelocity = 0;
+          if (event?.type === 'pointerup' && testimonialPressedTab) {
+            activateTestimonialSelection(testimonialPressedTab);
+            testimonialPressedTab = null;
+          }
+        }
+        if (event?.type === 'pointercancel') testimonialPressedTab = null;
+        setTimeout(() => { testimonialDragged = false; }, 120);
       };
 
       testimonialCloud.addEventListener('pointerdown', (event) => {
+        pauseTestimonialRail();
         if (event.pointerType === 'touch') return;
         testimonialUserPicked = true;
-        dragging = true;
-        dragged = false;
-        startX = event.clientX;
-        startScroll = testimonialCloud.scrollLeft;
+        stopTestimonialMomentum();
+        testimonialPressedTab = event.target.closest?.('.testimonial-tab') || null;
+        testimonialDragging = true;
+        testimonialDragged = false;
+        testimonialStartX = event.clientX;
+        testimonialLastX = event.clientX;
+        testimonialLastTime = performance.now();
         testimonialCloud.classList.add('dragging');
         testimonialCloud.setPointerCapture?.(event.pointerId);
       });
 
       testimonialCloud.addEventListener('pointermove', (event) => {
-        if (!dragging) return;
-        const distance = event.clientX - startX;
-        if (Math.abs(distance) > 6) dragged = true;
-        testimonialCloud.scrollLeft = startScroll - distance;
-        if (dragged) event.preventDefault();
+        if (!testimonialDragging) return;
+        const now = performance.now();
+        const pointerDelta = event.clientX - testimonialLastX;
+        const elapsed = Math.max(8, now - testimonialLastTime);
+        const instantVelocity = -(pointerDelta / elapsed) * 1350;
+        testimonialVelocity = testimonialVelocity * .32 + instantVelocity * .68;
+        testimonialCloud.scrollLeft -= pointerDelta;
+        loopTestimonials();
+        testimonialLastX = event.clientX;
+        testimonialLastTime = now;
+        if (Math.abs(event.clientX - testimonialStartX) > 6) testimonialDragged = true;
+        if (testimonialDragged) event.preventDefault();
       });
 
       testimonialCloud.addEventListener('pointerup', finishTestimonialDrag);
       testimonialCloud.addEventListener('pointercancel', finishTestimonialDrag);
       testimonialCloud.addEventListener('lostpointercapture', finishTestimonialDrag);
+      testimonialCloud.addEventListener('scroll', loopTestimonials, { passive: true });
+      testimonialCloud.addEventListener('wheel', () => {
+        stopTestimonialMomentum();
+        pauseTestimonialRail();
+      }, { passive: true });
       testimonialCloud.addEventListener('dragstart', (event) => event.preventDefault());
       testimonialCloud.addEventListener('click', (event) => {
-        if (!dragged) return;
+        if (!testimonialDragged) return;
         event.preventDefault();
         event.stopPropagation();
-        dragged = false;
+        testimonialDragged = false;
+        testimonialPressedTab = null;
       }, true);
+
+      const animateTestimonialRail = (now) => {
+        const delta = Math.min(.04, Math.max(0, (now - testimonialPreviousFrame) / 1000));
+        testimonialPreviousFrame = now;
+        if (!prefersReducedMotion && !testimonialDragging && testimonialMomentumFrame === null && now - testimonialLastInteraction > 3200) {
+          testimonialCloud.scrollLeft += delta * 22;
+          loopTestimonials();
+        }
+        requestAnimationFrame(animateTestimonialRail);
+      };
+      requestAnimationFrame(animateTestimonialRail);
+      addEventListener('resize', () => measureTestimonialLoop(true));
     }
 
     showTestimonial(0);
