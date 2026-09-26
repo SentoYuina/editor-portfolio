@@ -2115,12 +2115,21 @@
             <a class="orbit-node" href="https://x.com/YanderEggsmr" target="_blank" rel="noopener noreferrer" aria-label="Visit YanderEgg on X">
               <img src="assets/clients/yanderegg.jpg" alt="" decoding="async"><span class="orbit-node-label">YanderEgg</span>
             </a>
+            <a class="orbit-node" href="https://x.com/_Emion_" target="_blank" rel="noopener noreferrer" aria-label="Visit Emion on X">
+              <img src="assets/clients/emion.jpg" alt="" decoding="async"><span class="orbit-node-label">Emion</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/heyxuanxuan" target="_blank" rel="noopener noreferrer" aria-label="Visit XUAN on X">
+              <img src="assets/clients/xuan.jpg" alt="" decoding="async"><span class="orbit-node-label">XUAN</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/AutumnMozilla" target="_blank" rel="noopener noreferrer" aria-label="Visit Autumn Mozilla on X">
+              <img src="assets/clients/autumn-mozilla.jpg" alt="" decoding="async"><span class="orbit-node-label">Autumn Mozilla</span>
+            </a>
           </div>
           <p class="orbit-help">Hover = pause · click = visit ↗</p>
         </div>
         <div class="client-marquee">
-          <p class="client-marquee-head"><span><strong>25</strong> more lovely people</span><span>Flick to spin · auto-resumes ↗</span></p>
-          <div class="client-marquee-viewport" tabindex="0" aria-label="Drag or flick to browse twenty-five more clients">
+          <p class="client-marquee-head"><span><strong>28</strong> more lovely people</span><span>Flick to spin · auto-resumes ↗</span></p>
+          <div class="client-marquee-viewport" tabindex="0" aria-label="Drag or flick to browse twenty-eight more clients">
             <div class="client-marquee-track" id="clientStrip">
               <div class="client-marquee-group" id="clientStripGroup"></div>
             </div>
@@ -2433,7 +2442,6 @@
     let marqueeDragged = false;
     let marqueePressedLink = null;
     let marqueeHandledClick = false;
-    let marqueeHovering = false;
     let marqueeStartX = 0;
     let marqueeLastPointerX = 0;
     let marqueeLastPointerTime = 0;
@@ -2474,8 +2482,8 @@
     };
 
     const startMarqueeMomentum = () => {
-      if (prefersReducedMotion || Math.abs(marqueeVelocity) < 28) return;
-      marqueeVelocity = Math.max(-1800, Math.min(1800, marqueeVelocity * 1.35));
+      if (prefersReducedMotion || Math.abs(marqueeVelocity) < 24) return;
+      marqueeVelocity = Math.max(-1500, Math.min(1500, marqueeVelocity * 1.18));
       let momentumPreviousFrame = performance.now();
 
       const glide = (now) => {
@@ -2483,7 +2491,7 @@
         momentumPreviousFrame = now;
         clientStripViewport.scrollLeft += marqueeVelocity * delta;
         loopClientMarquee();
-        marqueeVelocity *= Math.exp(-delta * 2.45);
+        marqueeVelocity *= Math.exp(-delta * 2.85);
         pauseClientMarquee();
 
         if (Math.abs(marqueeVelocity) > 8) {
@@ -2520,8 +2528,8 @@
       const now = performance.now();
       const elapsed = Math.max(8, now - marqueeLastPointerTime);
       const pointerDelta = event.clientX - marqueeLastPointerX;
-      const instantVelocity = -(pointerDelta / elapsed) * 1350;
-      marqueeVelocity = marqueeVelocity * .32 + instantVelocity * .68;
+      const instantVelocity = -(pointerDelta / elapsed) * 1000;
+      marqueeVelocity = marqueeVelocity * .58 + instantVelocity * .42;
       clientStripViewport.scrollLeft -= pointerDelta;
       loopClientMarquee();
       marqueeLastPointerX = event.clientX;
@@ -2561,15 +2569,6 @@
       stopMarqueeMomentum();
       pauseClientMarquee();
     }, { passive: true });
-    clientStripViewport.addEventListener('pointerenter', () => {
-      marqueeHovering = true;
-      stopMarqueeMomentum();
-      pauseClientMarquee();
-    });
-    clientStripViewport.addEventListener('pointerleave', () => {
-      marqueeHovering = false;
-      pauseClientMarquee();
-    });
     clientStripViewport.addEventListener('scroll', loopClientMarquee, { passive: true });
     clientStripViewport.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
@@ -2590,8 +2589,8 @@
       const delta = Math.min(.04, Math.max(0, (now - marqueePreviousFrame) / 1000));
       marqueePreviousFrame = now;
 
-      if (!prefersReducedMotion && !marqueeHovering && !marqueeDragging && marqueeMomentumFrame === null && now - marqueeLastInteraction > 2800) {
-        clientStripViewport.scrollLeft += delta * 38;
+      if (!prefersReducedMotion && !marqueeDragging && marqueeMomentumFrame === null && now - marqueeLastInteraction > 1900) {
+        clientStripViewport.scrollLeft += delta * 34;
         loopClientMarquee();
       }
 
