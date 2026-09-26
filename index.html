@@ -3,9 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SentoYuina — Video Editor portfolio.">
+  <meta name="description" content="SentoYuina is a video editor creating fast, funny, emotional videos with sharp timing, clean pacing, and memorable visual effects.">
   <meta name="theme-color" content="#170d1f">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SentoYuina">
+  <meta property="og:title" content="SentoYuina — Video Editor">
+  <meta property="og:description" content="Fast cuts, big feelings, good chaos, and clean finishes that keep people watching.">
+  <meta property="og:url" content="https://sentoyuina.github.io/editor-portfolio/">
+  <meta property="og:image" content="https://sentoyuina.github.io/editor-portfolio/assets/social-preview.png">
+  <meta property="og:image:secure_url" content="https://sentoyuina.github.io/editor-portfolio/assets/social-preview.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="SentoYuina video editor portfolio — Make it hit.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@SentoYuinaWK">
+  <meta name="twitter:creator" content="@SentoYuinaWK">
+  <meta name="twitter:title" content="SentoYuina — Video Editor">
+  <meta name="twitter:description" content="Fast cuts, big feelings, good chaos, and clean finishes that keep people watching.">
+  <meta name="twitter:image" content="https://sentoyuina.github.io/editor-portfolio/assets/social-preview.png">
+  <meta name="twitter:image:alt" content="SentoYuina video editor portfolio — Make it hit.">
   <title>SentoYuina — Video Editor</title>
+  <link rel="canonical" href="https://sentoyuina.github.io/editor-portfolio/">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23170d1f'/%3E%3Cpath d='M16 18h32v8H16zm0 20h32v8H16z' fill='%23ff70ad'/%3E%3Cpath d='M27 14h10v36H27z' fill='%239a7cff'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -91,6 +110,13 @@
       gap: 1.5rem;
     }
 
+    .brand-cluster {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      min-width: 0;
+    }
+
     .brand {
       display: inline-flex;
       align-items: center;
@@ -116,6 +142,34 @@
       color: var(--muted);
       font: 750 .54rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
       letter-spacing: .13em;
+    }
+
+    .vtuber-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .35rem;
+      min-height: 2.35rem;
+      padding: .55rem .72rem;
+      border: 1px solid rgba(255, 112, 173, .46);
+      border-radius: 999px;
+      color: var(--paper);
+      background: linear-gradient(120deg, rgba(255, 112, 173, .16), rgba(154, 124, 255, .13));
+      box-shadow: inset 0 0 0 1px rgba(255, 242, 234, .03);
+      font: 800 .61rem/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .08em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .vtuber-link::before { content: "✦"; color: var(--cyan); }
+    .vtuber-link-short { display: none; }
+    .vtuber-link:hover,
+    .vtuber-link:focus-visible {
+      border-color: var(--acid);
+      background: linear-gradient(120deg, rgba(255, 112, 173, .28), rgba(154, 124, 255, .22));
+      transform: translateY(-2px) rotate(-1deg);
     }
 
     .nav-links {
@@ -1772,6 +1826,10 @@
     @media (max-width: 560px) {
       .shell { width: min(calc(100% - 1.25rem), var(--max)); }
       .brand-copy small { display: none; }
+      .brand-cluster { gap: .5rem; }
+      .vtuber-link { min-height: 2.2rem; padding: .5rem .58rem; letter-spacing: .04em; }
+      .vtuber-link-long { display: none; }
+      .vtuber-link-short { display: inline; }
       .nav { position: relative; gap: .65rem; }
       .nav-toggle { display: inline-flex; }
       .nav-links {
@@ -1904,10 +1962,13 @@
 
   <header class="site-header">
     <nav class="nav shell" aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="SentoYuina home">
-        <img class="brand-avatar" src="assets/sento-yuina.png" alt="" aria-hidden="true">
-        <span class="brand-copy"><strong>SentoYuina</strong><small>VIDEO EDITOR</small></span>
-      </a>
+      <div class="brand-cluster">
+        <a class="brand" href="#top" aria-label="SentoYuina home">
+          <img class="brand-avatar" src="assets/sento-yuina.png" alt="" aria-hidden="true">
+          <span class="brand-copy"><strong>SentoYuina</strong><small>VIDEO EDITOR</small></span>
+        </a>
+        <a class="vtuber-link" href="https://sentoyuina.github.io/?lang=en" target="_blank" rel="noopener noreferrer" aria-label="Visit SentoYuina's VTuber website in English"><span class="vtuber-link-long">VTUBER SITE ↗</span><span class="vtuber-link-short" aria-hidden="true">VT ↗</span></a>
+      </div>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu"><span>Menu</span><b aria-hidden="true">＋</b></button>
       <div class="nav-links" id="site-menu">
         <a href="#clients"><em>01</em> Clients</a>
@@ -2030,12 +2091,21 @@
             <a class="orbit-node" href="https://x.com/CrashVSX" target="_blank" rel="noopener noreferrer" aria-label="Visit CrashVS on X">
               <img src="assets/clients/crashvs.jpg" alt="" decoding="async"><span class="orbit-node-label">CrashVS</span>
             </a>
+            <a class="orbit-node" href="https://x.com/moseko0930" target="_blank" rel="noopener noreferrer" aria-label="Visit 摩西子 on X">
+              <img src="assets/moseko0930.jpg" alt="" decoding="async"><span class="orbit-node-label">摩西子</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/yura_vt" target="_blank" rel="noopener noreferrer" aria-label="Visit Yura Sorae on X">
+              <img src="assets/yura-vt.jpg" alt="" decoding="async"><span class="orbit-node-label">Yura Sorae</span>
+            </a>
+            <a class="orbit-node" href="https://x.com/Adriel_Reinsley" target="_blank" rel="noopener noreferrer" aria-label="Visit Adriel Reinsley on X">
+              <img src="assets/adriel-reinsley.jpg" alt="" decoding="async"><span class="orbit-node-label">Adriel Reinsley</span>
+            </a>
           </div>
           <p class="orbit-help">Hover = pause · click = visit ↗</p>
         </div>
         <div class="client-marquee">
-          <p class="client-marquee-head"><span><strong>17</strong> more lovely people</span><span>Flick to spin · auto-resumes ↗</span></p>
-          <div class="client-marquee-viewport" tabindex="0" aria-label="Drag or flick to browse seventeen more clients">
+          <p class="client-marquee-head"><span><strong>20</strong> more lovely people</span><span>Flick to spin · auto-resumes ↗</span></p>
+          <div class="client-marquee-viewport" tabindex="0" aria-label="Drag or flick to browse twenty more clients">
             <div class="client-marquee-track" id="clientStrip">
               <div class="client-marquee-group" id="clientStripGroup"></div>
             </div>
